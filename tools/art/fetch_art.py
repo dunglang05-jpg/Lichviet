@@ -107,8 +107,26 @@ def commons(params):
 def run_dongho():
     out = os.path.join(ROOT, "tools/art/candidates")
     os.makedirs(out, exist_ok=True)
-    cats, seen_cats = ["Category:Dong Ho painting", "Category:Đông Hồ paintings", "Category:Đông Hồ painting"], set()
-    files = {}
+    files, seen_cats = {}, set()
+    # 1) tìm thẳng file theo từ khoá
+    for q in ["Đông Hồ painting", "Dong Ho painting", "tranh Đông Hồ", "Dong Ho woodblock print", "Đông Hồ folk painting",
+              "tranh dân gian Đông Hồ", "Dong Ho folk"]:
+        try:
+            j = commons({"action": "query", "list": "search", "srsearch": q, "srnamespace": "6", "srlimit": "100"})
+            for m in j.get("query", {}).get("search", []):
+                if re.search(r"\.(jpe?g|png)$", m["title"], re.I):
+                    files.setdefault(m["title"], "search:" + q)
+        except Exception as e:
+            print("search lỗi", q, e)
+    # 2) danh mục liên quan (tìm theo tên) và file trong đó
+    cats = []
+    for q in ["Dong Ho painting", "Đông Hồ"]:
+        try:
+            j = commons({"action": "query", "list": "search", "srsearch": q, "srnamespace": "14", "srlimit": "20"})
+            cats += [m["title"] for m in j.get("query", {}).get("search", [])]
+        except Exception as e:
+            print("catsearch lỗi", e)
+    print("categories found:", cats)
     while cats and len(seen_cats) < 25:
         c = cats.pop(0)
         if c in seen_cats:
@@ -123,7 +141,7 @@ def run_dongho():
             if m["ns"] == 14:
                 cats.append(m["title"])
             elif m["ns"] == 6 and re.search(r"\.(jpe?g|png)$", m["title"], re.I):
-                files[m["title"]] = c
+                files.setdefault(m["title"], c)
     print("categories", len(seen_cats), "files", len(files))
     titles = list(files)
     credits, n = [], 0
