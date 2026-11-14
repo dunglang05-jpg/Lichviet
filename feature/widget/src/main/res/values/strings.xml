@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="w_day">Lịch Việt · Ngày</string>
+    <string name="w_detail">Lịch Việt · Chi tiết ngày</string>
+    <string name="w_month">Lịch Việt · Tháng</string>
+    <string name="w_day_desc">Ngày dương, âm lịch và can chi hôm nay</string>
+    <string name="w_detail_desc">Âm lịch, ngày tốt xấu, giờ hoàng đạo, việc nên làm</string>
+    <string name="w_month_desc">Lịch tháng có âm lịch</string>
+</resources>

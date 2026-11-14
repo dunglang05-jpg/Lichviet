@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/w_bg" android:orientation="vertical" android:gravity="center" android:padding="8dp">
+    <TextView android:id="@+id/weekday" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textColor="#B3261E" android:textSize="12sp" android:textStyle="bold" />
+    <TextView android:id="@+id/solarDay" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textColor="#1F1F1F" android:textSize="44sp" android:textStyle="bold" android:includeFontPadding="false" />
+    <TextView android:id="@+id/monthYear" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textColor="#555555" android:textSize="11sp" />
+    <TextView android:id="@+id/lunar" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginTop="4dp" android:textColor="#1F1F1F" android:textSize="12sp" android:textStyle="bold" />
+    <TextView android:id="@+id/canchi" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textColor="#555555" android:textSize="10sp" />
+</LinearLayout>

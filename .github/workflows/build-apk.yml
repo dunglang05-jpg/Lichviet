@@ -1,0 +1,44 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Kiểm thử lõi âm lịch
+        run: ./gradlew :core:lunar:test --stacktrace
+
+      - name: Build APK
+        run: ./gradlew :app:assembleDebug :app:assembleRelease --stacktrace
+
+      - name: Đổi tên APK
+        run: |
+          mkdir -p out
+          cp app/build/outputs/apk/debug/app-debug.apk out/LichViet-debug.apk
+          cp app/build/outputs/apk/release/app-release.apk out/LichViet.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LichViet-apk
+          path: out/*.apk
+
+      - name: Báo cáo kiểm thử (nếu lỗi)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: core/lunar/build/reports/tests/
