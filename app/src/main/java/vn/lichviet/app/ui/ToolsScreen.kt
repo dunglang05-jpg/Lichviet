@@ -48,6 +48,7 @@ import vn.lichviet.core.DayInfo
 import vn.lichviet.core.GoodDayFinder
 import vn.lichviet.core.LunarCalendar
 import vn.lichviet.data.SettingsRepository
+import vn.lichviet.data.Today
 import vn.lichviet.reminder.ReminderScheduler
 import vn.lichviet.widget.WidgetUpdater
 
@@ -145,6 +146,10 @@ private fun FinderSection(todayJd: Int, onOpenDay: (Int) -> Unit) {
         }
         Text("Tiêu chí: Trực hợp việc; tránh Tam Nương, Nguyệt Kỵ, Dương Công, Thụ Tử, Sát Chủ và sao xấu kỵ việc này; điểm ngày từ 3/5.",
             style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+    Section("Tranh nền tờ lịch") {
+        val month = remember { Today.ymd()[1] }
+        ArtSetPicker(month, s.artSet) { id -> repo.update { it.copy(artSet = id) } }
     }
 }
 

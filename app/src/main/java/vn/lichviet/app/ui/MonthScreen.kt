@@ -44,7 +44,8 @@ fun MonthScreen(selectedJd: Int, todayJd: Int, onPick: (Int) -> Unit, modifier: 
     val sel = remember(selectedJd) { dayOf(selectedJd) }
     var month by rememberSaveable { mutableIntStateOf(sel.solarMonth) }
     var year by rememberSaveable { mutableIntStateOf(sel.solarYear) }
-    val settings by SettingsRepository.get(LocalContext.current).settings.collectAsState()
+    val ctx = LocalContext.current
+    val settings by SettingsRepository.get(ctx).settings.collectAsState()
     val grid = remember(month, year, settings.mondayFirst) { MonthGrid(month, year, settings.mondayFirst) }
     val heads = if (settings.mondayFirst) listOf("T2", "T3", "T4", "T5", "T6", "T7", "CN") else listOf("CN", "T2", "T3", "T4", "T5", "T6", "T7")
 
@@ -61,16 +62,19 @@ fun MonthScreen(selectedJd: Int, todayJd: Int, onPick: (Int) -> Unit, modifier: 
         ThemeBadge(Modifier.padding(bottom = 4.dp))
         // Tờ lịch tháng: tranh dân gian + tiêu đề tháng, như lịch treo tường
         ShadowCard(elevation = 8.dp) {
-            MonthPainting(month)
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                TextButton(onClick = { shift(-1) }) { Text("◀") }
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("Tháng $month · $year", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                    Text(grid.lunarRange(), style = MaterialTheme.typography.bodySmall)
-                    Text("Tranh: ${MonthArtData.TITLES[month - 1]}", style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+            MonthPainting(month, settings.artSet) {
+                // tên tháng đè lên tranh như tờ lịch treo tường
+                Column(Modifier.align(Alignment.BottomStart).padding(14.dp)) {
+                    Text("Tháng $month", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Bold)
+                    Text("$year · ${grid.lunarRange()}", color = Color.White.copy(alpha = 0.92f), style = MaterialTheme.typography.bodyMedium)
                 }
-                TextButton(onClick = { shift(1) }) { Text("▶") }
+            }
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                TextButton(onClick = { shift(-1) }) { Text("◀ Trước") }
+                Text("Tranh: " + MonthArt.caption(ctx, MonthArt.set(settings.artSet), month), style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    modifier = Modifier.weight(1f))
+                TextButton(onClick = { shift(1) }) { Text("Sau ▶") }
             }
         }
         ShadowCard(elevation = 6.dp) {

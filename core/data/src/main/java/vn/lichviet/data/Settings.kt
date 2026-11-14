@@ -16,6 +16,8 @@ data class AppSettings(
     val notifyHour: Int = 7,
     val remindSocVong: Boolean = true,
     val remindHolidays: Boolean = true,
+    /** Bộ tranh lịch tháng: 0 = đồng quê màu nước, 1 = Đông Hồ. */
+    val artSet: Int = 0,
 )
 
 class SettingsRepository private constructor(context: Context) {
@@ -33,6 +35,7 @@ class SettingsRepository private constructor(context: Context) {
         notifyHour = prefs.getInt("notifyHour", 7),
         remindSocVong = prefs.getBoolean("remindSocVong", true),
         remindHolidays = prefs.getBoolean("remindHolidays", true),
+        artSet = prefs.getInt("artSet", 0),
     )
 
     fun update(transform: (AppSettings) -> AppSettings) {
@@ -47,6 +50,7 @@ class SettingsRepository private constructor(context: Context) {
             .putInt("notifyHour", s.notifyHour.coerceIn(0, 23))
             .putBoolean("remindSocVong", s.remindSocVong)
             .putBoolean("remindHolidays", s.remindHolidays)
+            .putInt("artSet", s.artSet)
             .apply()
         _settings.value = s
     }
