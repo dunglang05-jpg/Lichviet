@@ -41,37 +41,38 @@ public final class HopTuoi {
     public static boolean lucHai(int a, int b) { return Math.floorMod(a + b, 12) == 7; }
     public static boolean tuHanhXung(int a, int b) { return a != b && Math.floorMod(a - b, 3) == 0 && !lucXung(a, b); }
 
+    /** Kết quả so tuổi: chỉ liệt kê các quan hệ theo quy tắc ngũ hành, can chi, cung phi; không chấm điểm. */
     public static final class Result {
-        public final int score;               // 0..10
         public final List<String> good = new ArrayList<>();
         public final List<String> bad = new ArrayList<>();
-        public String verdict;
-        Result(int s) { score = s; }
+        public final List<String> neutral = new ArrayList<>();
+        public String cungPhiSao;    // sao Bát trạch của cặp cung phi
     }
 
     public static Result compare(Person a, Person b) {
-        int s = 0;
-        List<String> g = new ArrayList<>(), x = new ArrayList<>();
+        Result r = new Result();
         int mh = quanHeHanh(a.menh(), b.menh());
-        if (mh == 2) { s += 3; g.add("Mệnh " + a.menh() + " – " + b.menh() + " tương sinh"); }
-        else if (mh == 1) { s += 2; g.add("Mệnh cùng hành " + a.menh() + ", bình hòa"); }
-        else x.add("Mệnh " + a.menh() + " – " + b.menh() + " tương khắc");
-        if (canHop(a.can, b.can)) { s += 2; g.add("Thiên can " + DayInfo.CAN[a.can] + " – " + DayInfo.CAN[b.can] + " hợp"); }
-        else if (canXung(a.can, b.can)) x.add("Thiên can " + DayInfo.CAN[a.can] + " – " + DayInfo.CAN[b.can] + " xung");
-        else s += 1;
-        if (tamHop(a.chi, b.chi)) { s += 3; g.add("Địa chi " + DayInfo.CHI[a.chi] + " – " + DayInfo.CHI[b.chi] + " tam hợp"); }
-        else if (lucHop(a.chi, b.chi)) { s += 3; g.add("Địa chi " + DayInfo.CHI[a.chi] + " – " + DayInfo.CHI[b.chi] + " lục hợp"); }
-        else if (lucXung(a.chi, b.chi)) x.add("Địa chi " + DayInfo.CHI[a.chi] + " – " + DayInfo.CHI[b.chi] + " lục xung");
-        else if (lucHai(a.chi, b.chi)) { s += 1; x.add("Địa chi " + DayInfo.CHI[a.chi] + " – " + DayInfo.CHI[b.chi] + " lục hại"); }
-        else s += 2;
+        String m = "Mệnh " + a.menh() + " (" + a.napAm() + ") – " + b.menh() + " (" + b.napAm() + ")";
+        if (mh == 2) r.good.add(m + ": tương sinh");
+        else if (mh == 1) r.neutral.add(m + ": cùng hành (bình hòa)");
+        else r.bad.add(m + ": tương khắc");
+        String c = "Thiên can " + DayInfo.CAN[a.can] + " – " + DayInfo.CAN[b.can];
+        if (canHop(a.can, b.can)) r.good.add(c + ": tương hợp");
+        else if (canXung(a.can, b.can)) r.bad.add(c + ": tương xung");
+        else r.neutral.add(c + ": không hợp không xung");
+        String z = "Địa chi " + DayInfo.CHI[a.chi] + " – " + DayInfo.CHI[b.chi];
+        if (tamHop(a.chi, b.chi)) r.good.add(z + ": tam hợp");
+        else if (lucHop(a.chi, b.chi)) r.good.add(z + ": lục hợp");
+        else if (lucXung(a.chi, b.chi)) r.bad.add(z + ": lục xung");
+        else if (lucHai(a.chi, b.chi)) r.bad.add(z + ": lục hại");
+        else if (tuHanhXung(a.chi, b.chi)) r.bad.add(z + ": cùng nhóm tứ hành xung");
+        else if (a.chi == b.chi) r.neutral.add(z + ": cùng tuổi");
+        else r.neutral.add(z + ": không hợp không xung");
         int ca = BatTrach.cung(a.lunarYear, a.male), cb = BatTrach.cung(b.lunarYear, b.male);
-        if (BatTrach.dongTuMenh(ca) == BatTrach.dongTuMenh(cb)) {
-            s += 2; g.add("Cung phi " + BatTrach.CUNG[ca] + " – " + BatTrach.CUNG[cb] + " cùng nhóm " + (BatTrach.dongTuMenh(ca) ? "Đông" : "Tây") + " tứ mệnh");
-        } else x.add("Cung phi " + BatTrach.CUNG[ca] + " – " + BatTrach.CUNG[cb] + " khác nhóm Đông/Tây tứ mệnh");
-        Result r = new Result(Math.min(10, s));
-        r.good.addAll(g);
-        r.bad.addAll(x);
-        r.verdict = r.score >= 8 ? "Rất hợp" : r.score >= 6 ? "Khá hợp" : r.score >= 4 ? "Trung bình" : "Ít hợp, cần nhường nhịn";
+        int i = java.util.Arrays.asList(BatTrach.huong(ca)).indexOf(BatTrach.PHUONG[cb]);
+        r.cungPhiSao = BatTrach.HUONG_TEN[i];
+        String cp = "Cung phi " + BatTrach.CUNG[ca] + " – " + BatTrach.CUNG[cb] + ": " + r.cungPhiSao;
+        if (i < 4) r.good.add(cp); else r.bad.add(cp);
         return r;
     }
 

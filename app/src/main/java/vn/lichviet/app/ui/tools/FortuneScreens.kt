@@ -2,61 +2,65 @@
 
 package vn.lichviet.app.ui.tools
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import vn.lichviet.app.ui.KeyValue
-import vn.lichviet.app.ui.ScoreRing
 import vn.lichviet.app.ui.Section
 import vn.lichviet.app.ui.goodColor
 import vn.lichviet.core.DayInfo
 import vn.lichviet.core.LunarCalendar
 import vn.lichviet.core.fortune.BatTrach
+import vn.lichviet.core.fortune.BatTu
 import vn.lichviet.core.fortune.HopTuoi
 import vn.lichviet.core.fortune.MenhInfo
 import vn.lichviet.core.fortune.Numerology
 import vn.lichviet.core.fortune.Person
 import vn.lichviet.core.fortune.SaoHan
+import vn.lichviet.core.fortune.Sources
 import vn.lichviet.core.fortune.TuViNgay
 import vn.lichviet.core.fortune.VanHan
 import vn.lichviet.core.fortune.Zodiac
 import vn.lichviet.data.Today
 
-private fun currentLunarYear(): Int = Today.ymd().let { LunarCalendar.solarToLunar(it[0], it[1], it[2])[2] }
+internal fun currentLunarYear(): Int = Today.ymd().let { LunarCalendar.solarToLunar(it[0], it[1], it[2])[2] }
 
 @Composable
-private fun badColor() = MaterialTheme.colorScheme.error
+internal fun badColor() = MaterialTheme.colorScheme.error
+
+/** Dòng nguồn ở cuối màn hình. */
+@Composable
+fun SourceNote(vararg src: String) {
+    Section("Nguồn") {
+        src.forEach { Note(it) }
+        Note(Sources.DAN_GIAN)
+    }
+}
 
 @Composable
 fun VanHanSection(p: Person, year: Int) {
     val v = remember(p.day, p.month, p.year, p.male, year) { VanHan(p, year) }
     Section("Năm ${v.yearCanChi} ($year) · tuổi mụ ${v.tuoiMu}") {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.weight(1f)) {
-                Text(v.verdict(), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                Stars(v.score)
-            }
-            ScoreRing(v.score * 20, 64.dp)
-        }
         KeyValue("Sao chiếu mệnh", SaoHan.SAO[v.sao])
-        Para(SaoHan.SAO_Y[v.sao])
-        KeyValue("Hạn làm nhà", SaoHan.HOANG_OC[v.hoangOc])
+        Note(SaoHan.SAO_Y[v.sao])
+        KeyValue("Hạn", SaoHan.HAN[v.han])
+        Note(SaoHan.HAN_Y[v.han])
         KeyValue("Kim lâu", v.kimLau ?: "Không phạm")
+        KeyValue("Hoang ốc", SaoHan.HOANG_OC[v.hoangOc])
         KeyValue("Tam tai", if (v.tamTai) "Phạm" else "Không phạm")
         v.tot.forEach { Bullet(it, goodColor()) }
         v.xau.forEach { Bullet(it, badColor()) }
-        Text("Lời khuyên", fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 6.dp))
-        v.loiKhuyen.forEach { Bullet(it) }
+        v.khac.forEach { Bullet(it) }
+        if (SaoHan.SAO_TOT[v.sao] != 2) KeyValue("Lễ dâng sao (theo phong tục)", SaoHan.CUNG[v.sao])
     }
 }
 
@@ -66,33 +70,35 @@ fun VanHanScreen() {
     val y = currentLunarYear()
     VanHanSection(p, y)
     VanHanSection(p, y + 1)
-    Note("Thông tin mang tính tham khảo theo phong tục dân gian.")
+    SourceNote(Sources.SAO, Sources.HAN, Sources.KIM_LAU_HOANG_OC_TAM_TAI)
 }
 
 @Composable
 fun XemSaoScreen() {
     val p = PersonPicker("Xem sao hạn cho") ?: return
     val y = currentLunarYear()
-    Section("Sao chiếu mệnh 5 năm") {
-        for (k in 0 until 5) {
+    Section("Sao và hạn 6 năm") {
+        for (k in 0 until 6) {
             val t = p.tuoiMu(y + k)
             val s = SaoHan.sao(t, p.male)
             val col = when (SaoHan.SAO_TOT[s]) { 2 -> goodColor(); 0 -> badColor(); else -> MaterialTheme.colorScheme.onSurface }
             Row(Modifier.fillMaxWidth()) {
-                Text("${y + k} (${t} tuổi)", Modifier.weight(1f))
+                Text("${y + k} · $t tuổi", Modifier.weight(1f))
                 Text(SaoHan.SAO[s], color = col, fontWeight = FontWeight.Bold)
+                Text("  ·  " + SaoHan.HAN[SaoHan.han(t, p.male)])
             }
         }
     }
-    val s = SaoHan.sao(p.tuoiMu(y), p.male)
+    val t0 = p.tuoiMu(y)
+    val s = SaoHan.sao(t0, p.male)
     Section("Năm nay: sao ${SaoHan.SAO[s]}") {
         Para(SaoHan.SAO_Y[s])
-        KeyValue("Cúng giải", SaoHan.CUNG[s])
-        KeyValue("Năm tam tai", SaoHan.tamTaiText(p.chi))
+        KeyValue("Lễ dâng sao", SaoHan.CUNG[s])
+        val h = SaoHan.han(t0, p.male)
+        KeyValue("Hạn ${SaoHan.HAN[h]}", SaoHan.HAN_Y[h])
+        KeyValue("Năm tam tai của tuổi", SaoHan.tamTaiText(p.chi))
     }
-    Section("Các tuổi gặp sao xấu nặng") {
-        Para(SaoHan.badYears(p.male).joinToString(", ") { "${it[0]} (${SaoHan.SAO[it[1]]})" })
-    }
+    SourceNote(Sources.SAO, Sources.HAN)
 }
 
 @Composable
@@ -101,41 +107,42 @@ fun ThanSoScreen() {
     val y = Today.ymd()[2]
     val r = remember(p.name, p.day, p.month, p.year, y) { Numerology.of(p.name, p.day, p.month, p.year, y) }
     Section("Con số chủ đạo") {
-        Text(r.lifePath.toString(), style = MaterialTheme.typography.displayMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-        Text(Numerology.title(r.lifePath), fontWeight = FontWeight.Bold)
+        Text(Numerology.label(r.lifePath), style = MaterialTheme.typography.displayMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+        Note("Cộng tất cả chữ số của ${p.day}/${p.month}/${p.year} rồi rút gọn đến khi được 2–11 (tổng 22 giữ là 22/4).")
         Para(Numerology.meaning(r.lifePath))
     }
-    Section("Các chỉ số khác") {
-        KeyValue("Số ngày sinh", "${r.birthDay} – ${Numerology.title(r.birthDay).substringAfter("– ")}")
-        KeyValue("Số thái độ", "${r.attitude} – ${Numerology.title(r.attitude).substringAfter("– ")}")
-        if (r.expression > 0) {
-            KeyValue("Số sứ mệnh (tên)", r.expression.toString())
-            KeyValue("Số linh hồn (nguyên âm)", r.soul.toString())
-            KeyValue("Số nhân cách (phụ âm)", r.personality.toString())
+    Section("Năm cá nhân") {
+        for (k in 0..2) {
+            val py = Numerology.personalYear(p.day, p.month, y + k)
+            KeyValue("Năm ${y + k}", py.toString())
         }
-        KeyValue("Năm cá nhân $y", r.personalYear.toString())
-        Para(Numerology.yearMeaning(r.personalYear))
+        Note("Cộng chữ số ngày, tháng sinh và năm cần xem, rút gọn về 1–9.")
     }
+    if (r.expression > 0) Section("Chỉ số theo tên (bảng chữ cái Pythagoras A=1 … I=9)") {
+        KeyValue("Số sứ mệnh (cả họ tên)", r.expression.toString())
+        KeyValue("Số linh hồn (nguyên âm)", r.soul.toString())
+        KeyValue("Số nhân cách (phụ âm)", r.personality.toString())
+        Note("Ứng dụng chỉ tính các chỉ số này; chưa có nguồn giải nghĩa đáng tin nên không kèm lời luận.")
+    }
+    SourceNote(Sources.THAN_SO)
 }
 
 @Composable
-fun HoangDao12Screen(todayJd: Int) {
-    val s = mySettings()
-    val me = s.toPerson()
+fun HoangDao12Screen(@Suppress("UNUSED_PARAMETER") todayJd: Int) {
+    val me = mySettings().toPerson()
     val mine = me?.let { Zodiac.of(it.day, it.month) }
-    if (mine != null) ZodiacCard(mine, todayJd, true)
-    for (i in 0 until 12) if (i != mine) ZodiacCard(i, todayJd, false)
+    if (mine != null) ZodiacCard(mine, true)
+    for (i in 0 until 12) if (i != mine) ZodiacCard(i, false)
+    Section("Nguồn") { Note("Ngày, nguyên tố, hành tinh chủ quản theo chiêm tinh phương Tây phổ biến; ghép hợp theo nguyên tố (cùng nguyên tố, hoặc Lửa–Khí, Đất–Nước).") }
 }
 
 @Composable
-private fun ZodiacCard(i: Int, jd: Int, mine: Boolean) {
+private fun ZodiacCard(i: Int, mine: Boolean) {
     Section("${Zodiac.SYMBOL[i]}  ${Zodiac.NAME[i]}${if (mine) " · cung của bạn" else ""}") {
         KeyValue("Ngày sinh", Zodiac.RANGE[i])
         KeyValue("Nguyên tố", Zodiac.ELEMENT[i])
         KeyValue("Hành tinh", Zodiac.PLANET[i])
-        Para(Zodiac.TRAITS[i])
         KeyValue("Hợp với", Zodiac.compatible(i))
-        Text("Hôm nay: " + Zodiac.daily(i, jd), color = MaterialTheme.colorScheme.primary)
     }
 }
 
@@ -145,80 +152,44 @@ fun HopNhauScreen(love: Boolean) {
     val b = PersonPicker(if (love) "Người ấy" else "Người thứ hai", false, if (love) "love-b" else "hop-b")
     if (a == null || b == null) { Note("Nhập đủ ngày sinh hai người để xem."); return }
     val r = remember(a.year, a.month, a.day, a.male, b.year, b.month, b.day, b.male) { HopTuoi.compare(a, b) }
-    Section("Kết quả: ${r.verdict}") {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.weight(1f)) {
-                Text("${r.score}/10 điểm", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                Text("${a.canChi()} (${a.napAm()}) và ${b.canChi()} (${b.napAm()})", style = MaterialTheme.typography.bodySmall)
-            }
-            ScoreRing(r.score * 10, 64.dp)
-        }
+    Section("${a.canChi()} và ${b.canChi()}") {
         r.good.forEach { Bullet(it, goodColor()) }
         r.bad.forEach { Bullet(it, badColor()) }
+        r.neutral.forEach { Bullet(it) }
+        Note("Mỗi mục là một quy tắc riêng; ứng dụng không cộng thành điểm vì không có thang điểm chuẩn.")
     }
     if (love) {
-        val na = Numerology.lifePath(a.day, a.month, a.year)
-        val nb = Numerology.lifePath(b.day, b.month, b.year)
-        val za = Zodiac.of(a.day, a.month); val zb = Zodiac.of(b.day, b.month)
-        Section("Thần số học & cung hoàng đạo") {
-            KeyValue("Số chủ đạo", "$na và $nb")
-            KeyValue("Cung", "${Zodiac.NAME[za]} và ${Zodiac.NAME[zb]}")
-            val zHop = Zodiac.compatible(za).contains(Zodiac.NAME[zb]) || za == zb
-            Para(if (zHop) "Hai cung có nguyên tố hòa hợp, dễ thấu hiểu nhau." else "Hai cung khác tính, cần lắng nghe và tôn trọng khác biệt.")
-            Para(MenhInfo.tinhDuyen(a.menh()))
+        val wife = if (!a.male) a else if (!b.male) b else null
+        if (wife != null) {
+            val kl = SaoHan.kimLau(wife.tuoiMu(currentLunarYear()))
+            Section("Kim lâu của bên nữ năm nay") { Para(kl ?: "Không phạm Kim lâu") }
         }
     }
-    Note("Kết quả mang tính tham khảo; tình cảm bền lâu nhờ sự thấu hiểu của hai người.")
+    SourceNote(Sources.NGU_HANH, Sources.BAT_TRACH, Sources.KIM_LAU_HOANG_OC_TAM_TAI)
 }
-
-enum class MenhTopic { TINH_DUYEN, NGHE, TAI_CHINH }
 
 @Composable
-fun MenhAdviceScreen(topic: MenhTopic) {
+fun TinhDuyenScreen() {
     val p = PersonPicker("Xem cho") ?: return
     val h = p.menh()
-    when (topic) {
-        MenhTopic.TINH_DUYEN -> {
-            Section("Tình duyên mệnh $h") {
-                Para(MenhInfo.tinhDuyen(h))
-                KeyValue("Tuổi hợp (địa chi)", HopTuoi.chiHop(p.chi))
-                KeyValue("Tuổi nên tránh", HopTuoi.chiKy(p.chi))
-                KeyValue("Mệnh hợp", "$h, ${HopTuoi.sinhRa(h)}, ${HANH_SINH[h]}")
-                KeyValue("Mệnh khắc", HopTuoi.biKhac(h) + ", " + HopTuoi.khac(h))
-                val kl = SaoHan.kimLau(p.tuoiMu(currentLunarYear()))
-                if (!p.male) KeyValue("Kim lâu năm nay", kl ?: "Không phạm – thuận cưới hỏi")
-            }
-            Section("Tính cách theo con giáp") { Para(MenhInfo.CON_GIAP[p.chi]) }
-        }
-        MenhTopic.NGHE -> {
-            val lp = Numerology.lifePath(p.day, p.month, p.year)
-            Section("Ngành nghề hợp mệnh $h") { Para(MenhInfo.nghe(h)) }
-            Section("Tính cách") { Para(MenhInfo.tinhCach(h)); Para(MenhInfo.CON_GIAP[p.chi]) }
-            Section("Theo con số chủ đạo $lp") { Para(Numerology.meaning(lp)) }
-            val c = BatTrach.cung(p.lunarYear, p.male)
-            Section("Hướng bàn làm việc") {
-                KeyValue("Sinh Khí", BatTrach.huong(c)[0])
-                KeyValue("Thiên Y", BatTrach.huong(c)[1])
-            }
-        }
-        MenhTopic.TAI_CHINH -> {
-            val v = VanHan(p, currentLunarYear())
-            Section("Xu hướng tài chính mệnh $h") { Para(MenhInfo.taiChinh(h)) }
-            Section("Năm nay") {
-                KeyValue("Vận năm", v.verdict())
-                Para(if (v.score >= 4) "Năm thuận để mở rộng nguồn thu, đầu tư vào kỹ năng và công việc chính."
-                    else if (v.score <= 2) "Năm nên phòng thủ: giữ quỹ dự phòng, tránh vay mượn và quyết định vội vàng."
-                    else "Năm ổn định: tích lũy đều đặn, chi tiêu có kế hoạch.")
-                KeyValue("Màu may mắn", MenhInfo.mauHop(h))
-                KeyValue("Số hợp", MenhInfo.soHop(h))
-                KeyValue("Hướng tài lộc (Sinh Khí)", BatTrach.huong(BatTrach.cung(p.lunarYear, p.male))[0])
-            }
-            Note("Gợi ý theo phong tục, không phải tư vấn tài chính chuyên nghiệp.")
-        }
+    Section("Tuổi ${p.canChi()} · mệnh ${p.napAm()}") {
+        KeyValue("Tam hợp, lục hợp", HopTuoi.chiHop(p.chi))
+        KeyValue("Lục xung, lục hại, tứ hành xung", HopTuoi.chiKy(p.chi))
+        KeyValue("Mệnh tương sinh", "${HopTuoi.sinhRa(h)} sinh $h; $h sinh ${sinhCua(h)}")
+        KeyValue("Mệnh tương khắc", "${HopTuoi.biKhac(h)} khắc $h; $h khắc ${HopTuoi.khac(h)}")
     }
+    val y = currentLunarYear()
+    Section("Kim lâu các năm tới") {
+        for (k in 0 until 6) {
+            val t = p.tuoiMu(y + k)
+            KeyValue("${y + k} (tuổi mụ $t)", SaoHan.kimLau(t) ?: "Không phạm")
+        }
+        Note("Dân gian thường xét Kim lâu theo tuổi mụ của người nữ khi cưới.")
+    }
+    SourceNote(Sources.NGU_HANH, Sources.KIM_LAU_HOANG_OC_TAM_TAI)
 }
 
-private val HANH_SINH = mapOf("Kim" to "Thủy", "Thủy" to "Mộc", "Mộc" to "Hỏa", "Hỏa" to "Thổ", "Thổ" to "Kim")
+private fun sinhCua(h: String) = mapOf("Kim" to "Thủy", "Thủy" to "Mộc", "Mộc" to "Hỏa", "Hỏa" to "Thổ", "Thổ" to "Kim")[h] ?: ""
 
 @Composable
 fun PhongThuyScreen() {
@@ -229,65 +200,52 @@ fun PhongThuyScreen() {
         KeyValue("Hành cung", BatTrach.HANH_CUNG[c])
         KeyValue("Mệnh nạp âm", p.napAm())
     }
-    Section("Hướng tốt") {
-        for (i in 0 until 4) {
-            Row { Text(BatTrach.HUONG_TEN[i], Modifier.weight(1f), fontWeight = FontWeight.Bold, color = goodColor()); Text(h[i], fontWeight = FontWeight.Bold) }
-            Note(BatTrach.HUONG_Y[i])
+    Section("Bốn hướng tốt") {
+        for (i in 0 until 4) Row {
+            Text(BatTrach.HUONG_TEN[i], Modifier.weight(1f), fontWeight = FontWeight.Bold, color = goodColor())
+            Text("${h[i]} · ${BatTrach.HUONG_Y[i]}")
         }
     }
-    Section("Hướng xấu") {
-        for (i in 4 until 8) {
-            Row { Text(BatTrach.HUONG_TEN[i], Modifier.weight(1f), fontWeight = FontWeight.Bold, color = badColor()); Text(h[i], fontWeight = FontWeight.Bold) }
-            Note(BatTrach.HUONG_Y[i])
+    Section("Bốn hướng xấu") {
+        for (i in 4 until 8) Row {
+            Text(BatTrach.HUONG_TEN[i], Modifier.weight(1f), fontWeight = FontWeight.Bold, color = badColor())
+            Text("${h[i]} · ${BatTrach.HUONG_Y[i]}")
         }
     }
-    val m = p.menh()
-    Section("Theo mệnh $m") {
-        KeyValue("Màu hợp", MenhInfo.mauHop(m))
-        KeyValue("Màu nên tránh", MenhInfo.mauKy(m))
-        KeyValue("Con số hợp", MenhInfo.soHop(m))
-        KeyValue("Cây hợp mệnh", MenhInfo.cayHop(m))
+    Section("Màu theo mệnh ${p.menh()}") {
+        KeyValue("Màu hợp", MenhInfo.mauHop(p.menh()))
+        KeyValue("Màu kỵ", MenhInfo.mauKy(p.menh()))
     }
-    Section("Gợi ý bố trí") {
-        Bullet("Cửa chính, bàn làm việc nhìn về hướng ${h[0]} (Sinh Khí).")
-        Bullet("Đầu giường hướng ${h[2]} (Diên Niên) để gia đạo hòa thuận.")
-        Bullet("Bàn thờ, bàn học hướng ${h[3]} (Phục Vị) hoặc ${h[1]} (Thiên Y).")
-        Bullet("Bếp nên đặt ở vùng xấu (${h[4]}, ${h[5]}) và miệng bếp nhìn về hướng tốt.")
-    }
+    SourceNote(Sources.BAT_TRACH, Sources.NGU_HANH)
 }
 
 @Composable
 fun TuViTronDoiScreen() {
-    val p = PersonPicker("Xem tử vi trọn đời cho") ?: return
-    val m = p.menh()
+    val p = PersonPicker("Xem cho") ?: return
     val c = BatTrach.cung(p.lunarYear, p.male)
-    Section("Tuổi ${p.canChi()} – ${p.gioi()} mạng") {
+    Section("Tuổi ${p.canChi()} – ${p.gioi()}") {
         KeyValue("Năm sinh âm", "${p.lunarYear} (${p.conGiap()})")
         KeyValue("Mệnh", p.napAm())
-        KeyValue("Cung phi", BatTrach.CUNG[c])
-        KeyValue("Con số chủ đạo", Numerology.lifePath(p.day, p.month, p.year).toString())
-    }
-    Section("Tính cách") { Para(MenhInfo.CON_GIAP[p.chi]); Para(MenhInfo.tinhCach(m)) }
-    Section("Sự nghiệp") { Para(MenhInfo.nghe(m)) }
-    Section("Tài lộc") { Para(MenhInfo.taiChinh(m)) }
-    Section("Tình duyên – gia đạo") {
-        Para(MenhInfo.tinhDuyen(m))
+        KeyValue("Cung phi", "${BatTrach.CUNG[c]} (${if (BatTrach.dongTuMenh(c)) "Đông" else "Tây"} tứ mệnh)")
+        KeyValue("Số chủ đạo", Numerology.label(Numerology.lifePath(p.day, p.month, p.year)))
         KeyValue("Tuổi hợp", HopTuoi.chiHop(p.chi))
         KeyValue("Tuổi kỵ", HopTuoi.chiKy(p.chi))
+        KeyValue("Hướng tốt", BatTrach.huong(c).take(4).joinToString(", "))
+        KeyValue("Màu hợp", MenhInfo.mauHop(p.menh()))
     }
-    Section("Diễn biến theo tuổi") {
-        val list = (20..80 step 1).map { t -> t to SaoHan.sao(t, p.male) }
-        val good = list.filter { SaoHan.SAO_TOT[it.second] == 2 }.map { it.first }
-        val bad = list.filter { SaoHan.SAO_TOT[it.second] == 0 && (it.second == 0 || it.second == 6) }.map { it.first }
-        KeyValue("Tuổi gặp sao tốt", good.joinToString(", "))
-        KeyValue("Tuổi cần cẩn trọng", bad.joinToString(", "))
+    Section("Sao chiếu mệnh theo tuổi (10–80)") {
+        val tot = (10..80).filter { SaoHan.SAO_TOT[SaoHan.sao(it, p.male)] == 2 }
+        val xau = (10..80).filter { SaoHan.SAO_TOT[SaoHan.sao(it, p.male)] == 0 }
+        KeyValue("Gặp sao tốt", tot.joinToString(", "))
+        KeyValue("Gặp sao xấu", xau.joinToString(", "))
+    }
+    Section("Hạn, Kim lâu, Tam tai") {
+        val dai = (10..80).filter { SaoHan.han(it, p.male).let { h -> h == 0 || h == 4 } }
+        KeyValue("Đại hạn (Huỳnh Tuyền, Toán Tận)", dai.joinToString(", "))
+        KeyValue("Kim lâu", (16..60).filter { SaoHan.kimLau(it) != null }.joinToString(", "))
         KeyValue("Năm tam tai", SaoHan.tamTaiText(p.chi))
     }
-    Section("Màu sắc – con số") {
-        KeyValue("Màu hợp", MenhInfo.mauHop(m))
-        KeyValue("Số hợp", MenhInfo.soHop(m))
-        KeyValue("Hướng tốt", BatTrach.huong(c).take(4).joinToString(", "))
-    }
+    SourceNote(Sources.SAO, Sources.HAN, Sources.KIM_LAU_HOANG_OC_TAM_TAI, Sources.BAT_TRACH, Sources.THAN_SO)
 }
 
 @Composable
@@ -295,21 +253,16 @@ fun TongQuanVanMenhScreen() {
     val p = PersonPicker("Xem cho") ?: return
     val y = currentLunarYear()
     val v = VanHan(p, y)
-    val lp = Numerology.lifePath(p.day, p.month, p.year)
     val z = Zodiac.of(p.day, p.month)
-    Section("Bức tranh tổng quan") {
+    Section("Tổng quan") {
         KeyValue("Tuổi", "${p.canChi()} · mệnh ${p.napAm()}")
         KeyValue("Cung phi", BatTrach.CUNG[BatTrach.cung(p.lunarYear, p.male)])
-        KeyValue("Số chủ đạo", "$lp – ${Numerology.title(lp).substringAfter("– ")}")
+        KeyValue("Số chủ đạo", Numerology.label(Numerology.lifePath(p.day, p.month, p.year)))
         KeyValue("Cung hoàng đạo", Zodiac.NAME[z])
-        KeyValue("Vận năm $y", "${v.verdict()} (sao ${SaoHan.SAO[v.sao]})")
     }
-    Section("Điểm mạnh") { Para(Numerology.meaning(lp)) }
-    Section("Năm nay") { v.loiKhuyen.forEach { Bullet(it) } }
-    Section("Định hướng") {
-        Bullet("Nghề hợp: " + MenhInfo.nghe(p.menh()))
-        Bullet("Tài chính: " + MenhInfo.taiChinh(p.menh()))
-    }
+    VanHanSection(p, y)
+    BatTuSummary(p)
+    SourceNote(Sources.SAO, Sources.HAN, Sources.BAT_TRACH, Sources.THAN_SO, Sources.BAT_TU)
 }
 
 @Composable
@@ -329,9 +282,10 @@ fun ThongTinScreen() {
         KeyValue("Con giáp", p.conGiap())
         KeyValue("Cung phi", BatTrach.CUNG[BatTrach.cung(p.lunarYear, p.male)])
         KeyValue("Cung hoàng đạo", Zodiac.NAME[Zodiac.of(p.day, p.month)])
-        KeyValue("Số chủ đạo", Numerology.lifePath(p.day, p.month, p.year).toString())
+        KeyValue("Số chủ đạo", Numerology.label(Numerology.lifePath(p.day, p.month, p.year)))
         KeyValue("Tuổi mụ năm nay", p.tuoiMu(currentLunarYear()).toString())
     }
+    SourceNote(Sources.BAT_TRACH, Sources.THAN_SO)
 }
 
 @Composable
@@ -339,49 +293,34 @@ fun GiaiMaNgaySinhScreen() {
     val p = PersonPicker("Ngày sinh cần giải mã", key = "giaima") ?: return
     val d = remember(p.day, p.month, p.year) { DayInfo.of(p.day, p.month, p.year) }
     val lp = Numerology.lifePath(p.day, p.month, p.year)
-    val z = Zodiac.of(p.day, p.month)
     Section("Sinh vào ${DayInfo.THU[d.weekday]}") {
-        Para("Ngày ${d.dayCanChi}, tháng ${d.monthCanChi}, năm ${d.yearCanChi}, tiết ${d.tietKhiCurrent}. Ngày sinh âm lịch ${d.lunarDay}/${d.lunarMonth}.")
-        Para("Ngày sinh là ngày ${if (d.hoangDao) "hoàng đạo" else "hắc đạo"} (${d.than12}), trực ${d.truc}.")
+        KeyValue("Âm lịch", "${d.lunarDay}/${d.lunarMonth}/${d.lunarYear}")
+        KeyValue("Can chi", "Ngày ${d.dayCanChi}, tháng ${d.monthCanChi}, năm ${d.yearCanChi}")
+        KeyValue("Tiết khí", d.tietKhiCurrent)
+        KeyValue("Ngày", "${if (d.hoangDao) "Hoàng đạo" else "Hắc đạo"} (${d.than12}), trực ${d.truc}")
+        KeyValue("Nạp âm năm", p.napAm())
+        KeyValue("Cung hoàng đạo", Zodiac.NAME[Zodiac.of(p.day, p.month)])
     }
-    Section("Con số ngày sinh ${Numerology.reduce(p.day)}") { Para(Numerology.meaning(Numerology.reduce(p.day))) }
-    Section("Con số chủ đạo $lp") { Para(Numerology.meaning(lp)) }
-    Section("Cung ${Zodiac.NAME[z]}") { Para(Zodiac.TRAITS[z]) }
-    Section("Mệnh ${p.napAm()}") { Para(MenhInfo.tinhCach(p.menh())) }
+    Section("Số chủ đạo ${Numerology.label(lp)}") { Para(Numerology.meaning(lp)) }
+    SourceNote(Sources.THAN_SO)
 }
 
 @Composable
 fun TuViNgayScreen(todayJd: Int) {
-    val p = PersonPicker("Tử vi hôm nay cho") ?: return
+    val p = PersonPicker("Ngày hợp tuổi cho") ?: return
     for (k in 0..1) {
         val jd = todayJd + k
         val d = remember(jd) { LunarCalendar.jdToDate(jd).let { DayInfo.of(it[0], it[1], it[2]) } }
         val t = remember(jd, p.day, p.month, p.year, p.male) { TuViNgay(p, d) }
         Section((if (k == 0) "Hôm nay" else "Ngày mai") + " – ${d.solarDay}/${d.solarMonth} (${d.dayCanChi})") {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) { Para(t.tongQuan) }
-                ScoreRing(t.total, 56.dp)
-            }
-            AspectRow("Công việc", t.congViec, t.congViecText)
-            AspectRow("Tài lộc", t.taiLoc, t.taiLocText)
-            AspectRow("Tình cảm", t.tinhCam, t.tinhCamText)
-            AspectRow("Sức khỏe", t.sucKhoe, t.sucKhoeText)
-            KeyValue("Màu may mắn", t.mauMayMan)
-            KeyValue("Con số may mắn", t.soMayMan)
-            KeyValue("Giờ tốt", t.gioTot)
+            KeyValue("Ngày", "${if (d.hoangDao) "Hoàng đạo" else "Hắc đạo"} (${d.than12}) · trực ${d.truc}")
+            t.tot.forEach { Bullet(it, goodColor()) }
+            t.xau.forEach { Bullet(it, badColor()) }
+            if (t.tot.isEmpty() && t.xau.isEmpty()) Note("Không có quan hệ hợp hay xung đáng kể với tuổi.")
+            KeyValue("Giờ hoàng đạo", t.gioTot)
         }
     }
-}
-
-@Composable
-private fun AspectRow(label: String, v: Int, text: String) {
-    Column(Modifier.padding(vertical = 2.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(label, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-            Stars(v)
-        }
-        Note(text)
-    }
+    SourceNote(Sources.NGU_HANH, "Quan hệ địa chi: tam hợp, lục hợp, lục xung, lục hại theo can chi truyền thống.")
 }
 
 @Composable
@@ -391,21 +330,48 @@ fun NoiBatScreen(todayJd: Int, onOpenDay: (Int) -> Unit) {
     Section("${DayInfo.THU[d.weekday]}, ${d.solarDay}/${d.solarMonth}/${d.solarYear}") {
         KeyValue("Âm lịch", "${d.lunarDay}/${d.lunarMonth} năm ${d.yearCanChi}")
         KeyValue("Ngày", "${d.dayCanChi} – ${if (d.hoangDao) "Hoàng đạo" else "Hắc đạo"} (${d.than12})")
-        KeyValue("Đánh giá", d.verdict)
-        KeyValue("Giờ tốt", d.hours.filter { it.good }.joinToString(", ") { "${it.name} (${it.range})" })
+        KeyValue("Giờ hoàng đạo", d.hours.filter { it.good }.joinToString(", ") { "${it.name} (${it.range})" })
         KeyValue("Xuất hành", "Hỷ thần ${d.hyThan} · Tài thần ${d.taiThan}")
         KeyValue("Tuổi xung", d.chiXung)
-        KeyValue("Khổng Minh", a.khongMinh)
+        KeyValue("Khổng Minh lục diệu", a.khongMinh)
     }
     if (d.nenLam.isNotEmpty()) Section("Nên làm") { d.nenLam.forEach { Bullet(it, goodColor()) } }
     if (d.kyLam.isNotEmpty()) Section("Không nên") { d.kyLam.forEach { Bullet(it, badColor()) } }
     val p = mySettings().toPerson()
     if (p != null) {
         val t = remember(todayJd, p.year, p.month, p.day) { TuViNgay(p, d) }
-        Section("Với bạn (${p.canChi()})") {
-            Para(t.tongQuan)
-            KeyValue("Màu may mắn", t.mauMayMan)
+        Section("Với tuổi ${p.canChi()}") {
+            t.tot.forEach { Bullet(it, goodColor()) }
+            t.xau.forEach { Bullet(it, badColor()) }
+            if (t.tot.isEmpty() && t.xau.isEmpty()) Note("Không có quan hệ hợp hay xung đáng kể.")
         }
     }
-    androidx.compose.material3.TextButton(onClick = { onOpenDay(todayJd) }) { Text("Xem chi tiết ngày hôm nay") }
+    TextButton(onClick = { onOpenDay(todayJd) }) { Text("Xem chi tiết ngày hôm nay") }
+}
+
+@Composable
+fun BatTuScreen() {
+    val p = PersonPicker("Lá số của", key = "battu") ?: return
+    BatTuSummary(p)
+    if (p.hour < 0) Note("Chưa có giờ sinh nên chỉ lập 3 trụ. Nhập giờ sinh ở hồ sơ hoặc mục Người khác để có đủ 4 trụ.")
+    SourceNote(Sources.BAT_TU)
+}
+
+@Composable
+fun BatTuSummary(p: Person) {
+    val b = remember(p.day, p.month, p.year, p.hour, p.male) { runCatching { BatTu(p) }.getOrNull() } ?: return
+    Section("Tứ trụ – Nhật chủ ${b.nhatChu} (${b.hanhNhatChu})") {
+        b.pillars.forEachIndexed { i, pl ->
+            Column(Modifier.padding(vertical = 4.dp)) {
+                Text("Trụ ${BatTu.TRU[i]}: ${pl.can} ${pl.chi}", fontWeight = FontWeight.Bold)
+                Note("Nạp âm ${pl.napAm} · can ${pl.hanhCan}, chi ${pl.hanhChi}")
+                Note("Thập thần: ${pl.thapThanCan} · Tàng can: ${pl.tangCan.joinToString(", ")} (${pl.thapThanChi.joinToString(", ")})")
+                Note("Trường sinh: ${pl.truongSinh}")
+            }
+        }
+    }
+    Section("Số chữ theo ngũ hành (8 chữ can chi)") {
+        BatTu.HANH.forEachIndexed { i, h -> KeyValue(h, b.hanhCount[i].toString()) }
+    }
+    if (b.daiVan.isNotEmpty()) Section("Đại vận") { b.daiVan.forEach { Note(it) } }
 }

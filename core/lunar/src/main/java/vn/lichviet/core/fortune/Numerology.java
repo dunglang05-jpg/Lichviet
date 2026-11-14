@@ -21,18 +21,27 @@ public final class Numerology {
         return s;
     }
 
-    /** Rút gọn về 1..9, giữ số Master 11, 22, 33. */
+    /** Rút gọn về 1..9, giữ số Master 11, 22, 33 (dùng cho chỉ số tên). */
     public static int reduce(int n) {
         while (n > 9 && n != 11 && n != 22 && n != 33) n = digitSum(n);
         return n;
     }
 
+    /**
+     * Số chủ đạo theo cách tính phổ biến ở Việt Nam: cộng tất cả chữ số ngày tháng năm sinh,
+     * rút gọn đến khi được 2–11; tổng bằng 22 giữ nguyên là 22/4 (vietnamworks.com, dienmayxanh.com, hellobacsi.com).
+     */
     public static int lifePath(int d, int m, int y) {
-        return reduce(reduce(d) + reduce(m) + reduce(digitSum(y)));
+        int s = digitSum(d) + digitSum(m) + digitSum(y);
+        while (s > 11 && s != 22) s = digitSum(s);
+        return s;
     }
 
+    /** Năm cá nhân: cộng chữ số ngày, tháng sinh và năm cần xem, rút gọn về 1–9 (mytour.vn). */
     public static int personalYear(int d, int m, int currentYear) {
-        return reduce(reduce(d) + reduce(m) + reduce(digitSum(currentYear)));
+        int s = digitSum(d) + digitSum(m) + digitSum(currentYear);
+        while (s > 9) s = digitSum(s);
+        return s;
     }
 
     /** Bỏ dấu tiếng Việt, chuyển chữ hoa. */
@@ -60,54 +69,23 @@ public final class Numerology {
             nameNumber(name, 1), nameNumber(name, 2), nameNumber(name, 0));
     }
 
-    public static String title(int n) {
-        switch (n) {
-            case 1: return "Số 1 – Người tiên phong";
-            case 2: return "Số 2 – Người hòa giải";
-            case 3: return "Số 3 – Người truyền cảm hứng";
-            case 4: return "Số 4 – Người xây nền móng";
-            case 5: return "Số 5 – Người tự do";
-            case 6: return "Số 6 – Người chăm sóc";
-            case 7: return "Số 7 – Người tìm chân lý";
-            case 8: return "Số 8 – Người làm chủ";
-            case 9: return "Số 9 – Người nhân ái";
-            case 11: return "Số 11 – Người khai sáng";
-            case 22: return "Số 22 – Kiến trúc sư bậc thầy";
-            case 33: return "Số 33 – Người thầy chữa lành";
-            default: return "—";
-        }
-    }
+    public static String label(int n) { return n == 22 ? "22/4" : String.valueOf(n); }
 
+    /** Ý nghĩa số chủ đạo, tóm lược theo momo.vn (2–9) và vietnamworks.com (10, 11, 22/4). */
     public static String meaning(int n) {
         switch (n) {
-            case 1: return "Độc lập, quyết đoán, thích dẫn đầu và tự mở đường. Cần học cách lắng nghe và hợp tác để không trở nên cô độc hay nóng vội.";
-            case 2: return "Tinh tế, giàu cảm xúc, giỏi kết nối và làm việc nhóm. Điểm cần rèn là sự tự tin và dám nói lên mong muốn của mình.";
-            case 3: return "Vui vẻ, sáng tạo, giỏi diễn đạt bằng lời nói và nghệ thuật. Nên tập trung vào ít mục tiêu để không phân tán năng lượng.";
-            case 4: return "Chăm chỉ, kỷ luật, thực tế và đáng tin cậy. Thành công đến từ sự bền bỉ; nên linh hoạt hơn khi hoàn cảnh thay đổi.";
-            case 5: return "Ham khám phá, thích đổi mới, thích nghi nhanh. Cần cân bằng giữa tự do và trách nhiệm, tránh bốc đồng trong chi tiêu.";
-            case 6: return "Giàu tình thương, có trách nhiệm với gia đình và cộng đồng. Đừng ôm đồm việc của người khác mà quên chăm sóc bản thân.";
-            case 7: return "Sâu sắc, thích nghiên cứu, trực giác tốt. Cần mở lòng chia sẻ để không bị khép kín và hoài nghi quá mức.";
-            case 8: return "Có tố chất quản lý, kinh doanh, nhạy bén với tiền bạc và quyền lực. Nên giữ chữ tín và cân bằng giữa công việc với gia đình.";
-            case 9: return "Bao dung, lý tưởng, muốn giúp đỡ mọi người. Hợp các công việc phục vụ cộng đồng; cần học cách buông bỏ chuyện cũ.";
-            case 11: return "Trực giác mạnh, giàu cảm hứng, có khả năng truyền động lực cho người khác. Dễ căng thẳng nên cần giữ tinh thần ổn định.";
-            case 22: return "Có tầm nhìn lớn và khả năng biến ý tưởng thành hiện thực. Áp lực cao; thành công khi kiên nhẫn từng bước.";
-            case 33: return "Tình yêu thương và tinh thần phụng sự lớn, hợp vai trò người thầy, người chữa lành. Cần giữ ranh giới để không kiệt sức.";
+            case 2: return "Người hòa giải: trực giác, nhạy cảm, khéo ngoại giao, giỏi cân bằng. Cần rèn sự tự tin và biết đặt ranh giới.";
+            case 3: return "Người sáng tạo: giỏi truyền đạt, hài hước, lạc quan, có năng khiếu nghệ thuật. Cần học tập trung và kỷ luật.";
+            case 4: return "Người xây dựng: thực tế, logic, có tổ chức, đáng tin cậy. Cần linh hoạt, cởi mở hơn với ý tưởng mới.";
+            case 5: return "Người tự do: thích phiêu lưu, thông minh, đa tài. Cần học tính kiên định, cam kết.";
+            case 6: return "Người nuôi dưỡng: có trách nhiệm, yêu thương, coi trọng gia đình. Dễ gánh quá nhiều trách nhiệm, cần biết cân bằng.";
+            case 7: return "Người nghiên cứu: trí tuệ, giỏi phân tích, quan tâm điều bí ẩn và tâm linh. Cần học chia sẻ và tin tưởng người khác.";
+            case 8: return "Người quyền lực: có tiềm năng về tài chính, kinh doanh, thành công vật chất. Cần dùng quyền lực một cách nhân đạo.";
+            case 9: return "Người phục vụ: nhân ái, có tầm nhìn lớn, giàu lòng từ bi. Cần học cách buông bỏ.";
+            case 10: return "Số 10 cho thấy người dễ thích nghi.";
+            case 11: return "Người nhạy cảm, chân thật, hướng đến cái đẹp và sự tinh tế, luôn dành tình cảm cho gia đình, bạn bè.";
+            case 22: return "Được gọi là \"con số vua\": thường đạt được mục đích dù khó khăn, có tiềm năng rất lớn.";
             default: return "";
-        }
-    }
-
-    public static String yearMeaning(int n) {
-        switch (n) {
-            case 1: return "Năm khởi đầu: gieo hạt cho dự định mới, chủ động nắm cơ hội.";
-            case 2: return "Năm kiên nhẫn: vun đắp quan hệ, hợp tác, chờ kết quả chín muồi.";
-            case 3: return "Năm sáng tạo: giao tiếp, học hỏi, thể hiện bản thân.";
-            case 4: return "Năm xây dựng: làm việc chăm chỉ, sắp xếp tài chính và sức khỏe.";
-            case 5: return "Năm thay đổi: đi lại, đổi mới, đón nhận điều bất ngờ.";
-            case 6: return "Năm gia đình: trách nhiệm, chăm sóc người thân, chuyện nhà cửa.";
-            case 7: return "Năm chiêm nghiệm: học sâu, nghỉ ngơi, nhìn lại bản thân.";
-            case 8: return "Năm gặt hái: sự nghiệp, tài chính, khẳng định vị trí.";
-            case 9: return "Năm khép lại: hoàn tất việc cũ, buông bỏ để chuẩn bị chu kỳ mới.";
-            default: return yearMeaning(reduce(digitSum(n)));
         }
     }
 }

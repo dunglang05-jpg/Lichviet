@@ -12,5 +12,7 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 dependencies {
+    // Bát tự (tứ trụ, thập thần, tàng can, đại vận): https://github.com/6tail/lunar-java – giấy phép MIT
+    api("cn.6tail:lunar:1.7.7")
     testImplementation(libs.junit)
 }

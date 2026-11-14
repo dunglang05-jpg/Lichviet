@@ -46,7 +46,7 @@ fun validDate(d: Int, m: Int, y: Int): Boolean {
 }
 
 fun AppSettings.toPerson(): Person? =
-    if (validDate(birthD, birthM, birthY)) Person(userName.ifBlank { "Tôi" }, male, birthD, birthM, birthY) else null
+    if (validDate(birthD, birthM, birthY)) Person(userName.ifBlank { "Tôi" }, male, birthD, birthM, birthY, birthHour) else null
 
 @Composable
 fun mySettings(): AppSettings {
@@ -86,6 +86,7 @@ fun FullProfileDialog(onDismiss: () -> Unit) {
     var m by remember { mutableStateOf(if (s.birthM > 0) s.birthM.toString() else "") }
     var y by remember { mutableStateOf(if (s.birthY > 0) s.birthY.toString() else "") }
     var addr by remember { mutableStateOf(s.address) }
+    var hour by remember { mutableStateOf(if (s.birthHour >= 0) s.birthHour.toString() else "") }
     val ok = validDate(d.toIntOrNull() ?: 0, m.toIntOrNull() ?: 0, y.toIntOrNull() ?: 0)
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -96,6 +97,8 @@ fun FullProfileDialog(onDismiss: () -> Unit) {
                 GenderChips(male) { male = it }
                 Text("Ngày sinh dương lịch", style = MaterialTheme.typography.labelMedium)
                 DateFields(d, m, y) { a, b, c -> d = a; m = b; y = c }
+                OutlinedTextField(hour, { hour = it.filter(Char::isDigit).take(2) }, label = { Text("Giờ sinh 0–23 (không bắt buộc)") },
+                    singleLine = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(addr, { addr = it }, label = { Text("Địa chỉ (cho văn khấn)") }, modifier = Modifier.fillMaxWidth())
             }
         },
@@ -103,7 +106,8 @@ fun FullProfileDialog(onDismiss: () -> Unit) {
             TextButton(enabled = ok, onClick = {
                 val dd = d.toInt(); val mm = m.toInt(); val yy = y.toInt()
                 val lunarYear = LunarCalendar.solarToLunar(dd, mm, yy)[2]
-                repo.update { it.copy(userName = name.trim(), male = male, birthD = dd, birthM = mm, birthY = yy, birthYear = lunarYear, address = addr.trim()) }
+                repo.update { it.copy(userName = name.trim(), male = male, birthD = dd, birthM = mm, birthY = yy, birthYear = lunarYear, address = addr.trim(),
+                    birthHour = hour.toIntOrNull()?.takeIf { it in 0..23 } ?: -1) }
                 onDismiss()
             }) { Text("Lưu") }
         },
@@ -150,12 +154,13 @@ fun PersonPicker(title: String, preferMe: Boolean = true, key: String = title): 
     var m by rememberSaveable(key + "m") { mutableStateOf("") }
     var y by rememberSaveable(key + "y") { mutableStateOf("") }
     var edit by rememberSaveable(key + "e") { mutableStateOf(false) }
+    var hh by rememberSaveable(key + "h") { mutableStateOf("") }
     val me = s.toPerson()
     val result: Person? = when {
         sel == "me" -> me
         sel == "other" -> {
             val dd = d.toIntOrNull() ?: 0; val mm = m.toIntOrNull() ?: 0; val yy = y.toIntOrNull() ?: 0
-            if (validDate(dd, mm, yy)) Person(name.ifBlank { "Người khác" }, male, dd, mm, yy) else null
+            if (validDate(dd, mm, yy)) Person(name.ifBlank { "Người khác" }, male, dd, mm, yy, hh.toIntOrNull()?.takeIf { it in 0..23 } ?: -1) else null
         }
         else -> withBirth.firstOrNull { it.id.toString() == sel }?.let { Person(it.name, it.male, it.birthD, it.birthM, it.birthY) }
     }
@@ -175,6 +180,8 @@ fun PersonPicker(title: String, preferMe: Boolean = true, key: String = title): 
             OutlinedTextField(name, { name = it }, label = { Text("Họ tên (không bắt buộc)") }, singleLine = true, modifier = Modifier.fillMaxWidth())
             GenderChips(male) { male = it }
             DateFields(d, m, y) { a, b, c -> d = a; m = b; y = c }
+            OutlinedTextField(hh, { hh = it.filter(Char::isDigit).take(2) }, label = { Text("Giờ sinh 0–23 (không bắt buộc)") },
+                singleLine = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), modifier = Modifier.fillMaxWidth())
         }
         result?.let {
             Text("${it.name} · ${it.gioi()} · sinh ${it.day}/${it.month}/${it.year} (âm ${it.lunarDay}/${it.lunarMonth}/${it.lunarYear}) · ${it.canChi()} · ${it.napAm()}",

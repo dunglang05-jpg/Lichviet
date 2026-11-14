@@ -6,16 +6,13 @@ public final class BatTrach {
 
     public static final String[] CUNG = {"", "Khảm", "Khôn", "Chấn", "Tốn", "", "Càn", "Đoài", "Cấn", "Ly"};
     public static final String[] HANH_CUNG = {"", "Thủy", "Thổ", "Mộc", "Mộc", "", "Kim", "Kim", "Thổ", "Hỏa"};
+    /** Phương vị của từng cung (chỉ số 1..9). */
+    public static final String[] PHUONG = {"", "Bắc", "Tây Nam", "Đông", "Đông Nam", "", "Tây Bắc", "Tây", "Đông Bắc", "Nam"};
     public static final String[] HUONG_TEN = {"Sinh Khí", "Thiên Y", "Diên Niên", "Phục Vị", "Tuyệt Mệnh", "Ngũ Quỷ", "Lục Sát", "Họa Hại"};
+    /** Mức cát/hung theo wiki.batdongsan.com.vn. */
     public static final String[] HUONG_Y = {
-        "Tốt nhất: tài lộc, danh tiếng, thăng tiến. Hợp cửa chính, bàn làm việc.",
-        "Sức khỏe, trường thọ, có quý nhân. Hợp phòng ngủ, bếp nhìn về.",
-        "Hòa thuận gia đạo, tình cảm bền chặt. Hợp phòng ngủ vợ chồng.",
-        "Bình yên, vững vàng tinh thần. Hợp bàn thờ, bàn học.",
-        "Xấu nhất: bệnh tật, hao tài. Nên đặt nhà vệ sinh, kho.",
-        "Thị phi, tai họa, mất mát. Tránh đặt cửa chính, giường ngủ.",
-        "Bất hòa, kiện tụng, tình cảm trắc trở.",
-        "Rắc rối nhỏ, thất bại vặt, không thuận.",
+        "Thượng cát", "Trung cát", "Thượng cát", "Tiểu cát",
+        "Đại hung", "Đại hung", "Thứ hung", "Tiểu hung",
     };
     /** Hướng theo thứ tự HUONG_TEN cho từng cung (chỉ số 1..9). */
     private static final String[][] HUONG = {

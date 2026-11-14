@@ -42,8 +42,7 @@ import vn.lichviet.app.ui.SectionTitle
 enum class Tool(val title: String, val icon: ImageVector, val color: Long, val group: Int) {
     VAN_HAN("Vận Hạn Năm", Icons.Filled.Insights, 0xFFE53935, 0),
     TINH_DUYEN("Tình Duyên", Icons.Filled.Favorite, 0xFFEC407A, 0),
-    NGHE_NGHIEP("Định Hướng Nghề Nghiệp", Icons.Filled.Work, 0xFF3F51B5, 0),
-    TAI_CHINH("Tư Vấn Tài Chính", Icons.Filled.AttachMoney, 0xFF43A047, 0),
+    BAT_TU("Lá Số Bát Tự", Icons.Filled.GridView, 0xFF8D6E63, 0),
     TONG_QUAN_VAN_MENH("Tổng Quan Vận Mệnh", Icons.Filled.AutoAwesome, 0xFFD81B60, 0),
     NOI_BAT("Nổi Bật Hôm Nay", Icons.Filled.Today, 0xFFFB8C00, 0),
     HOP_NHAU("Mức Độ Hợp Nhau", Icons.Filled.People, 0xFFFFA000, 0),
@@ -67,7 +66,6 @@ enum class Tool(val title: String, val icon: ImageVector, val color: Long, val g
     LA_BAN("La Bàn", Icons.Filled.Explore, 0xFF5E35B1, 1),
     XEM_SAO("Xem Sao Hạn", Icons.Filled.Star, 0xFF2E7D32, 1),
     FAQ("Câu Hỏi Thường Gặp", Icons.Filled.QuestionAnswer, 0xFFF9A825, 1),
-    GIAI_MONG("Giải Mộng", Icons.Filled.Bedtime, 0xFF8E24AA, 1),
 }
 
 @Composable
@@ -119,9 +117,8 @@ fun ToolPage(tool: Tool, todayJd: Int, onOpenDay: (Int) -> Unit, onBack: () -> U
         }
         when (tool) {
             Tool.VAN_HAN -> VanHanScreen()
-            Tool.TINH_DUYEN -> MenhAdviceScreen(MenhTopic.TINH_DUYEN)
-            Tool.NGHE_NGHIEP -> MenhAdviceScreen(MenhTopic.NGHE)
-            Tool.TAI_CHINH -> MenhAdviceScreen(MenhTopic.TAI_CHINH)
+            Tool.TINH_DUYEN -> TinhDuyenScreen()
+            Tool.BAT_TU -> BatTuScreen()
             Tool.TONG_QUAN_VAN_MENH -> TongQuanVanMenhScreen()
             Tool.NOI_BAT -> NoiBatScreen(todayJd, onOpenDay)
             Tool.HOP_NHAU -> HopNhauScreen(love = false)
@@ -145,7 +142,6 @@ fun ToolPage(tool: Tool, todayJd: Int, onOpenDay: (Int) -> Unit, onBack: () -> U
             Tool.LA_BAN -> LaBanScreen()
             Tool.XEM_SAO -> XemSaoScreen()
             Tool.FAQ -> FaqScreen()
-            Tool.GIAI_MONG -> GiaiMongScreen()
         }
     }
 }

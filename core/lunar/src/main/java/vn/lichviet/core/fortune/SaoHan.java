@@ -12,30 +12,55 @@ public final class SaoHan {
     /** Thứ tự sao bắt đầu từ tuổi 10 (rồi 19, 28...) cho nam và nữ. */
     private static final int[] NAM = {0, 1, 2, 3, 4, 5, 6, 7, 8};
     private static final int[] NU = {6, 5, 8, 7, 1, 0, 4, 3, 2};
-    public static final int[] SAO_TOT = {0, 0, 1, 0, 2, 0, 0, 2, 2}; // 0 xấu, 1 trung, 2 tốt
+    /** 2 = sao tốt, 1 = sao trung, 0 = sao xấu (phân loại phổ biến: hoatieu.vn, mytour.vn). */
+    public static final int[] SAO_TOT = {0, 1, 1, 0, 2, 1, 0, 2, 2};
+    /** Tính chất sao, tóm lược theo vnexpress.net, hoatieu.vn, ngaydep.com. */
     public static final String[] SAO_Y = {
-        "Sao xấu, chủ khẩu thiệt, kiện tụng, tai nạn; nam kỵ hơn nữ. Nên giữ lời ăn tiếng nói, cẩn trọng đi lại.",
-        "Sao xấu, chủ tiểu nhân, đi xa không thuận, chăn nuôi hao. Nên thận trọng khi ký kết, đầu tư.",
-        "Sao trung bình, tốt cho người làm ăn buôn bán; kỵ sông nước, dễ có chuyện thị phi.",
-        "Sao xấu, hao tài tốn của, dễ đau ốm. Nên tiết kiệm, tránh vay mượn và làm ăn lớn.",
-        "Sao tốt, đặc biệt với nam: công danh, tài lộc thuận lợi, gia đạo yên vui.",
-        "Sao xấu vừa, dễ ốm đau, khẩu thiệt, sinh nở khó. Nên giữ sức khỏe, tránh tranh cãi.",
-        "Sao xấu, nữ kỵ hơn nam: dễ có chuyện buồn, ốm đau, đi xa nhiều trắc trở.",
-        "Sao tốt, đặc biệt với nữ: tài lộc, hôn nhân, sinh nở thuận lợi; kỵ tháng 11 âm.",
-        "Sao tốt, chủ hôn nhân, gia đạo hòa thuận, công việc tiến triển.",
+        "Hung tinh, còn gọi Khẩu thiệt tinh: chủ thị phi, kiện tụng, phiền muộn, bệnh về máu huyết; kỵ nhất với nam giới.",
+        "Chủ dễ gặp tiểu nhân, đi xa không may, hay mộng mị; nửa cuối năm thuận hơn.",
+        "Nam: phúc lộc, đi xa có lợi. Nữ: bất lợi hơn, dễ khẩu thiệt thị phi, nên tránh sông nước.",
+        "Chủ mọi việc không như ý, hao tài; đại kỵ với nữ giới, nam đỡ hơn.",
+        "Cát tinh. Nam: làm ăn phát đạt, thăng tiến. Nữ: có chút tai ương.",
+        "Nữ: nhiều tai ương, đề phòng huyết quang. Nam: kiện tụng, thị phi, gia đạo bất an.",
+        "Cả nam và nữ đều kỵ, nữ nặng hơn; riêng nữ có thai lại may mắn.",
+        "Cát tinh. Nam: đi lại hanh thông, được giúp đỡ về tiền bạc. Nữ: có tiền tài nhưng sinh nở bất lợi.",
+        "Cát tinh: may mắn trong công việc, hôn nhân hòa hợp; nữ đề phòng huyết quang, nam đề phòng bệnh mắt.",
     };
-    /** Ngày cúng giải hạn hằng tháng (âm lịch) và hướng cúng. */
+    /** Ngày cúng âm lịch hằng tháng, số nến, hướng lạy (hoatieu.vn, luatduonggia.vn). */
     public static final String[] CUNG = {
-        "Mùng 8 âm hằng tháng, hướng Bắc, 9 ngọn nến",
-        "Ngày 19 âm hằng tháng, hướng Tây, 5 ngọn nến",
-        "Ngày 21 âm hằng tháng, hướng Bắc, 7 ngọn nến",
-        "Ngày 15 âm hằng tháng, hướng Tây, 8 ngọn nến",
-        "Ngày 27 âm hằng tháng, hướng Đông, 12 ngọn nến",
-        "Ngày 29 âm hằng tháng, hướng Nam, 15 ngọn nến",
-        "Ngày 18 âm hằng tháng, hướng Tây, 21 ngọn nến",
-        "Ngày 26 âm hằng tháng, hướng Tây, 7 ngọn nến",
-        "Ngày 25 âm hằng tháng, hướng Đông, 20 ngọn nến",
+        "Ngày 8 âm lịch hằng tháng, 9 ngọn nến, hướng Bắc",
+        "Ngày 19 âm lịch hằng tháng, 5 ngọn nến, hướng Tây",
+        "Ngày 21 âm lịch hằng tháng, 7 ngọn nến, hướng Bắc",
+        "Ngày 15 âm lịch hằng tháng, 8 ngọn nến, hướng Tây",
+        "Ngày 27 âm lịch hằng tháng, 12 ngọn nến, hướng Đông",
+        "Ngày 29 âm lịch hằng tháng, 15 ngọn nến",
+        "Ngày 18 âm lịch hằng tháng, 20 hoặc 21 ngọn nến tùy sách, hướng Tây",
+        "Ngày 26 âm lịch hằng tháng, 7 ngọn nến, hướng Tây",
+        "Ngày 25 âm lịch hằng tháng, 20 ngọn nến, hướng Đông",
     };
+
+    /** Tám hạn. Thứ tự vòng của nam và của nữ (dichhocungdung.com). */
+    public static final String[] HAN = {"Huỳnh Tuyền", "Tam Kheo", "Ngũ Mộ", "Thiên Tinh", "Toán Tận", "Thiên La", "Địa Võng", "Diêm Vương"};
+    private static final int[] HAN_NAM = {0, 1, 2, 3, 4, 5, 6, 7};
+    private static final int[] HAN_NU = {4, 3, 2, 1, 0, 7, 6, 5};
+    /** Tính chất hạn, tóm lược theo masterphongthuy.vn, hoatieu.vn, dichhocungdung.com. */
+    public static final String[] HAN_Y = {
+        "Đại hạn: chủ bệnh nặng, hao tài; nên tránh bảo lãnh cho người khác.",
+        "Tiểu hạn: chú ý bệnh khớp, chấn thương tay chân.",
+        "Tiểu hạn: dễ hao tiền tốn của.",
+        "Hạn xấu: dễ thị phi, kiện tụng; chú ý ăn uống.",
+        "Đại hạn: dễ mất tiền bất ngờ, đặc biệt bất lợi với nam.",
+        "Hạn xấu: chủ sức khỏe, tâm lý bất an; dễ bất hòa vợ chồng.",
+        "Hạn xấu: dễ gặp thị phi, bị hiểu lầm, rắc rối pháp lý.",
+        "Hạn xấu: bất lợi cho phụ nữ, nhất là khi mang thai, sinh nở.",
+    };
+
+    /** Hạn theo tuổi mụ: mỗi chục tuổi khởi một hạn, mỗi năm lẻ đếm tiếp (10 tuổi: nam Huỳnh Tuyền, nữ Toán Tận). */
+    public static int han(int tuoiMu, boolean male) {
+        int tens = tuoiMu / 10, units = tuoiMu % 10;
+        int i = Math.floorMod(tens - 1 + units, 8);
+        return male ? HAN_NAM[i] : HAN_NU[i];
+    }
 
     public static int sao(int tuoiMu, boolean male) {
         int i = Math.floorMod(tuoiMu - 10, 9);

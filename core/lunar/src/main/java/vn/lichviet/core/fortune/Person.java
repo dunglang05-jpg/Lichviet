@@ -11,8 +11,15 @@ public final class Person {
     public final int day, month, year;          // dương lịch
     public final int lunarDay, lunarMonth, lunarYear;
     public final int can, chi;                  // can chi năm sinh âm lịch
+    /** Giờ sinh 0..23 (giờ Việt Nam), -1 nếu không rõ. */
+    public final int hour;
 
     public Person(String name, boolean male, int day, int month, int year) {
+        this(name, male, day, month, year, -1);
+    }
+
+    public Person(String name, boolean male, int day, int month, int year, int hour) {
+        this.hour = hour;
         this.name = name == null ? "" : name.trim();
         this.male = male;
         this.day = day;

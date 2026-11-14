@@ -65,13 +65,12 @@ import vn.lichviet.core.DayInfo
 import vn.lichviet.core.LunarCalendar
 import vn.lichviet.core.fortune.BatTrach
 import vn.lichviet.core.fortune.Faq
-import vn.lichviet.core.fortune.GiaiMong
 import vn.lichviet.core.fortune.KinhDich
 import vn.lichviet.core.fortune.LoBan
 import vn.lichviet.core.fortune.Numerology
 import vn.lichviet.core.fortune.SongKhoe
-import vn.lichviet.core.fortune.TenHay
 import vn.lichviet.core.fortune.VanKhan
+import vn.lichviet.core.fortune.Sources
 
 @Composable
 fun DoiNgayScreen(todayJd: Int, onOpenDay: (Int) -> Unit) = ConverterSection(todayJd, onOpenDay)
@@ -92,19 +91,17 @@ fun GieoQueScreen() {
             HexagramDrawing(c.lines)
             Spacer(Modifier.width(16.dp))
             Column(Modifier.weight(1f)) {
-                Text("Quẻ số ${c.main}", fontWeight = FontWeight.Bold)
-                val cat = KinhDich.CAT[c.main]
-                Text(if (cat == 2) "Cát" else if (cat == 1) "Bình" else "Hung", fontWeight = FontWeight.Bold,
-                    color = if (cat == 2) goodColor() else if (cat == 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface)
+                Text("Quẻ số ${c.main} (thứ tự Văn Vương)", fontWeight = FontWeight.Bold)
+                Note("Hào dưới lên trên; ● là hào động.")
             }
         }
         if (q.isNotBlank()) Note("Việc hỏi: $q")
-        Para(KinhDich.Y[c.main])
+        Note("Lời quẻ (Thoán từ) chưa được đưa vào vì mình chưa tìm được bản dịch tiếng Việt có nguồn rõ ràng. Bạn tra lời quẻ \"${KinhDich.TEN[c.main]}\" trong sách Kinh Dịch (bản dịch Ngô Tất Tố hoặc Nguyễn Hiến Lê).")
     }
     if (c.changed != 0) Section("Quẻ biến: ${c.changedName}") {
-        Note("Hào động (đánh dấu ●) cho biết xu hướng sự việc chuyển sang quẻ biến.")
-        Para(KinhDich.Y[c.changed])
+        Note("Quẻ số ${c.changed}. Hào động cho biết sự việc chuyển sang quẻ biến.")
     }
+    SourceNote("Tên 64 quẻ và thứ tự Văn Vương theo Kinh Dịch; cách gieo 3 đồng xu (sấp 2, ngửa 3; 6 và 9 là hào động).")
 }
 
 @Composable
@@ -126,18 +123,6 @@ private fun HexagramDrawing(lines: IntArray) {
             if (v == 6 || v == 9) drawCircle(mark, h * 0.2f, Offset(size.width * 0.92f, y))
         }
     }
-}
-
-@Composable
-fun GiaiMongScreen() {
-    var q by rememberSaveable { mutableStateOf("") }
-    Section("Bạn mơ thấy gì?") {
-        OutlinedTextField(q, { q = it }, label = { Text("Ví dụ: rắn, nước, răng rụng…") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-    }
-    val list = remember(q) { GiaiMong.search(q) }
-    if (list.isEmpty()) Section("Không tìm thấy") { Para("Thử từ khóa ngắn hơn, ví dụ \"cá\", \"nhà\", \"tiền\".") }
-    list.forEach { e -> Section("Mơ thấy ${e[0].lowercase()}") { Para(e[1]) } }
-    Note("Giải mộng theo quan niệm dân gian, mang tính tham khảo và giải trí.")
 }
 
 private fun ngayAmText(jd: Int): String {
@@ -173,15 +158,20 @@ fun VanKhanScreen(todayJd: Int) {
             Text(VanKhan.fill(e[1], ngayAmText(jd), s.userName, s.address), style = MaterialTheme.typography.bodyLarge)
         }
     }
+    Section("Nguồn") {
+        Note("Bài khấn soạn theo khuôn mẫu văn khấn cổ truyền phổ biến (mở đầu Nam mô A Di Đà Phật, kính lạy chư vị, ngày tháng, tín chủ, lễ vật, lời cầu). Mình chưa đối chiếu từng chữ với sách \"Văn khấn cổ truyền Việt Nam\"; nên tham khảo thêm sách hoặc nhà chùa nơi bạn ở.")
+    }
 }
 
 @Composable
-fun SongKhoeScreen(todayJd: Int) {
-    val d = remember(todayJd) { LunarCalendar.jdToDate(todayJd).let { DayInfo.of(it[0], it[1], it[2]) } }
-    Section("Tiết ${d.tietKhiCurrent}") { Para(SongKhoe.tip(d.tietKhiCurrent)) }
-    Section("Thói quen tốt mỗi ngày") { SongKhoe.CHUNG.forEach { Bullet(it) } }
-    Section("Cả năm theo tiết khí") { SongKhoe.TIPS.forEach { Note(it) } }
-    Note("Thông tin chăm sóc sức khỏe chung, không thay cho tư vấn của bác sĩ.")
+fun SongKhoeScreen(@Suppress("UNUSED_PARAMETER") todayJd: Int) {
+    Section("Khuyến nghị vận động") {
+        SongKhoe.KHUYEN_NGHI.forEach { e ->
+            Text(e[0], fontWeight = FontWeight.Bold)
+            Para(e[1])
+        }
+    }
+    Section("Nguồn") { Note(Sources.SUC_KHOE); Note("Thông tin chung, không thay cho tư vấn của bác sĩ.") }
 }
 
 @Composable
@@ -197,36 +187,19 @@ fun FaqScreen() {
 
 @Composable
 fun ChonTenScreen() {
-    var male by rememberSaveable { mutableStateOf(true) }
-    var hanh by rememberSaveable { mutableIntStateOf(0) }
-    var ho by rememberSaveable { mutableStateOf("") }
-    var dem by rememberSaveable { mutableStateOf("") }
-    Section("Tiêu chí") {
-        GenderChips(male) { male = it }
-        Text("Ngũ hành của bé (theo năm sinh dự kiến)", style = MaterialTheme.typography.labelMedium)
-        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            items(TenHay.HANH.size) { i -> FilterChip(hanh == i, { hanh = i }, label = { Text(TenHay.HANH[i]) }) }
-        }
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedTextField(ho, { ho = it }, label = { Text("Họ") }, singleLine = true, modifier = Modifier.weight(1f))
-            OutlinedTextField(dem, { dem = it }, label = { Text("Tên đệm") }, singleLine = true, modifier = Modifier.weight(1f))
-        }
-        Note("Năm sinh → mệnh: dùng mục Thông Tin Tổng Quan hoặc nhập năm ở mục Người khác.")
+    var names by rememberSaveable { mutableStateOf("") }
+    Section("Nhập các tên đang cân nhắc") {
+        OutlinedTextField(names, { names = it }, label = { Text("Mỗi dòng một họ tên đầy đủ") }, modifier = Modifier.fillMaxWidth(), minLines = 3)
+        Note("Ứng dụng tính số sứ mệnh, linh hồn, nhân cách theo bảng chữ cái Pythagoras để bạn so sánh. Không có danh sách tên \"hợp mệnh\" vì chưa có nguồn chuẩn.")
     }
-    Section("Gợi ý tên hành ${TenHay.HANH[hanh]}") {
-        TenHay.DATA[if (male) 0 else 1][hanh].forEach { e ->
-            val (ten, y) = e.split("|").let { it[0] to it[1] }
-            val full = listOf(ho.trim(), dem.trim(), ten).filter { it.isNotEmpty() }.joinToString(" ")
-            val n = Numerology.nameNumber(full, 0)
-            Row(Modifier.fillMaxWidth().padding(vertical = 3.dp), verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    Text(full, fontWeight = FontWeight.Bold)
-                    Note(y)
-                }
-                Text("Số $n", color = MaterialTheme.colorScheme.primary)
-            }
+    names.lines().map { it.trim() }.filter { it.isNotEmpty() }.forEach { n ->
+        Section(n) {
+            KeyValue("Số sứ mệnh", Numerology.nameNumber(n, 0).toString())
+            KeyValue("Số linh hồn", Numerology.nameNumber(n, 1).toString())
+            KeyValue("Số nhân cách", Numerology.nameNumber(n, 2).toString())
         }
     }
+    Section("Nguồn") { Note("Bảng quy đổi chữ cái A=1 … I=9, J=1 … theo thần số học Pythagoras (hellobacsi.com).") }
 }
 
 @Composable
@@ -247,6 +220,7 @@ fun LoBanScreen() {
         Para(if (ok) "Kích thước ${"%.1f".format(v)} cm rơi vào cung tốt." else "Cung xấu – nên điều chỉnh kích thước.")
         if (!ok) KeyValue("Kích thước tốt gần nhất", "%.1f cm".format(LoBan.nearestGood(type, v)))
         RulerBar(type, v)
+        if (type == 2) LOBAN_388_Y[LoBan.CUNG[type][c]]?.let { KeyValue("Ý nghĩa", it) }
     }
     Section("Các cung của thước") {
         LoBan.CUNG[type].forEachIndexed { i, n ->
@@ -254,7 +228,13 @@ fun LoBanScreen() {
         }
         Note("Chiều dài một vòng thước: ${LoBan.LEN[type]} cm.")
     }
+    Section("Nguồn") { Note(Sources.LO_BAN); Note(Sources.DAN_GIAN) }
 }
+
+private val LOBAN_388_Y = mapOf(
+    "Vượng" to "Đức của trời", "Khổ" to "Mất của", "Nghĩa" to "Cát lành", "Quan" to "Giàu có",
+    "Tử" to "Xa quê hương", "Hưng" to "Thi cử đỗ đạt", "Thất" to "Cô đơn", "Tài" to "Phúc đến",
+)
 
 @Composable
 private fun RulerBar(type: Int, v: Double) {

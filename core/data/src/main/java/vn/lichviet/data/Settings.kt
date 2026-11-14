@@ -24,6 +24,8 @@ data class AppSettings(
     val birthM: Int = 0,
     val birthY: Int = 0,
     val address: String = "",
+    /** Giờ sinh 0..23, -1 nếu không rõ (cho lá số Bát tự). */
+    val birthHour: Int = -1,
 )
 
 class SettingsRepository private constructor(context: Context) {
@@ -47,6 +49,7 @@ class SettingsRepository private constructor(context: Context) {
         birthM = prefs.getInt("birthM", 0),
         birthY = prefs.getInt("birthY", 0),
         address = prefs.getString("address", "") ?: "",
+        birthHour = prefs.getInt("birthHour", -1),
     )
 
     fun update(transform: (AppSettings) -> AppSettings) {
@@ -67,6 +70,7 @@ class SettingsRepository private constructor(context: Context) {
             .putInt("birthM", s.birthM)
             .putInt("birthY", s.birthY)
             .putString("address", s.address)
+            .putInt("birthHour", s.birthHour)
             .apply()
         _settings.value = s
     }

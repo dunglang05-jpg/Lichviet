@@ -129,7 +129,6 @@ fun ThienDiaNhanCard(d: DayInfo, settings: AppSettings, onEditProfile: () -> Uni
             return@ShadowCard
         }
         val rep = remember(d.jd, settings.birthYear) { TuoiHop.report(settings.birthYear, d) }
-        var open by remember { mutableStateOf(false) }
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable(onClick = onEditProfile)) {
             Box(
                 Modifier.size(40.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primaryContainer),
@@ -142,22 +141,13 @@ fun ThienDiaNhanCard(d: DayInfo, settings: AppSettings, onEditProfile: () -> Uni
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                ScoreLine("Chỉ số ngày", rep.day.score)
-                ScoreLine("Chỉ số tháng", rep.month.score)
-                ScoreLine("Chỉ số năm", rep.year.score)
-            }
-            ScoreRing(rep.total, 92.dp)
+        // Chỉ liệt kê quan hệ hợp/xung giữa tuổi và can chi ngày, tháng, năm (không chấm điểm)
+        listOf("Ngày ${d.dayCanChi}" to rep.day, "Tháng ${d.monthCanChi}" to rep.month, "Năm ${d.yearCanChi}" to rep.year).forEach { (t, r) ->
+            Text(t, fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.bodyMedium)
+            Text(r.reasons.joinToString("; ").ifBlank { "Không có quan hệ hợp hay xung đáng kể" }, style = MaterialTheme.typography.bodySmall)
         }
-        TextButton(onClick = { open = !open }) { Text(if (open) "Ẩn giải thích" else "Xem giải thích", maxLines = 1) }
-        if (open) {
-            listOf("Ngày ${d.dayCanChi}" to rep.day, "Tháng" to rep.month, "Năm ${d.yearCanChi}" to rep.year).forEach { (t, r) ->
-                Text("$t: " + r.reasons.joinToString("; "), style = MaterialTheme.typography.bodySmall)
-            }
-            Text("Chỉ số do Lịch Việt tính từ quan hệ hợp/xung giữa tuổi và can chi ngày, tháng, năm; chỉ để tham khảo.",
-                style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
+        Text("Theo quy tắc tam hợp, lục hợp, lục xung của địa chi và sinh khắc ngũ hành. Phong tục dân gian, chỉ để tham khảo.",
+            style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 

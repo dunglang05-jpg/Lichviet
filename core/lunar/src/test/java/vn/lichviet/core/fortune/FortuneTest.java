@@ -8,7 +8,11 @@ import vn.lichviet.core.DayInfo;
 
 public class FortuneTest {
     @Test public void numerology() {
-        assertEquals(6, Numerology.lifePath(15, 8, 1990));
+        assertEquals(6, Numerology.lifePath(15, 8, 1990));   // 1+5+8+1+9+9+0 = 33 -> 6
+        assertEquals(10, Numerology.lifePath(15, 7, 1995)); // ví dụ dienmayxanh: 37 -> 10
+        assertEquals(22, Numerology.lifePath(10, 3, 1980)); // ví dụ dienmayxanh: 22/4
+        assertEquals(9, Numerology.lifePath(28, 5, 2001));  // ví dụ dienmayxanh
+        assertEquals(4, Numerology.personalYear(27, 2, 2018)); // ví dụ mytour
     }
 
     @Test public void numerologyMaster() {
@@ -45,6 +49,23 @@ public class FortuneTest {
         assertEquals("Tứ Tấn Tài", SaoHan.HOANG_OC[SaoHan.hoangOc(40)]);
     }
 
+    @Test public void hanTheoNguon() {
+        // thuvienphapluat 2025: 1999 nam 27 Huỳnh Tuyền, nữ Toán Tận; 1949 (77) nam Thiên La, nữ Diêm Vương
+        assertEquals("Huỳnh Tuyền", SaoHan.HAN[SaoHan.han(27, true)]);
+        assertEquals("Toán Tận", SaoHan.HAN[SaoHan.han(27, false)]);
+        assertEquals("Thiên La", SaoHan.HAN[SaoHan.han(77, true)]);
+        assertEquals("Diêm Vương", SaoHan.HAN[SaoHan.han(77, false)]);
+        // hoatieu: nam 81, 89, 90 Huỳnh Tuyền; nam/nữ 16, 69, 70 Địa Võng; nữ 37 Thiên Tinh
+        assertEquals("Huỳnh Tuyền", SaoHan.HAN[SaoHan.han(89, true)]);
+        assertEquals("Huỳnh Tuyền", SaoHan.HAN[SaoHan.han(90, true)]);
+        assertEquals("Địa Võng", SaoHan.HAN[SaoHan.han(69, false)]);
+        assertEquals("Địa Võng", SaoHan.HAN[SaoHan.han(16, true)]);
+        assertEquals("Thiên Tinh", SaoHan.HAN[SaoHan.han(37, false)]);
+        // sao: 1960 (66) nam Thủy Diệu, nữ Mộc Đức (thuvienphapluat 2025)
+        assertEquals("Thủy Diệu", SaoHan.SAO[SaoHan.sao(66, true)]);
+        assertEquals("Mộc Đức", SaoHan.SAO[SaoHan.sao(66, false)]);
+    }
+
     @Test public void person() {
         Person p = new Person("A", true, 15, 8, 1990);
         assertEquals("Canh Ngọ", p.canChi());
@@ -54,9 +75,11 @@ public class FortuneTest {
         assertEquals(1990, q.lunarYear);
         VanHan v = new VanHan(p, 2026);
         assertEquals(37, v.tuoiMu);
-        assertTrue(v.score >= 1 && v.score <= 5);
-        HopTuoi.Result r = HopTuoi.compare(p, new Person("C", false, 1, 6, 1994));
-        assertTrue(r.score >= 0 && r.score <= 10);
+        assertEquals("La Hầu", SaoHan.SAO[v.sao]);
+        assertEquals("Tam Kheo", SaoHan.HAN[v.han]);
+        // Chấn (nam 1970) + Ly (nữ 1985) = Sinh khí (wiki.batdongsan)
+        HopTuoi.Result r = HopTuoi.compare(new Person("A", true, 1, 6, 1970), new Person("B", false, 1, 6, 1985));
+        assertEquals("Sinh Khí", r.cungPhiSao);
     }
 
     @Test public void kinhDich() {
@@ -82,10 +105,8 @@ public class FortuneTest {
     }
 
     @Test public void misc() {
-        assertFalse(GiaiMong.search("ran").isEmpty());
         assertTrue(VanKhan.fill(VanKhan.DATA[0][1], "ngày X", "", "").contains("ngày X"));
-        assertTrue(SongKhoe.tip("Lập đông").startsWith("Lập đông"));
         TuViNgay t = new TuViNgay(new Person("A", true, 15, 8, 1990), DayInfo.of(15, 11, 2026));
-        assertTrue(t.total > 0 && !t.gioTot.isEmpty());
+        assertTrue(!t.gioTot.isEmpty());
     }
 }

@@ -4,7 +4,7 @@ package vn.lichviet.core.fortune;
 public final class LoBan {
     private LoBan() {}
 
-    public static final String[] TYPE = {"Thông thủy 52,2 cm (cửa, cửa sổ)", "Dương trạch 42,9 cm (nhà, bếp, giường, tủ)", "Âm phần 38,8 cm (bàn thờ, mộ)"};
+    public static final String[] TYPE = {"Thông thủy 52,2 cm (cửa đi, cửa sổ, cổng)", "Dương trạch 42,9 cm (khối xây: bệ bếp, bậc, tường)", "Âm phần 38,8 cm (bàn thờ, tủ thờ, nội thất, mộ phần)"};
     public static final double[] LEN = {52.2, 42.9, 38.8};
     public static final String[][] CUNG = {
         {"Quý Nhân", "Hiểm Họa", "Thiên Tai", "Thiên Tài", "Nhân Lộc", "Cô Độc", "Thiên Tặc", "Tể Tướng"},
