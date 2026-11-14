@@ -21,10 +21,12 @@ from PIL import Image, ImageDraw
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 UA = "LichVietCalendarApp/1.0 (https://github.com/dunglang05-jpg/Lichviet)"
 
-STYLE = (". Detailed Vietnamese countryside illustration, gouache and watercolor, warm nostalgic mood like a Vietnamese wall calendar painting, "
-         "fine brushwork, cream paper texture, soft natural colors. Wide landscape with scenery on the left and right sides and open sky in the middle. "
-         "Strictly Vietnamese, not Chinese, not Japanese: no pagoda towers, no upturned Chinese eaves, no Chinese characters, no red seal stamps, "
-         "no text or letters anywhere, no watermark, no border")
+STYLE = (". Highly detailed realistic painting, like a vintage Vietnamese wall calendar illustration: rich painterly detail in "
+         "foliage, roof tiles, stone paths and small figures, natural soft daylight with light haze, muted warm colors "
+         "(olive green, ochre, terracotta, soft pink), subtle canvas texture, nostalgic and peaceful, NOT watercolor, NOT ink wash. "
+         "Wide landscape: detailed scenery on the left and right sides, a river or path leading to the distance, calm pale sky in the middle. "
+         "Strictly Vietnamese, not Chinese, not Japanese: no pagoda towers, no upturned Chinese eaves, no Chinese characters, "
+         "no seal stamps, no text or letters anywhere, no watermark, no border")
 V = "authentic Vietnamese village of the Red River Delta: low single-storey three-room houses with small flat brown 'ngoi ta' tiles or thatched straw roofs, yellow lime-washed or laterite brick walls, bamboo hedges around the village, areca palm trees, banana trees, haystacks, a village pond with water lilies"
 # Mỗi tháng một cảnh đúng mùa ở quê Việt Nam
 PROMPTS = [
