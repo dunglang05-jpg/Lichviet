@@ -33,11 +33,15 @@ fun MoonScreen(jd: Int, modifier: Modifier = Modifier) {
     val p = remember(jd) { MoonPhase.of(d.solarDay, d.solarMonth, d.solarYear) }
     val events = remember(jd) { MoonPhase.upcoming(d.solarDay, d.solarMonth, d.solarYear, 8) }
     Column(modifier.verticalScroll(rememberScrollState()).padding(bottom = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(solarText(d), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 16.dp))
-        Text("Âm lịch ${d.lunarText()}", style = MaterialTheme.typography.bodyMedium)
-        MoonDisc(p.fraction, Modifier.size(200.dp).padding(16.dp))
-        Text(p.phaseName, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-        Text("Tuổi trăng %.1f ngày · Độ sáng %d%%".format(p.age, p.illumination))
+        ThemeBadge(Modifier.padding(top = 12.dp))
+        Text(solarText(d), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 8.dp))
+        Text("Âm lịch ${d.lunarText()}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        MoonDisc(
+            p.fraction, Modifier.size(200.dp).padding(16.dp),
+            dark = MaterialTheme.colorScheme.surfaceContainerHighest, ring = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Text(p.phaseName, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+        Text("Tuổi trăng %.1f ngày · Độ sáng %d%%".format(p.age, p.illumination), color = MaterialTheme.colorScheme.onSurfaceVariant)
         Section("Mốc trăng sắp tới") {
             events.forEach { e ->
                 val ed = DayInfo.of(e.day, e.month, e.year)
@@ -57,8 +61,14 @@ fun MoonScreen(jd: Int, modifier: Modifier = Modifier) {
 
 /** Vẽ đĩa trăng theo pha (0 = trăng mới, 0.5 = trăng tròn). */
 @Composable
-fun MoonDisc(fraction: Double, modifier: Modifier = Modifier, lit: Color = Color(0xFFF3EBC9), dark: Color = Color(0xFF2B3160)) {
-    Canvas(modifier) { drawMoon(fraction, lit, dark) }
+fun MoonDisc(
+    fraction: Double, modifier: Modifier = Modifier, lit: Color = Color(0xFFF3EBC9), dark: Color = Color(0xFF2B3160),
+    ring: Color = Color(0x55FFFFFF),
+) {
+    Canvas(modifier) {
+        drawMoon(fraction, lit, dark)
+        drawCircle(ring.copy(alpha = 0.5f), size.minDimension / 2, style = androidx.compose.ui.graphics.drawscope.Stroke(1.5f))
+    }
 }
 
 private fun DrawScope.drawMoon(f: Double, lit: Color, dark: Color) {

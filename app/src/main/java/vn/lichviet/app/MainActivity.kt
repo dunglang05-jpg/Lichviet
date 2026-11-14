@@ -108,6 +108,7 @@ private fun AppRoot(activity: ComponentActivity) {
     ) {
     Scaffold(
         containerColor = Color.Transparent,
+        contentColor = spec.ink,
         bottomBar = {
             NavigationBar(containerColor = spec.card) {
                 Tab.entries.forEachIndexed { i, t ->

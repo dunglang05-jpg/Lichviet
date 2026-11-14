@@ -8,6 +8,9 @@ import kotlinx.coroutines.flow.StateFlow
 data class AppSettings(
     val themeId: Int = 0,
     val autoSeason: Boolean = true,
+    /** Năm sinh âm lịch của người dùng (0 = chưa nhập), dùng cho chỉ số hợp tuổi. */
+    val birthYear: Int = 0,
+    val userName: String = "",
     val mondayFirst: Boolean = true,
     val morningNotify: Boolean = true,
     val notifyHour: Int = 7,
@@ -23,6 +26,8 @@ class SettingsRepository private constructor(context: Context) {
     private fun read() = AppSettings(
         themeId = prefs.getInt("themeId", 0),
         autoSeason = prefs.getBoolean("autoSeason", true),
+        birthYear = prefs.getInt("birthYear", 0),
+        userName = prefs.getString("userName", "") ?: "",
         mondayFirst = prefs.getBoolean("mondayFirst", true),
         morningNotify = prefs.getBoolean("morningNotify", true),
         notifyHour = prefs.getInt("notifyHour", 7),
@@ -35,6 +40,8 @@ class SettingsRepository private constructor(context: Context) {
         prefs.edit()
             .putInt("themeId", s.themeId.coerceIn(0, 9))
             .putBoolean("autoSeason", s.autoSeason)
+            .putInt("birthYear", s.birthYear)
+            .putString("userName", s.userName)
             .putBoolean("mondayFirst", s.mondayFirst)
             .putBoolean("morningNotify", s.morningNotify)
             .putInt("notifyHour", s.notifyHour.coerceIn(0, 23))

@@ -192,7 +192,24 @@ private fun SettingsSection() {
     val ctx = LocalContext.current
     val repo = remember { SettingsRepository.get(ctx) }
     val s by repo.settings.collectAsState()
+    var editProfile by remember { mutableStateOf(false) }
     Section("Cài đặt") {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+            Column(Modifier.weight(1f)) {
+                Text("Thông tin của bạn")
+                Text(
+                    if (s.birthYear == 0) "Chưa nhập năm sinh" else "${s.userName.ifBlank { "Bạn" }} · tuổi ${vn.lichviet.core.TuoiHop.tuoiName(s.birthYear)} (${s.birthYear})",
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            TextButton(onClick = { editProfile = true }) { Text("Sửa", maxLines = 1) }
+        }
+        if (editProfile) {
+            ProfileDialog(s, onDismiss = { editProfile = false }) { name, year ->
+                repo.update { it.copy(userName = name, birthYear = year) }
+                editProfile = false
+            }
+        }
         SwitchRow("Tuần bắt đầu Thứ Hai", s.mondayFirst) { v -> repo.update { it.copy(mondayFirst = v) }; WidgetUpdater.updateAll(ctx) }
         SwitchRow("Thông báo lịch mỗi sáng", s.morningNotify) { v -> repo.update { it.copy(morningNotify = v) } }
         SwitchRow("Nhắc trước mùng 1 và rằm", s.remindSocVong) { v -> repo.update { it.copy(remindSocVong = v) } }
