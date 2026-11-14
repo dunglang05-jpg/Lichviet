@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 /** Cài đặt ứng dụng. [themeId] 0..9 dành cho 10 giao diện sẽ làm sau. */
 data class AppSettings(
     val themeId: Int = 0,
+    val autoSeason: Boolean = true,
     val mondayFirst: Boolean = true,
     val morningNotify: Boolean = true,
     val notifyHour: Int = 7,
@@ -21,6 +22,7 @@ class SettingsRepository private constructor(context: Context) {
 
     private fun read() = AppSettings(
         themeId = prefs.getInt("themeId", 0),
+        autoSeason = prefs.getBoolean("autoSeason", true),
         mondayFirst = prefs.getBoolean("mondayFirst", true),
         morningNotify = prefs.getBoolean("morningNotify", true),
         notifyHour = prefs.getInt("notifyHour", 7),
@@ -32,6 +34,7 @@ class SettingsRepository private constructor(context: Context) {
         val s = transform(_settings.value)
         prefs.edit()
             .putInt("themeId", s.themeId.coerceIn(0, 9))
+            .putBoolean("autoSeason", s.autoSeason)
             .putBoolean("mondayFirst", s.mondayFirst)
             .putBoolean("morningNotify", s.morningNotify)
             .putInt("notifyHour", s.notifyHour.coerceIn(0, 23))

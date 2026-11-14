@@ -9,7 +9,23 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.produceState
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
+import java.util.Calendar
+import kotlinx.coroutines.delay
+import vn.lichviet.app.ui.dayOf
+import vn.lichviet.app.ui.theme.LichTheme
+import vn.lichviet.app.ui.theme.Themes
+import vn.lichviet.app.ui.theme.drawPattern
+import vn.lichviet.data.SettingsRepository
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.DateRange
@@ -17,7 +33,6 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -46,7 +61,7 @@ import vn.lichviet.data.Today
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { MaterialTheme { AppRoot() } }
+        setContent { AppRoot(this) }
     }
 }
 
@@ -59,19 +74,42 @@ private enum class Tab(val label: String, val icon: ImageVector) {
 }
 
 @Composable
-private fun AppRoot() {
+private fun AppRoot(activity: ComponentActivity) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
     val todayJd = remember { Today.ymd().let { LunarCalendar.jdFromDate(it[0], it[1], it[2]) } }
     var selectedJd by rememberSaveable { mutableIntStateOf(todayJd) }
+
+    // Giao diện: đổi theo cài đặt, theo ngày và (Thời Thần) theo giờ – kiểm tra lại mỗi phút
+    val settings by SettingsRepository.get(activity).settings.collectAsState()
+    val hour by produceState(Today.calendar().get(Calendar.HOUR_OF_DAY)) {
+        while (true) {
+            delay(60_000)
+            value = Today.calendar().get(Calendar.HOUR_OF_DAY)
+        }
+    }
+    val today = remember(todayJd) { dayOf(todayJd) }
+    val spec = remember(settings.themeId, settings.autoSeason, todayJd, hour) {
+        Themes.resolve(settings.themeId, settings.autoSeason, today, hour)
+    }
+    LaunchedEffect(spec.dark) {
+        val style = if (spec.dark) SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
+        else SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT)
+        activity.enableEdgeToEdge(statusBarStyle = style, navigationBarStyle = style)
+    }
 
     val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { }
     LaunchedEffect(Unit) {
         if (Build.VERSION.SDK_INT >= 33) permission.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 
+    LichTheme(spec) {
+    Box(
+        Modifier.fillMaxSize().background(spec.bg).drawBehind { drawPattern(spec.pattern, spec.patternColor, spec.patternAlpha) },
+    ) {
     Scaffold(
+        containerColor = Color.Transparent,
         bottomBar = {
-            NavigationBar {
+            NavigationBar(containerColor = spec.card) {
                 Tab.entries.forEachIndexed { i, t ->
                     NavigationBarItem(
                         selected = tab == i,
@@ -91,5 +129,7 @@ private fun AppRoot() {
             Tab.EVENTS -> EventsScreen(todayJd, onOpenDay = { selectedJd = it; tab = 0 }, modifier = m)
             Tab.TOOLS -> ToolsScreen(todayJd, onOpenDay = { selectedJd = it; tab = 0 }, modifier = m)
         }
+    }
+    }
     }
 }

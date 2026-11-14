@@ -2,7 +2,18 @@
 
 package vn.lichviet.app.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import vn.lichviet.app.ui.theme.LocalLich
+import vn.lichviet.app.ui.theme.Themes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,7 +54,9 @@ import vn.lichviet.widget.WidgetUpdater
 /** Đổi ngày âm/dương, tìm ngày tốt theo việc, cài đặt. */
 @Composable
 fun ToolsScreen(todayJd: Int, onOpenDay: (Int) -> Unit, modifier: Modifier = Modifier) {
-    Column(modifier.verticalScroll(rememberScrollState()).padding(bottom = 16.dp)) {
+    Column(modifier.verticalScroll(rememberScrollState()).padding(top = 12.dp, bottom = 16.dp)) {
+        ThemeBadge()
+        ThemeSection()
         ConverterSection(todayJd, onOpenDay)
         FinderSection(todayJd, onOpenDay)
         SettingsSection()
@@ -108,19 +121,69 @@ private fun FinderSection(todayJd: Int, onOpenDay: (Int) -> Unit) {
     val result = remember(activity, days) { GoodDayFinder.find(activity, t.solarDay, t.solarMonth, t.solarYear, days, 30) }
     Section("Tìm ngày tốt theo việc") {
         LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            items(Activity.entries) { a -> FilterChip(selected = a == activity, onClick = { activity = a }, label = { Text(a.label) }) }
+            items(Activity.entries) { a -> FilterChip(selected = a == activity, onClick = { activity = a }, label = { Text(a.label, maxLines = 1, softWrap = false) }) }
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            listOf(30, 90, 180, 365).forEach { n -> FilterChip(selected = n == days, onClick = { days = n }, label = { Text("$n ngày") }) }
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            items(listOf(30, 90, 180, 365)) { n ->
+                FilterChip(selected = n == days, onClick = { days = n }, label = { Text("$n ngày", maxLines = 1, softWrap = false) })
+            }
         }
         if (result.isEmpty()) Text("Không tìm thấy ngày phù hợp trong khoảng này.")
         result.forEach { d ->
-            Row(Modifier.fillMaxWidth().clickable { onOpenDay(d.jd) }.padding(vertical = 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("${DayInfo.THU_NGAN[d.weekday]} ${d.solarDay}/${d.solarMonth}/${d.solarYear}", fontWeight = FontWeight.SemiBold)
-                Text("${d.lunarText()} âm · Trực ${d.truc} · ${d.starsText()}", style = MaterialTheme.typography.bodySmall)
+            Row(
+                Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.45f))
+                    .clickable { onOpenDay(d.jd) }.padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(Modifier.weight(1f)) {
+                    Text("${DayInfo.THU[d.weekday]}, ${d.solarDay}/${d.solarMonth}/${d.solarYear}", fontWeight = FontWeight.Bold, maxLines = 1)
+                    Text("${d.lunarText()} âm · Trực ${d.truc} · ${d.almanac().khongMinh}", style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                Text(d.starsText(), color = MaterialTheme.colorScheme.primary, maxLines = 1, softWrap = false)
             }
         }
-        Text("Tiêu chí: Trực hợp việc, không phạm Tam Nương/Nguyệt Kỵ, điểm ngày từ 3/5.", style = MaterialTheme.typography.bodySmall)
+        Text("Tiêu chí: Trực hợp việc; tránh Tam Nương, Nguyệt Kỵ, Dương Công, Thụ Tử, Sát Chủ và sao xấu kỵ việc này; điểm ngày từ 3/5.",
+            style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+
+@Composable
+private fun ThemeSection() {
+    val ctx = LocalContext.current
+    val repo = remember { SettingsRepository.get(ctx) }
+    val s by repo.settings.collectAsState()
+    val current = LocalLich.current
+    Section("Giao diện") {
+        Themes.GROUP_ORDER.forEach { group ->
+            Text(group.uppercase(), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                Themes.NAMES.indices.filter { Themes.GROUPS[it] == group }.forEach { id ->
+                    val (bg, accent) = Themes.SWATCH[id]
+                    val selected = current?.id == id
+                    Column(
+                        Modifier.weight(1f).clip(RoundedCornerShape(14.dp))
+                            .border(2.dp, if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(14.dp))
+                            .clickable { repo.update { it.copy(themeId = id, autoSeason = false) } }
+                            .padding(vertical = 8.dp, horizontal = 4.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Box(Modifier.size(36.dp).shadow(2.dp, CircleShape).clip(CircleShape).background(bg), contentAlignment = Alignment.Center) {
+                            Box(Modifier.size(14.dp).clip(CircleShape).background(accent))
+                        }
+                        Text(Themes.NAMES[id], style = MaterialTheme.typography.labelMedium, maxLines = 2,
+                            fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.padding(top = 4.dp))
+                    }
+                }
+                // giữ hàng 2 ô có bề rộng như hàng 4 ô
+                repeat(4 - Themes.GROUPS.count { it == group }) { Spacer(Modifier.weight(1f)) }
+            }
+        }
+        SwitchRow("Tự đổi theo mùa (theo tiết khí)", s.autoSeason) { v -> repo.update { it.copy(autoSeason = v) } }
+        Text("Ngũ Hành đổi màu theo can ngày · Thời Thần theo canh giờ · Hoàng Đạo theo ngày hoàng/hắc đạo · Con Giáp theo năm.",
+            style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
@@ -140,7 +203,6 @@ private fun SettingsSection() {
             Text("%02d:00".format(s.notifyHour), fontWeight = FontWeight.Bold)
             TextButton(onClick = { setHour(ctx, repo, (s.notifyHour + 1) % 24) }) { Text("+") }
         }
-        Text("Giao diện: sẽ có 10 phong cách ở bản cập nhật giao diện (đang lưu: #${s.themeId + 1}).", style = MaterialTheme.typography.bodySmall)
         Button(onClick = { WidgetUpdater.updateAll(ctx) }) { Text("Làm mới widget") }
     }
 }
@@ -153,7 +215,7 @@ private fun setHour(ctx: android.content.Context, repo: SettingsRepository, h: I
 @Composable
 private fun SwitchRow(label: String, value: Boolean, onChange: (Boolean) -> Unit) {
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        Text(label, Modifier.weight(1f))
+        Text(label, Modifier.weight(1f).padding(end = 8.dp))
         Switch(value, onChange)
     }
 }

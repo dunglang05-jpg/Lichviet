@@ -1,6 +1,13 @@
 package vn.lichviet.app.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,25 +34,53 @@ fun DayScreen(jd: Int, todayJd: Int, onChange: (Int) -> Unit, modifier: Modifier
     val fits = remember(jd) { GoodDayFinder.activitiesFor(d) }
     val a = remember(jd) { d.almanac() }
     Column(modifier.verticalScroll(rememberScrollState()).padding(bottom = 16.dp)) {
+        ThemeBadge(Modifier.padding(top = 12.dp))
         Row(
-            Modifier.fillMaxWidth().padding(8.dp),
+            Modifier.fillMaxWidth().padding(horizontal = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            TextButton(onClick = { onChange(jd - 1) }) { Text("◀ Trước") }
-            TextButton(onClick = { onChange(todayJd) }, enabled = jd != todayJd) { Text("Hôm nay") }
-            TextButton(onClick = { onChange(jd + 1) }) { Text("Sau ▶") }
+            TextButton(onClick = { onChange(jd - 1) }) { Text("◀ Trước", maxLines = 1) }
+            TextButton(onClick = { onChange(todayJd) }, enabled = jd != todayJd) { Text("Hôm nay", maxLines = 1) }
+            TextButton(onClick = { onChange(jd + 1) }) { Text("Sau ▶", maxLines = 1) }
         }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(DayInfo.THU[d.weekday], style = MaterialTheme.typography.titleMedium)
-            Text("${d.solarDay}", fontSize = 88.sp, fontWeight = FontWeight.Bold)
-            Text("Tháng ${d.solarMonth} năm ${d.solarYear}", style = MaterialTheme.typography.titleMedium)
-            Text(d.lunarFull(), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(top = 6.dp))
-            Text("${d.verdict}  ${d.starsText()}", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 6.dp))
+        // Thẻ ngày chính: dương lịch bên trái, âm lịch bên phải
+        ShadowCard(elevation = 8.dp) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1f)) {
+                    Text(DayInfo.THU[d.weekday].uppercase(), style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+                    Text("${d.solarDay}", fontSize = 76.sp, fontWeight = FontWeight.Black, color = MaterialTheme.colorScheme.primary,
+                        lineHeight = 80.sp)
+                    Text("Tháng ${d.solarMonth}, ${d.solarYear}", style = MaterialTheme.typography.bodyMedium)
+                }
+                Box(Modifier.width(1.dp).height(110.dp).background(MaterialTheme.colorScheme.outlineVariant))
+                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1f)) {
+                    Text("ÂM LỊCH", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("${d.lunarDay}", fontSize = 52.sp, fontWeight = FontWeight.Bold, lineHeight = 56.sp)
+                    Text("Tháng ${d.lunarMonth}${if (d.leap) " nhuận" else ""}", style = MaterialTheme.typography.bodyMedium)
+                    Text("Năm ${d.yearCanChi}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(top = 6.dp)) {
+                val good = goodColor()
+                Pill("${d.verdict} ${d.score}/5", (if (d.score >= 4) good else MaterialTheme.colorScheme.primary).copy(alpha = 0.15f),
+                    if (d.score >= 4) good else MaterialTheme.colorScheme.primary, bold = true)
+                Pill(if (d.hoangDao) "Hoàng đạo · ${d.than12}" else "Hắc đạo · ${d.than12}",
+                    MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
+                Pill("Ngày ${d.dayCanChi}", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
+                Pill("Trực ${d.truc}", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
+                Pill(a.khongMinh, MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
+            }
         }
 
         if (d.holidays.isNotEmpty()) {
-            Section("Ngày lễ") { d.holidays.forEach { Text("• ${it.name}" + if (it.major) " (lễ lớn)" else "") } }
+            ShadowCard(elevation = 6.dp) {
+                SectionTitle("Ngày lễ hôm nay")
+                d.holidays.forEach {
+                    HolidayRow(it.name, if (it.lunar) "Theo âm lịch · ${d.lunarText()}" else "Theo dương lịch", major = it.major)
+                }
+            }
         }
         Section("Can chi & tiết khí") {
             KeyValue("Năm", "${d.yearCanChi} (${d.yearAnimal})")
@@ -58,21 +93,26 @@ fun DayScreen(jd: Int, todayJd: Int, onChange: (Int) -> Unit, modifier: Modifier
             KeyValue("Trực", d.truc)
             KeyValue("Nhị thập bát tú", "Sao ${d.tu} (${d.tuHanh}) · ${if (d.tuTot) "tốt" else "xấu"}")
             KeyValue("Tuổi xung", d.chiXung)
-            d.luuY.forEach { Text("⚠ $it", color = MaterialTheme.colorScheme.error) }
+            d.luuY.forEach { Text("⚠ $it", color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
         }
         Section("Giờ hoàng đạo") {
             d.hours.chunked(3).forEach { row ->
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     row.forEach { h ->
-                        Text(
-                            "${h.canChi} ${h.range}h",
-                            fontWeight = if (h.good) FontWeight.Bold else FontWeight.Normal,
-                            color = if (h.good) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
-                            style = MaterialTheme.typography.bodySmall,
-                        )
+                        val bg = if (h.good) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
+                        val fg = if (h.good) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
+                        Column(
+                            Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).background(bg).padding(vertical = 8.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            Text(h.canChi, color = fg, fontWeight = if (h.good) FontWeight.Bold else FontWeight.Normal,
+                                style = MaterialTheme.typography.bodyMedium, maxLines = 1)
+                            Text("${h.range}h", color = fg, style = MaterialTheme.typography.labelSmall, maxLines = 1)
+                        }
                     }
                 }
             }
+            Text("Ô đậm là giờ hoàng đạo", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         Section("Việc nên làm / nên tránh") {
             Text("Nên: " + d.nenLam.joinToString(", "))
