@@ -21,21 +21,22 @@ from PIL import Image, ImageDraw
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 UA = "LichVietCalendarApp/1.0 (https://github.com/dunglang05-jpg/Lichviet)"
 
-STYLE = (", traditional Vietnamese oil painting, realistic, painterly brushstrokes, rich warm colours, "
-         "masterpiece fine art, highly detailed, no text, no watermark, no frame")
+STYLE = (", soft vintage watercolor painting on aged textured rice paper, muted earthy palette with sepia and soft green, "
+         "delicate fine ink outlines, misty atmosphere, gentle warm light, traditional Vietnamese landscape illustration, "
+         "calm and poetic, wide panoramic composition, empty sky area in the upper part, no text, no letters, no characters, no watermark, no frame")
 PROMPTS = [
-    "a Vietnamese village house courtyard on Lunar New Year morning, blooming pink peach blossom tree, stacks of square banh chung, red paper couplets, family in ao dai",
-    "misty spring morning in a northern Vietnam village, bamboo grove, old communal house with curved tiled roof, light drizzle, peach blossoms, villagers walking",
-    "a boy riding a water buffalo and playing a bamboo flute on a green rice field dike at sunset, northern Vietnam countryside, bamboo hedges",
-    "farmers wearing conical hats transplanting rice seedlings in a flooded paddy field, white storks flying, morning light, northern Vietnam",
-    "a summer lotus pond with pink lotus flowers and big green leaves, a woman in conical hat rowing a small wooden boat, Vietnam countryside",
-    "a village banyan tree, old well and communal house courtyard at summer noon, children playing, cicadas, northern Vietnam",
-    "a fisherman lifting a square fishing net on a quiet river at dawn, mist, wooden sampan, Vietnamese countryside",
-    "a farmer herding a flock of ducks across flooded rice fields in the rainy season, Mekong delta, coconut palms, soft clouds",
-    "children carrying red star lanterns and carp lanterns in a Vietnamese village at night, Mid-Autumn festival, full moon, warm glow",
-    "golden rice harvest in northern Vietnam, farmers in conical hats cutting rice with sickles, haystacks, blue sky",
-    "late autumn evening in a Vietnamese village, smoke rising from kitchen roofs, golden straw drying on the road, ducks returning home",
-    "cold misty winter morning at a rural market in northern Vietnam, women in scarves selling vegetables, bare trees, pond",
+    "a northern Vietnamese village on Lunar New Year morning, pink peach blossom trees, old tiled-roof houses, a woman with a shoulder pole of flowers, a small stone bridge over a river",
+    "misty spring in the northern Vietnamese countryside, bamboo groves, an ancient communal house gate, villagers in conical hats, light drizzle over green fields",
+    "a boy riding a water buffalo and playing a bamboo flute on a rice field dike, limestone mountains in the distance, Vietnamese countryside",
+    "farmers in conical hats transplanting rice in flooded paddies, white storks flying, distant mountains and a pagoda, Vietnam",
+    "a vast lotus pond in summer with pink lotus flowers, a small wooden boat, an old pagoda by the water, northern Vietnam",
+    "an old village banyan tree, a water well and communal house courtyard at summer noon, children flying a kite, Vietnam",
+    "a fisherman lifting a square fishing net on a calm river at dawn, karst mountains reflected in water, Ninh Binh, Vietnam",
+    "a duck herder guiding ducks across flooded fields in the rainy season, coconut palms, Mekong delta riverside houses",
+    "a Vietnamese village at night during the Mid-Autumn festival, children with star lanterns walking along a river, big full moon",
+    "golden rice harvest fields in the northern Vietnam countryside, farmers carrying rice sheaves on shoulder poles, haystacks, mountains",
+    "late autumn evening in a Vietnamese village, smoke rising from kitchen roofs, straw drying along a path, a river and a temple gate",
+    "a quiet misty winter morning in a northern Vietnamese village, an old market under a banyan tree, people in warm scarves, pale sun",
 ]
 
 
