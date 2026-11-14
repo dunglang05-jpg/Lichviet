@@ -2,6 +2,9 @@ package vn.lichviet.app.ui
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,16 +35,25 @@ fun MoonScreen(jd: Int, modifier: Modifier = Modifier) {
     val d = remember(jd) { dayOf(jd) }
     val p = remember(jd) { MoonPhase.of(d.solarDay, d.solarMonth, d.solarYear) }
     val events = remember(jd) { MoonPhase.upcoming(d.solarDay, d.solarMonth, d.solarYear, 8) }
-    Column(modifier.verticalScroll(rememberScrollState()).padding(bottom = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier.verticalScroll(rememberScrollState()).padding(bottom = 16.dp)) {
         ThemeBadge(Modifier.padding(top = 12.dp))
-        Text(solarText(d), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 8.dp))
-        Text("Âm lịch ${d.lunarText()}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        MoonDisc(
-            p.fraction, Modifier.size(200.dp).padding(16.dp),
-            dark = MaterialTheme.colorScheme.surfaceContainerHighest, ring = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Text(p.phaseName, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-        Text("Tuổi trăng %.1f ngày · Độ sáng %d%%".format(p.age, p.illumination), color = MaterialTheme.colorScheme.onSurfaceVariant)
+        // Thẻ trăng gọn: hình nhỏ + thông tin
+        ShadowCard(elevation = 6.dp) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                MoonDisc(
+                    p.fraction, Modifier.size(64.dp),
+                    dark = MaterialTheme.colorScheme.outlineVariant, ring = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.width(14.dp))
+                Column(Modifier.weight(1f)) {
+                    Text(solarText(d), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                    Text("Âm lịch ${d.lunarText()}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(p.phaseName, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                    Text("Tuổi trăng %.1f ngày · Độ sáng %d%%".format(p.age, p.illumination), style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        }
         Section("Mốc trăng sắp tới") {
             events.forEach { e ->
                 val ed = DayInfo.of(e.day, e.month, e.year)
@@ -49,11 +61,22 @@ fun MoonScreen(jd: Int, modifier: Modifier = Modifier) {
             }
             Text("Thượng/hạ huyền là ước lượng, có thể lệch ±1 ngày.", style = MaterialTheme.typography.bodySmall)
         }
-        Section("30 ngày tới") {
+        Section("Tình trạng trăng 30 ngày tới") {
             for (i in 0 until 30) {
-                val dt = LunarCalendar.jdToDate(jd + i)
-                val mp = MoonPhase.of(dt[0], dt[1], dt[2])
-                KeyValue("${dt[0]}/${dt[1]}", "${mp.phaseName} · ${mp.illumination}%")
+                val dd = dayOf(jd + i)
+                val mp = MoonPhase.of(dd.solarDay, dd.solarMonth, dd.solarYear)
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(vertical = 3.dp)) {
+                    MoonDisc(mp.fraction, Modifier.size(24.dp), dark = MaterialTheme.colorScheme.outlineVariant,
+                        ring = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Spacer(Modifier.width(10.dp))
+                    Column(Modifier.width(92.dp)) {
+                        Text("${DayInfo.THU_NGAN[dd.weekday]} ${dd.solarDay}/${dd.solarMonth}", fontWeight = FontWeight.SemiBold, maxLines = 1)
+                        Text("${dd.lunarText()} âm", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+                    }
+                    Text(mp.phaseName, style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f))
+                    Text("${mp.illumination}%", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary, maxLines = 1)
+                }
             }
         }
     }

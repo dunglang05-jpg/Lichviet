@@ -129,3 +129,18 @@ fun HolidayRow(name: String, sub: String, trailing: String? = null, major: Boole
 }
 
 @Suppress("unused") private val keepSize = Modifier.size(0.dp)
+
+/** Tình trạng trăng gọn của một ngày: hình trăng nhỏ + tên pha + độ sáng. */
+@Composable
+fun MoonStatus(d: DayInfo, modifier: Modifier = Modifier) {
+    val mp = androidx.compose.runtime.remember(d.jd) { vn.lichviet.core.MoonPhase.of(d.solarDay, d.solarMonth, d.solarYear) }
+    Row(modifier, verticalAlignment = Alignment.CenterVertically) {
+        MoonDisc(mp.fraction, Modifier.size(22.dp), dark = MaterialTheme.colorScheme.outlineVariant, ring = MaterialTheme.colorScheme.onSurfaceVariant)
+        Spacer(Modifier.width(8.dp))
+        Text(
+            "${mp.phaseName} · sáng ${mp.illumination}% · tuổi trăng ${"%.1f".format(mp.age)} ngày",
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}

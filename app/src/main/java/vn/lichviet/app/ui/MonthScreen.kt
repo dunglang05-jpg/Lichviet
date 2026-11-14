@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import vn.lichviet.core.DayInfo
 import vn.lichviet.core.Holidays
 import vn.lichviet.core.MonthGrid
+import vn.lichviet.core.MoonPhase
 import vn.lichviet.data.SettingsRepository
 
 /** Lịch tháng có âm lịch, chấm ngày tốt (xanh) và ngày lễ (cam). */
@@ -102,7 +104,11 @@ fun MonthScreen(selectedJd: Int, todayJd: Int, onPick: (Int) -> Unit, modifier: 
                             d.score >= 4 -> goodColor()
                             else -> Color.Transparent
                         }
-                        Text("●", color = dot, fontSize = 7.sp)
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                            val mp = remember(d.jd) { MoonPhase.of(d.solarDay, d.solarMonth, d.solarYear) }
+                            MoonDisc(mp.fraction, Modifier.size(9.dp), dark = fg.copy(alpha = 0.22f), ring = fg)
+                            Text("●", color = dot, fontSize = 7.sp)
+                        }
                     }
                 }
             }

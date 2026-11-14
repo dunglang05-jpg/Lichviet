@@ -69,6 +69,7 @@ fun DayScreen(jd: Int, todayJd: Int, onChange: (Int) -> Unit, modifier: Modifier
                     Text("Năm ${d.yearCanChi}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
+            MoonStatus(d, Modifier.padding(top = 4.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(top = 6.dp)) {
                 val good = goodColor()
                 Pill("${d.verdict} ${d.score}/5", (if (d.score >= 4) good else MaterialTheme.colorScheme.primary).copy(alpha = 0.15f),
