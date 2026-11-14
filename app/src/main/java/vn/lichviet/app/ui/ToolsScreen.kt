@@ -147,10 +147,6 @@ private fun FinderSection(todayJd: Int, onOpenDay: (Int) -> Unit) {
         Text("Tiêu chí: Trực hợp việc; tránh Tam Nương, Nguyệt Kỵ, Dương Công, Thụ Tử, Sát Chủ và sao xấu kỵ việc này; điểm ngày từ 3/5.",
             style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
-    Section("Tranh nền tờ lịch") {
-        val month = remember { Today.ymd()[1] }
-        ArtSetPicker(month, s.artSet) { id -> repo.update { it.copy(artSet = id) } }
-    }
 }
 
 @Composable
@@ -189,6 +185,10 @@ private fun ThemeSection() {
         SwitchRow("Tự đổi theo mùa (theo tiết khí)", s.autoSeason) { v -> repo.update { it.copy(autoSeason = v) } }
         Text("Ngũ Hành đổi màu theo can ngày · Thời Thần theo canh giờ · Hoàng Đạo theo ngày hoàng/hắc đạo · Con Giáp theo năm.",
             style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+    Section("Tranh nền tờ lịch") {
+        val month = remember { Today.ymd()[1] }
+        ArtSetPicker(month, s.artSet) { id -> repo.update { it.copy(artSet = id) } }
     }
 }
 
