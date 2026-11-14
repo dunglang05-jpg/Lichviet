@@ -25,15 +25,15 @@ STYLE = (", soft vintage watercolor painting on aged textured rice paper, muted 
          "delicate fine ink outlines, misty atmosphere, gentle warm light, traditional Vietnamese landscape illustration, "
          "calm and poetic, wide panoramic composition, empty sky area in the upper part, no text, no letters, no characters, no watermark, no frame")
 PROMPTS = [
-    "a northern Vietnamese village on Lunar New Year morning, pink peach blossom trees, old tiled-roof houses, a woman with a shoulder pole of flowers, a small stone bridge over a river",
-    "misty spring in the northern Vietnamese countryside, bamboo groves, an ancient communal house gate, villagers in conical hats, light drizzle over green fields",
+    "a traditional northern Vietnamese village on Lunar New Year morning, single-storey houses with curved red terracotta tile roofs and yellow earthen walls, pink peach blossom trees, a woman in conical hat carrying flowers on a bamboo shoulder pole, a small arched stone bridge over a river, rice fields",
+    "misty spring drizzle in the northern Vietnamese countryside, bamboo hedges, an ancient Vietnamese village gate (cong lang) of brick with a curved tiled roof and two pillars, villagers in conical hats walking on a dirt road, green rice fields",
     "a boy riding a water buffalo and playing a bamboo flute on a rice field dike, limestone mountains in the distance, Vietnamese countryside",
     "farmers in conical hats transplanting rice in flooded paddies, white storks flying, distant mountains and a pagoda, Vietnam",
     "a vast lotus pond in summer with pink lotus flowers, a small wooden boat, an old pagoda by the water, northern Vietnam",
     "an old village banyan tree, a water well and communal house courtyard at summer noon, children flying a kite, Vietnam",
     "a fisherman lifting a square fishing net on a calm river at dawn, karst mountains reflected in water, Ninh Binh, Vietnam",
     "a duck herder guiding ducks across flooded fields in the rainy season, coconut palms, Mekong delta riverside houses",
-    "a Vietnamese village at night during the Mid-Autumn festival, children with star lanterns walking along a river, big full moon",
+    "Mid-Autumn festival night in a Vietnamese village, a group of children carrying glowing red five-pointed star lanterns walking along a village path by a pond, a huge bright full moon above bamboo and tiled roofs",
     "golden rice harvest fields in the northern Vietnam countryside, farmers carrying rice sheaves on shoulder poles, haystacks, mountains",
     "late autumn evening in a Vietnamese village, smoke rising from kitchen roofs, straw drying along a path, a river and a temple gate",
     "a quiet misty winter morning in a northern Vietnamese village, an old market under a banyan tree, people in warm scarves, pale sun",
@@ -55,7 +55,7 @@ def crop_16_9(img, width=1280):
     return img.convert("RGB").resize((width, int(width * 9 / 16)), Image.LANCZOS)
 
 
-def run_ai():
+def run_ai(only=None):
     acc = os.environ["CF_ACCOUNT_ID"].strip()
     tok = os.environ["CF_API_TOKEN"].strip()
     out = os.path.join(ROOT, "app/src/main/assets/art/dongque")
@@ -63,6 +63,8 @@ def run_ai():
     models = ["@cf/black-forest-labs/flux-1-schnell", "@cf/bytedance/stable-diffusion-xl-lightning",
               "@cf/stabilityai/stable-diffusion-xl-base-1.0"]
     for i, p in enumerate(PROMPTS, start=1):
+        if only and i not in only:
+            continue
         path = os.path.join(out, f"{i:02d}.jpg")
         for model in models:
             body = {"prompt": p + STYLE}
@@ -197,6 +199,8 @@ def run_dongho():
 
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "all"
+    if mode.startswith("ai:"):  # vd ai:1,2,9 -> chỉ vẽ lại các tháng này
+        run_ai({int(x) for x in mode[3:].split(",") if x.strip()})
     if mode in ("ai", "all"):
         run_ai()
     if mode in ("dongho", "all"):
