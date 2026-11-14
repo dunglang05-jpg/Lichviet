@@ -38,10 +38,10 @@ data class ArtSet(val id: Int, val name: String, val folder: String, val fit: Bo
 
 object MonthArt {
     val SETS = listOf(
-        ArtSet(0, "Đồng quê màu nước", "dongque", false, listOf(
-            "Sáng mồng Một ở làng", "Cổng làng mưa xuân", "Mục đồng thổi sáo", "Cấy lúa",
-            "Đầm sen mùa hạ", "Trưa hè gốc đa", "Kéo vó bình minh", "Chăn vịt mùa nước",
-            "Đêm rằm Trung thu", "Gặt lúa", "Chiều thu khói bếp", "Chợ quê sớm đông",
+        ArtSet(0, "Bốn mùa quê hương", "dongque", false, listOf(
+            "Tết – hoa đào", "Xuân – mưa phùn, hội làng", "Cuối xuân – hoa gạo", "Hoa loa kèn, lúa non",
+            "Đầu hè – hoa phượng", "Hè – đầm sen", "Mưa ngâu – bằng lăng", "Mùa nước nổi miền Tây",
+            "Trung thu", "Mùa gặt lúa chín", "Cuối thu – cúc họa mi", "Đông – hoa cải, sương mù",
         ), "Tranh màu nước vẽ bằng AI"),
         ArtSet(1, "Tranh Đông Hồ", "dongho", true, emptyList(), "Wikimedia Commons"),
     )
