@@ -59,13 +59,19 @@ fun MonthScreen(selectedJd: Int, todayJd: Int, onPick: (Int) -> Unit, modifier: 
     val monthHolidays = remember(month, year) { Holidays.listYear(year).filter { (it[2] as Int) == month } }
     Column(modifier.verticalScroll(rememberScrollState()).padding(vertical = 12.dp)) {
         ThemeBadge(Modifier.padding(bottom = 4.dp))
-        Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-            TextButton(onClick = { shift(-1) }) { Text("◀") }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Tháng $month · $year", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                Text(grid.lunarRange(), style = MaterialTheme.typography.bodySmall)
+        // Tờ lịch tháng: tranh dân gian + tiêu đề tháng, như lịch treo tường
+        ShadowCard(elevation = 8.dp) {
+            MonthPainting(month)
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                TextButton(onClick = { shift(-1) }) { Text("◀") }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("Tháng $month · $year", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                    Text(grid.lunarRange(), style = MaterialTheme.typography.bodySmall)
+                    Text("Tranh: ${MonthArtData.TITLES[month - 1]}", style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                TextButton(onClick = { shift(1) }) { Text("▶") }
             }
-            TextButton(onClick = { shift(1) }) { Text("▶") }
         }
         ShadowCard(elevation = 6.dp) {
         Row(Modifier.fillMaxWidth()) {
