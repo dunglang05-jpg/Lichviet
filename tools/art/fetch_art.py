@@ -21,39 +21,37 @@ from PIL import Image, ImageDraw
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 UA = "LichVietCalendarApp/1.0 (https://github.com/dunglang05-jpg/Lichviet)"
 
-STYLE = (". Highly detailed realistic painting, like a vintage Vietnamese wall calendar illustration: rich painterly detail in "
-         "foliage, roof tiles, stone paths and small figures, natural soft daylight with light haze, muted warm colors "
-         "(olive green, ochre, terracotta, soft pink), subtle canvas texture, nostalgic and peaceful, NOT watercolor, NOT ink wash. "
-         "Wide landscape: detailed scenery on the left and right sides, a river or path leading to the distance, calm pale sky in the middle. "
-         "Strictly Vietnamese, not Chinese, not Japanese: no pagoda towers, no upturned Chinese eaves, no Chinese characters, "
-         "no seal stamps, no text or letters anywhere, no watermark, no border")
-V = "authentic Vietnamese village of the Red River Delta: low single-storey three-room houses with small flat brown 'ngoi ta' tiles or thatched straw roofs, yellow lime-washed or laterite brick walls, bamboo hedges around the village, areca palm trees, banana trees, haystacks, a village pond with water lilies"
-# Mỗi tháng một cảnh đúng mùa ở quê Việt Nam
+STYLE = (". Detailed vintage Vietnamese illustration in the style of a retro Vietnamese calendar painting: fine pen lines with "
+         "gouache and colored pencil, aged beige paper texture, muted warm earthy colors (terracotta red, ochre yellow, olive green, "
+         "faded pink), rich detail in people, trees and buildings, small decorative auspicious clouds and lotus ornaments in the top "
+         "corners, scenery spread along the bottom half with soft open sky above. Clearly Vietnamese people, clothes and places "
+         "(ao dai, ao ba ba, non la conical hats, Vietnamese flags where fitting). Not Chinese, not Japanese, no text, no letters, no watermark")
+# Mỗi tháng một cảnh đúng mùa, đậm chất Việt Nam
 PROMPTS = [
     # 1 Tết
-    "Tet holiday morning in an " + V + ", pink peach blossom branches, a kumquat tree, a woman in brown ao tu than dress and non la conical hat carrying flowers on a bamboo shoulder pole, children in new clothes, banh chung on a table",
-    # 2 xuân mưa phùn, hội làng
-    "light spring drizzle in an " + V + ", a simple old village gate made of laterite bricks with a small tiled roof, fresh green bamboo, white plum blossoms, villagers in non la conical hats walking to the village festival at the dinh (communal house with a low, wide, heavy tiled roof), colorful festival flags",
+    "Tet in a northern Vietnamese village: families in red and yellow ao dai, pink peach blossom branches and kumquat trees, a tray of square banh chung wrapped in green dong leaves, red lanterns, old houses with brown tiled roofs, children receiving lucky money",
+    # 2 Xuân, hội làng
+    "spring village festival in northern Vietnam: villagers in ao tu than and non la walk to the dinh lang communal house, colorful five-color festival flags, a wrestling ring, a swing game, fresh green bamboo, light spring mist",
     # 3 hoa gạo
-    "late spring in an " + V + ", a tall red silk-cotton tree (cay gao) in full red bloom at the village edge beside the pond, a boy riding a water buffalo along the dike, young green rice fields, flat delta plain",
-    # 4 loa kèn
-    "April in an " + V + ", a girl in white ao dai riding an old bicycle with a basket of white Easter lilies along a village road, farmers weeding young green rice, white egrets",
-    # 5 phượng
-    "early summer in an " + V + ", red flame trees (hoa phuong) blooming over a small yellow village school, children in white shirts with bicycles, a canal with a small boat",
+    "late spring in the Red River Delta: a big red silk-cotton tree (cay gao) in full bloom at the village edge, a boy riding a water buffalo on the dike, women in non la carrying baskets, young green rice fields and a village pond",
+    # 4 Giỗ Tổ, loa kèn
+    "April in Hanoi: a girl in white ao dai cycling with a basket of white Easter lilies (hoa loa ken) along a tree-lined street with yellow French colonial houses, street vendors with shoulder poles, old tram-era lamp posts",
+    # 5 phượng, ngày lễ
+    "early summer in Vietnam: red flame trees (hoa phuong) blooming over a yellow schoolyard, pupils in white shirts and red scarves, families walking with small red flags, a lake promenade, festive atmosphere",
     # 6 sen
-    "midsummer lotus pond of an " + V + ", pink lotus flowers and big green leaves, a woman in non la conical hat on a small round basket boat picking lotus, an old dinh communal house with low wide roof by the pond",
-    # 7 bằng lăng, mưa ngâu
-    "July summer rain in an " + V + ", purple crape myrtle trees (bang lang) blooming along a river, ducks on the water, farmers in straw raincoats and non la hats",
+    "summer lotus pond in northern Vietnam: pink lotus flowers and big leaves, a woman in non la picking lotus from a round basket boat (thung chai), an old Vietnamese one-pillar style small shrine by the water, willow trees, white egrets",
+    # 7 mưa ngâu, bằng lăng
+    "July rainy season in Hue, Vietnam: purple crape myrtle (bang lang) trees along the Perfume River, a dragon boat, girls in white ao dai with non la and bicycles, soft summer rain",
     # 8 nước nổi miền Tây
-    "flood season in the Mekong Delta of southern Vietnam: brown water over the fields, a xuong ba la wooden sampan with a woman in ao ba ba and non la, wooden stilt houses with nipa palm roofs, coconut palms, a monkey bridge (cau khi), yellow dien dien flowers, fishermen casting nets",
-    # 9 Trung thu
-    "Mid-Autumn festival night in an " + V + ", a big round golden full moon, Vietnamese children carrying red paper star lanterns (den ong sao) and a lion dance (mua lan) on the village path, warm glow, banana trees and bamboo silhouettes",
-    # 10 gặt
-    "autumn harvest in an " + V + ", golden ripe rice fields on a flat plain, farmers in non la conical hats cutting rice with sickles and carrying sheaves on shoulder poles, straw drying on the village road, clear blue autumn sky",
-    # 11 cúc họa mi
-    "late autumn in a village near Hanoi: fields of small white daisies (cuc hoa mi), a woman street vendor with a bicycle loaded with daisies, yellow leaves on old trees, light morning mist over a pond and low tiled houses",
+    "flood season in the Mekong Delta: a floating market with wooden boats full of fruits, women in ao ba ba and non la rowing xuong ba la sampans, stilt houses with nipa palm roofs, coconut trees, a monkey bridge, yellow dien dien flowers",
+    # 9 Quốc khánh, Trung thu
+    "September in Hanoi: the Hanoi Flag Tower with a big red flag with a yellow star, streets decorated with red flags, families in ao dai, and in the evening children carrying red star lanterns (den ong sao) with a lion dance and a full moon",
+    # 10 gặt lúa
+    "autumn harvest in the northern Vietnamese countryside: golden ripe rice fields, farmers in non la cutting rice and carrying sheaves on shoulder poles, straw drying on the village road, buffalo carts, a bamboo-hedged village",
+    # 11 cúc họa mi, Hà Nội thu
+    "late autumn in Hanoi: a woman street vendor with a bicycle loaded with white daisies (cuc hoa mi) by Hoan Kiem Lake with the red The Huc bridge and Turtle Tower, yellow leaves, light morning mist",
     # 12 đông, hoa cải
-    "cold misty winter morning in an " + V + ", fields of yellow mustard flowers (hoa cai), villagers in warm coats and scarves, smoke from kitchen roofs, bare trees, fog over the fields",
+    "winter in the northern Vietnamese highlands: fields of yellow mustard flowers and pink buckwheat flowers, H'mong people in colorful traditional clothes, wooden houses with smoke, terraced fields, misty mountains",
 ]
 
 
