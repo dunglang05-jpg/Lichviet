@@ -93,6 +93,17 @@ public final class Almanac {
     public final String banhToCan, banhToChi;
     public final String hyThan, taiThan, hacThan;
 
+    /** Nạp âm của cặp can chi (vd Canh Ngọ -> Lộ Bàng Thổ). */
+    public static String napAm(int can, int chi) {
+        return AlmanacData.NAP_AM[canChiIndex(can, chi)];
+    }
+
+    /** Hành (Kim/Mộc/Thủy/Hỏa/Thổ) của nạp âm. */
+    public static String hanhNapAm(int can, int chi) {
+        String n = napAm(can, chi);
+        return n.substring(n.lastIndexOf(' ') + 1);
+    }
+
     static int canChiIndex(int can, int chi) {
         for (int i = 0; i < 60; i++) if (i % 10 == can && i % 12 == chi) return i;
         throw new IllegalArgumentException();

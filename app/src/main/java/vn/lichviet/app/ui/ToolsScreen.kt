@@ -2,6 +2,12 @@
 
 package vn.lichviet.app.ui
 
+import vn.lichviet.app.ui.tools.ProfileCard
+import vn.lichviet.app.ui.tools.Tool
+import vn.lichviet.app.ui.tools.ToolGrid
+import vn.lichviet.app.ui.tools.ToolPage
+import androidx.compose.runtime.saveable.rememberSaveable
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -55,8 +61,16 @@ import vn.lichviet.widget.WidgetUpdater
 /** Đổi ngày âm/dương, tìm ngày tốt theo việc, cài đặt. */
 @Composable
 fun ToolsScreen(todayJd: Int, onOpenDay: (Int) -> Unit, modifier: Modifier = Modifier) {
+    var openName by rememberSaveable { mutableStateOf<String?>(null) }
+    val open = openName?.let { n -> Tool.entries.firstOrNull { it.name == n } }
+    if (open != null) {
+        ToolPage(open, todayJd, onOpenDay, onBack = { openName = null }, modifier = modifier)
+        return
+    }
     Column(modifier.verticalScroll(rememberScrollState()).padding(top = 12.dp, bottom = 16.dp)) {
         ThemeBadge()
+        ProfileCard()
+        ToolGrid { openName = it.name }
         ThemeSection()
         ConverterSection(todayJd, onOpenDay)
         FinderSection(todayJd, onOpenDay)
@@ -65,7 +79,7 @@ fun ToolsScreen(todayJd: Int, onOpenDay: (Int) -> Unit, modifier: Modifier = Mod
 }
 
 @Composable
-private fun ConverterSection(todayJd: Int, onOpenDay: (Int) -> Unit) {
+fun ConverterSection(todayJd: Int, onOpenDay: (Int) -> Unit) {
     val t = remember { dayOf(todayJd) }
     var sd by remember { mutableStateOf(t.solarDay.toString()) }
     var sm by remember { mutableStateOf(t.solarMonth.toString()) }

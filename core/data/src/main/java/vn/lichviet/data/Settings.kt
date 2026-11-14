@@ -18,6 +18,12 @@ data class AppSettings(
     val remindHolidays: Boolean = true,
     /** Bộ tranh lịch tháng: 0 = đồng quê màu nước, 1 = Đông Hồ. */
     val artSet: Int = 0,
+    /** Hồ sơ đầy đủ cho các tiện ích tử vi: giới tính và ngày sinh dương lịch (0 = chưa nhập). */
+    val male: Boolean = true,
+    val birthD: Int = 0,
+    val birthM: Int = 0,
+    val birthY: Int = 0,
+    val address: String = "",
 )
 
 class SettingsRepository private constructor(context: Context) {
@@ -36,6 +42,11 @@ class SettingsRepository private constructor(context: Context) {
         remindSocVong = prefs.getBoolean("remindSocVong", true),
         remindHolidays = prefs.getBoolean("remindHolidays", true),
         artSet = prefs.getInt("artSet", 0),
+        male = prefs.getBoolean("male", true),
+        birthD = prefs.getInt("birthD", 0),
+        birthM = prefs.getInt("birthM", 0),
+        birthY = prefs.getInt("birthY", 0),
+        address = prefs.getString("address", "") ?: "",
     )
 
     fun update(transform: (AppSettings) -> AppSettings) {
@@ -51,6 +62,11 @@ class SettingsRepository private constructor(context: Context) {
             .putBoolean("remindSocVong", s.remindSocVong)
             .putBoolean("remindHolidays", s.remindHolidays)
             .putInt("artSet", s.artSet)
+            .putBoolean("male", s.male)
+            .putInt("birthD", s.birthD)
+            .putInt("birthM", s.birthM)
+            .putInt("birthY", s.birthY)
+            .putString("address", s.address)
             .apply()
         _settings.value = s
     }
