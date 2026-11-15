@@ -52,7 +52,8 @@ public final class Numerology {
 
     static int letter(char c) { return (c - 'A') % 9 + 1; }
 
-    static boolean vowel(char c) { return "AEIOUY".indexOf(c) >= 0; }
+    /** Nguyên âm A, E, I, O, U (fptshop.com.vn, viettelstore.vn). */
+    static boolean vowel(char c) { return "AEIOU".indexOf(c) >= 0; }
 
     public static int nameNumber(String name, int mode) { // 0 tất cả, 1 nguyên âm, 2 phụ âm
         int s = 0;
@@ -67,6 +68,44 @@ public final class Numerology {
     public static Result of(String name, int d, int m, int y, int currentYear) {
         return new Result(lifePath(d, m, y), reduce(d), reduce(d + m), personalYear(d, m, currentYear),
             nameNumber(name, 1), nameNumber(name, 2), nameNumber(name, 0));
+    }
+
+
+    /** Một đỉnh cao trong kim tự tháp thần số học. */
+    public static final class Pinnacle {
+        public final int number, fromAge;
+        Pinnacle(int n, int a) { number = n; fromAge = a; }
+    }
+
+    private static int r9(int n) { while (n > 9) n = digitSum(n); return n; }
+
+    /**
+     * 4 đỉnh cao (jobsgo.vn): đáy là tháng, ngày, năm sinh rút gọn; đỉnh 1 = tháng + ngày, đỉnh 2 = ngày + năm,
+     * đỉnh 3 = đỉnh 1 + đỉnh 2, đỉnh 4 = tháng + năm. Tuổi đỉnh 1 = 36 − số chủ đạo, mỗi đỉnh sau +9 năm.
+     */
+    public static Pinnacle[] pinnacles(int d, int m, int y) {
+        int mm = r9(m), dd = r9(d), yy = r9(digitSum(y));
+        int p1 = r9(mm + dd), p2 = r9(dd + yy), p3 = r9(p1 + p2), p4 = r9(mm + yy);
+        int lp = lifePath(d, m, y);
+        int lpr = lp == 22 ? 4 : r9(lp);
+        int a1 = 36 - lpr;
+        return new Pinnacle[]{new Pinnacle(p1, a1), new Pinnacle(p2, a1 + 9), new Pinnacle(p3, a1 + 18), new Pinnacle(p4, a1 + 27)};
+    }
+
+    /** Từ khóa của các con số 1–9 (hellobacsi.com). */
+    public static String keyword(int n) {
+        switch (n == 11 ? 2 : n == 22 ? 4 : n == 33 ? 6 : n) {
+            case 1: return "Độc lập, lãnh đạo, sáng tạo";
+            case 2: return "Hòa giải, nhạy cảm, hợp tác";
+            case 3: return "Giao tiếp, nghệ thuật, vui vẻ";
+            case 4: return "Kỷ luật, thực tế, bền vững";
+            case 5: return "Tự do, phiêu lưu, linh hoạt";
+            case 6: return "Trách nhiệm, gia đình, yêu thương";
+            case 7: return "Trí tuệ, tâm linh, phân tích";
+            case 8: return "Tham vọng, quyền lực, thành công";
+            case 9: return "Nhân đạo, bao dung, lý tưởng";
+            default: return "";
+        }
     }
 
     public static String label(int n) { return n == 22 ? "22/4" : String.valueOf(n); }

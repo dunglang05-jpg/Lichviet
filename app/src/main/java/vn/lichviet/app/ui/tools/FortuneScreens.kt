@@ -12,6 +12,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.foundation.clickable
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import vn.lichviet.app.ui.KeyValue
@@ -114,15 +118,22 @@ fun ThanSoScreen() {
     Section("Năm cá nhân") {
         for (k in 0..2) {
             val py = Numerology.personalYear(p.day, p.month, y + k)
-            KeyValue("Năm ${y + k}", py.toString())
+            KeyValue("Năm ${y + k}", "$py – ${Numerology.keyword(py)}")
         }
         Note("Cộng chữ số ngày, tháng sinh và năm cần xem, rút gọn về 1–9.")
     }
+    Section("4 đỉnh cao cuộc đời") {
+        val pk = remember(p.day, p.month, p.year) { Numerology.pinnacles(p.day, p.month, p.year) }
+        pk.forEachIndexed { i, x ->
+            KeyValue("Đỉnh ${i + 1} · tuổi ${x.fromAge}", "${x.number} – ${Numerology.keyword(x.number)}")
+        }
+        Note("Đáy kim tự tháp là tháng, ngày, năm sinh đã rút gọn. Đỉnh 1 = tháng + ngày, đỉnh 2 = ngày + năm, đỉnh 3 = đỉnh 1 + đỉnh 2, đỉnh 4 = tháng + năm. Tuổi đỉnh 1 = 36 − số chủ đạo, mỗi đỉnh sau cộng 9 năm.")
+    }
     if (r.expression > 0) Section("Chỉ số theo tên (bảng chữ cái Pythagoras A=1 … I=9)") {
-        KeyValue("Số sứ mệnh (cả họ tên)", r.expression.toString())
-        KeyValue("Số linh hồn (nguyên âm)", r.soul.toString())
-        KeyValue("Số nhân cách (phụ âm)", r.personality.toString())
-        Note("Ứng dụng chỉ tính các chỉ số này; chưa có nguồn giải nghĩa đáng tin nên không kèm lời luận.")
+        KeyValue("Số sứ mệnh (cả họ tên)", "${r.expression} – ${Numerology.keyword(r.expression)}")
+        KeyValue("Số linh hồn (nguyên âm)", "${r.soul} – ${Numerology.keyword(r.soul)}")
+        KeyValue("Số nhân cách (phụ âm)", "${r.personality} – ${Numerology.keyword(r.personality)}")
+        Note("Số linh hồn: cộng các nguyên âm A, E, I, O, U trong họ tên khai sinh (bỏ dấu) — thể hiện mong muốn, động lực bên trong. Số nhân cách: cộng các phụ âm. Số sứ mệnh: cộng toàn bộ chữ cái.")
     }
     SourceNote(Sources.THAN_SO)
 }
@@ -133,16 +144,26 @@ fun HoangDao12Screen(@Suppress("UNUSED_PARAMETER") todayJd: Int) {
     val mine = me?.let { Zodiac.of(it.day, it.month) }
     if (mine != null) ZodiacCard(mine, true)
     for (i in 0 until 12) if (i != mine) ZodiacCard(i, false)
-    Section("Nguồn") { Note("Ngày, nguyên tố, hành tinh chủ quản theo chiêm tinh phương Tây phổ biến; ghép hợp theo nguyên tố (cùng nguyên tố, hoặc Lửa–Khí, Đất–Nước).") }
+    SourceNote(Sources.ZODIAC)
 }
 
 @Composable
 private fun ZodiacCard(i: Int, mine: Boolean) {
-    Section("${Zodiac.SYMBOL[i]}  ${Zodiac.NAME[i]}${if (mine) " · cung của bạn" else ""}") {
+    var open by remember { mutableStateOf(mine) }
+    Section("${Zodiac.SYMBOL[i]}  ${Zodiac.NAME[i]} (${Zodiac.ENGLISH[i]})${if (mine) " · cung của bạn" else ""}",
+        modifier = Modifier.clickable { open = !open }) {
         KeyValue("Ngày sinh", Zodiac.RANGE[i])
         KeyValue("Nguyên tố", Zodiac.ELEMENT[i])
-        KeyValue("Hành tinh", Zodiac.PLANET[i])
+        if (!open) { Note("Chạm để xem chi tiết"); return@Section }
+        KeyValue("Tính chất", Zodiac.MODALITY[i])
+        KeyValue("Hành tinh chủ quản", Zodiac.PLANET[i])
+        KeyValue("Biểu tượng", Zodiac.EMBLEM[i])
+        KeyValue("Cung đối diện", Zodiac.NAME[Zodiac.opposite(i)])
+        KeyValue("Cùng nguyên tố", Zodiac.sameElement(i))
         KeyValue("Hợp với", Zodiac.compatible(i))
+        Para(Zodiac.TRAIT[i])
+        Bullet("Ưu điểm: ${Zodiac.PROS[i]}", goodColor())
+        Bullet("Nhược điểm: ${Zodiac.CONS[i]}", badColor())
     }
 }
 

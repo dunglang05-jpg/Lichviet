@@ -21,7 +21,11 @@ public final class Sources {
         "Tương sinh – tương khắc ngũ hành và màu theo hành: hoanghamobile.com, vnexpress.net, wiki.batdongsan.com.vn.";
     public static final String THAN_SO =
         "Cách tính số chủ đạo theo trường phái Pythagoras phổ biến ở Việt Nam (kết quả 2–11 và 22/4): "
-        + "vietnamworks.com, dienmayxanh.com, hellobacsi.com. Ý nghĩa các số: momo.vn, vietnamworks.com.";
+        + "vietnamworks.com, dienmayxanh.com, hellobacsi.com. Ý nghĩa các số: momo.vn, vietnamworks.com. "
+        + "Số linh hồn (nguyên âm A, E, I, O, U): fptshop.com.vn, viettelstore.vn. Từ khóa 1–9: hellobacsi.com. 4 đỉnh cao: jobsgo.vn.";
+    public static final String ZODIAC =
+        "Ngày, nguyên tố, hành tinh: hoanghamobile.com, mytour.vn. Tính chất (tiên phong/kiên định/linh hoạt), tính cách, ưu – nhược điểm: "
+        + "hoanghamobile.com, thegioididong.com. Biểu tượng: shopee.vn/blog, careerlink.vn. Chiêm tinh mang tính giải trí, không có cơ sở khoa học.";
     public static final String LO_BAN =
         "Ba loại thước và tên cung: quantrimang.com, baophapluat.vn, baohatinh.vn, mytour.vn. "
         + "Ý nghĩa cung thước 38,8 cm: baophapluat.vn.";

@@ -109,4 +109,22 @@ public class FortuneTest {
         TuViNgay t = new TuViNgay(new Person("A", true, 15, 8, 1990), DayInfo.of(15, 11, 2026));
         assertTrue(!t.gioTot.isEmpty());
     }
+
+    @Test public void numerologyExtras() {
+        // fptshop.com.vn: Trần An Nhiên -> linh hồn 7; viettelstore.vn: Nguyễn Văn An -> linh hồn 1
+        assertEquals(7, Numerology.nameNumber("Trần An Nhiên", 1));
+        assertEquals(1, Numerology.nameNumber("Nguyễn Văn An", 1));
+        // jobsgo.vn: đáy 4–3–2 (tháng–ngày–năm) -> đỉnh 7, 5, 3, 6
+        Numerology.Pinnacle[] p = Numerology.pinnacles(3, 4, 2000);
+        assertEquals(7, p[0].number); assertEquals(5, p[1].number);
+        assertEquals(3, p[2].number); assertEquals(6, p[3].number);
+        assertEquals(36 - 9, p[0].fromAge); // 3+4+2 = 9
+        assertEquals(p[0].fromAge + 9, p[1].fromAge);
+    }
+
+    @Test public void zodiacExtras() {
+        assertEquals("Thiên Bình", Zodiac.NAME[Zodiac.opposite(0)]);
+        assertEquals("Sư Tử, Nhân Mã", Zodiac.sameElement(0));
+        assertEquals(12, Zodiac.TRAIT.length); assertEquals(12, Zodiac.PROS.length); assertEquals(12, Zodiac.CONS.length);
+    }
 }
