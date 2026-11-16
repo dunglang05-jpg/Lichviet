@@ -1,5 +1,7 @@
 package vn.lichviet.app.ui
 
+import vn.lichviet.ui.*
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -182,29 +184,6 @@ fun ScoreRing(v: Int, size: Dp) {
             Text("tổng", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
-}
-
-@Composable
-fun ProfileDialog(settings: AppSettings, onDismiss: () -> Unit, onSave: (String, Int) -> Unit) {
-    var name by remember { mutableStateOf(settings.userName) }
-    var year by remember { mutableStateOf(if (settings.birthYear == 0) "" else settings.birthYear.toString()) }
-    val y = year.toIntOrNull()
-    val ok = y != null && y in 1900..2100
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text("Thông tin của bạn") },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(name, { name = it }, label = { Text("Tên (không bắt buộc)") }, singleLine = true)
-                OutlinedTextField(year, { year = it }, label = { Text("Năm sinh âm lịch") }, singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
-                if (ok) Text("Tuổi ${TuoiHop.tuoiName(y!!)}", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
-                Text("Sinh trước Tết âm lịch thì lấy năm âm lịch (năm trước).", style = MaterialTheme.typography.labelSmall)
-            }
-        },
-        confirmButton = { TextButton(enabled = ok, onClick = { onSave(name.trim(), y!!) }) { Text("Lưu") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Hủy") } },
-    )
 }
 
 // ---------------------------------------------------------------- Chọn ngày theo việc

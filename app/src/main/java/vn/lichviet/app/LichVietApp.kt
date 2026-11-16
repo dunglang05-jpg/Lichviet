@@ -1,5 +1,7 @@
 package vn.lichviet.app
 
+import vn.lichviet.ui.*
+
 import android.app.Application
 import vn.lichviet.data.SettingsRepository
 import vn.lichviet.reminder.ReminderScheduler

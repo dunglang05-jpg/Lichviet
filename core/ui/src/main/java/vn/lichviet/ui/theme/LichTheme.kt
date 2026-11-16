@@ -1,4 +1,4 @@
-package vn.lichviet.app.ui.theme
+package vn.lichviet.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -14,12 +14,13 @@ val LocalLich = staticCompositionLocalOf<ThemeSpec?> { null }
 @Composable
 fun LichTheme(spec: ThemeSpec, content: @Composable () -> Unit) {
     val container = spec.accent.copy(alpha = 0.18f).compositeOver(spec.card)
+    val container2 = spec.accent2.copy(alpha = 0.18f).compositeOver(spec.card)
     val scheme = if (spec.dark) {
         darkColorScheme(
             primary = spec.accent, onPrimary = spec.onAccent,
             primaryContainer = container, onPrimaryContainer = spec.ink,
-            secondary = spec.accent, onSecondary = spec.onAccent,
-            secondaryContainer = container, onSecondaryContainer = spec.ink,
+            secondary = spec.accent2, onSecondary = spec.onAccent2,
+            secondaryContainer = container2, onSecondaryContainer = spec.ink,
             tertiary = spec.good,
             background = spec.bg, onBackground = spec.ink,
             surface = spec.bg, onSurface = spec.ink,
@@ -33,8 +34,8 @@ fun LichTheme(spec: ThemeSpec, content: @Composable () -> Unit) {
         lightColorScheme(
             primary = spec.accent, onPrimary = spec.onAccent,
             primaryContainer = container, onPrimaryContainer = spec.ink,
-            secondary = spec.accent, onSecondary = spec.onAccent,
-            secondaryContainer = container, onSecondaryContainer = spec.ink,
+            secondary = spec.accent2, onSecondary = spec.onAccent2,
+            secondaryContainer = container2, onSecondaryContainer = spec.ink,
             tertiary = spec.good,
             background = spec.bg, onBackground = spec.ink,
             surface = spec.bg, onSurface = spec.ink,

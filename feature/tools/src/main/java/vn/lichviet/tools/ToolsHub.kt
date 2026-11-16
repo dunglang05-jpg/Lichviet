@@ -1,6 +1,8 @@
 @file:OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 
-package vn.lichviet.app.ui.tools
+package vn.lichviet.tools
+
+import vn.lichviet.ui.*
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -35,8 +37,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import vn.lichviet.app.ui.ShadowCard
-import vn.lichviet.app.ui.SectionTitle
+import vn.lichviet.ui.ShadowCard
+import vn.lichviet.ui.SectionTitle
 
 /** Danh sách tiện ích. [group] 0 = Gợi ý cho bạn, 1 = Tiện ích khác. */
 enum class Tool(val title: String, val icon: ImageVector, val color: Long, val group: Int) {

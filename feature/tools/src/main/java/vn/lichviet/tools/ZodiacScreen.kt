@@ -1,4 +1,6 @@
-package vn.lichviet.app.ui.tools
+package vn.lichviet.tools
+
+import vn.lichviet.ui.*
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
@@ -44,7 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import vn.lichviet.app.ui.KeyValue
+import vn.lichviet.ui.KeyValue
 import vn.lichviet.core.DayInfo
 import vn.lichviet.core.LunarCalendar
 import vn.lichviet.core.fortune.Sources
@@ -183,7 +185,7 @@ fun HoangDao12Screen(todayJd: Int) {
                     KeyValue("Hợp với", Zodiac.compatible(i))
                     Text("Tính cách", fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 8.dp))
                     Para(Zodiac.TRAIT[i])
-                    Bullet("Ưu điểm: ${Zodiac.PROS[i]}", vn.lichviet.app.ui.goodColor())
+                    Bullet("Ưu điểm: ${Zodiac.PROS[i]}", vn.lichviet.ui.goodColor())
                     Bullet("Nhược điểm: ${Zodiac.CONS[i]}", MaterialTheme.colorScheme.error)
                     SourceNote(Sources.ZODIAC)
                 }

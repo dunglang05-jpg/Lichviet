@@ -12,8 +12,8 @@ android {
         applicationId = "vn.lichviet.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 100
-        versionName = "0.10.0"
+        versionCode = 110
+        versionName = "0.11.0"
     }
 
     buildTypes {
@@ -40,6 +40,9 @@ android {
 dependencies {
     implementation(project(":core:lunar"))
     implementation(project(":core:data"))
+    implementation(project(":core:ui"))
+    implementation(project(":feature:tools"))
+    implementation(project(":feature:settings"))
     implementation(project(":feature:widget"))
     implementation(project(":feature:reminder"))
 

@@ -1,6 +1,8 @@
 @file:OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 
-package vn.lichviet.app.ui.tools
+package vn.lichviet.tools
+
+import vn.lichviet.ui.*
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,9 +20,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import vn.lichviet.app.ui.KeyValue
-import vn.lichviet.app.ui.Section
-import vn.lichviet.app.ui.goodColor
+import vn.lichviet.ui.KeyValue
+import vn.lichviet.ui.Section
+import vn.lichviet.ui.goodColor
 import vn.lichviet.core.DayInfo
 import vn.lichviet.core.LunarCalendar
 import vn.lichviet.core.fortune.BatTrach

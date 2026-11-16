@@ -1,6 +1,8 @@
 @file:OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 
-package vn.lichviet.app.ui.tools
+package vn.lichviet.tools
+
+import vn.lichviet.ui.*
 
 import android.content.Context
 import android.hardware.Sensor
@@ -57,10 +59,9 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.util.Random
-import vn.lichviet.app.ui.ConverterSection
-import vn.lichviet.app.ui.KeyValue
-import vn.lichviet.app.ui.Section
-import vn.lichviet.app.ui.goodColor
+import vn.lichviet.ui.KeyValue
+import vn.lichviet.ui.Section
+import vn.lichviet.ui.goodColor
 import vn.lichviet.core.DayInfo
 import vn.lichviet.core.LunarCalendar
 import vn.lichviet.core.fortune.BatTrach

@@ -1,13 +1,7 @@
-@file:OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+package vn.lichviet.tools
 
-package vn.lichviet.app.ui
-
-import vn.lichviet.app.ui.tools.ProfileCard
-import vn.lichviet.app.ui.tools.Tool
-import vn.lichviet.app.ui.tools.ToolGrid
-import vn.lichviet.app.ui.tools.ToolPage
+import vn.lichviet.ui.*
 import androidx.compose.runtime.saveable.rememberSaveable
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,8 +12,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import vn.lichviet.app.ui.theme.LocalLich
-import vn.lichviet.app.ui.theme.Themes
+import vn.lichviet.ui.theme.LocalLich
+import vn.lichviet.ui.theme.Themes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -55,10 +49,8 @@ import vn.lichviet.core.GoodDayFinder
 import vn.lichviet.core.LunarCalendar
 import vn.lichviet.data.SettingsRepository
 import vn.lichviet.data.Today
-import vn.lichviet.reminder.ReminderScheduler
-import vn.lichviet.widget.WidgetUpdater
 
-/** Đổi ngày âm/dương, tìm ngày tốt theo việc, cài đặt. */
+/** Tab Tiện ích: hồ sơ, lưới công cụ, đổi ngày âm/dương, tìm ngày tốt. Cài đặt nằm ở module :feature:settings. */
 @Composable
 fun ToolsScreen(todayJd: Int, onOpenDay: (Int) -> Unit, modifier: Modifier = Modifier) {
     var openName by rememberSaveable { mutableStateOf<String?>(null) }
@@ -71,10 +63,8 @@ fun ToolsScreen(todayJd: Int, onOpenDay: (Int) -> Unit, modifier: Modifier = Mod
         ThemeBadge()
         ProfileCard()
         ToolGrid { openName = it.name }
-        ThemeSection()
         ConverterSection(todayJd, onOpenDay)
         FinderSection(todayJd, onOpenDay)
-        SettingsSection()
     }
 }
 
@@ -163,95 +153,3 @@ private fun FinderSection(todayJd: Int, onOpenDay: (Int) -> Unit) {
     }
 }
 
-@Composable
-private fun ThemeSection() {
-    val ctx = LocalContext.current
-    val repo = remember { SettingsRepository.get(ctx) }
-    val s by repo.settings.collectAsState()
-    val current = LocalLich.current
-    Section("Giao diện") {
-        Themes.GROUP_ORDER.forEach { group ->
-            Text(group.uppercase(), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                Themes.NAMES.indices.filter { Themes.GROUPS[it] == group }.forEach { id ->
-                    val (bg, accent) = Themes.SWATCH[id]
-                    val selected = current?.id == id
-                    Column(
-                        Modifier.weight(1f).clip(RoundedCornerShape(14.dp))
-                            .border(2.dp, if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(14.dp))
-                            .clickable { repo.update { it.copy(themeId = id, autoSeason = false) } }
-                            .padding(vertical = 8.dp, horizontal = 4.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Box(Modifier.size(36.dp).shadow(2.dp, CircleShape).clip(CircleShape).background(bg), contentAlignment = Alignment.Center) {
-                            Box(Modifier.size(14.dp).clip(CircleShape).background(accent))
-                        }
-                        Text(Themes.NAMES[id], style = MaterialTheme.typography.labelMedium, maxLines = 2,
-                            fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
-                            textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.padding(top = 4.dp))
-                    }
-                }
-                // giữ hàng 2 ô có bề rộng như hàng 4 ô
-                repeat(4 - Themes.GROUPS.count { it == group }) { Spacer(Modifier.weight(1f)) }
-            }
-        }
-        SwitchRow("Tự đổi theo mùa (theo tiết khí)", s.autoSeason) { v -> repo.update { it.copy(autoSeason = v) } }
-        Text("Ngũ Hành đổi màu theo can ngày · Thời Thần theo canh giờ · Hoàng Đạo theo ngày hoàng/hắc đạo · Con Giáp theo năm.",
-            style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-    }
-    Section("Tranh nền tờ lịch") {
-        val month = remember { Today.ymd()[1] }
-        ArtSetPicker(month, s.artSet) { id -> repo.update { it.copy(artSet = id) } }
-    }
-}
-
-@Composable
-private fun SettingsSection() {
-    val ctx = LocalContext.current
-    val repo = remember { SettingsRepository.get(ctx) }
-    val s by repo.settings.collectAsState()
-    var editProfile by remember { mutableStateOf(false) }
-    Section("Cài đặt") {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-            Column(Modifier.weight(1f)) {
-                Text("Thông tin của bạn")
-                Text(
-                    if (s.birthYear == 0) "Chưa nhập năm sinh" else "${s.userName.ifBlank { "Bạn" }} · tuổi ${vn.lichviet.core.TuoiHop.tuoiName(s.birthYear)} (${s.birthYear})",
-                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            TextButton(onClick = { editProfile = true }) { Text("Sửa", maxLines = 1) }
-        }
-        if (editProfile) {
-            ProfileDialog(s, onDismiss = { editProfile = false }) { name, year ->
-                repo.update { it.copy(userName = name, birthYear = year) }
-                editProfile = false
-            }
-        }
-        SwitchRow("Tuần bắt đầu Thứ Hai", s.mondayFirst) { v -> repo.update { it.copy(mondayFirst = v) }; WidgetUpdater.updateAll(ctx) }
-        SwitchRow("Thông báo lịch mỗi sáng", s.morningNotify) { v -> repo.update { it.copy(morningNotify = v) } }
-        SwitchRow("Nhắc trước mùng 1 và rằm", s.remindSocVong) { v -> repo.update { it.copy(remindSocVong = v) } }
-        SwitchRow("Nhắc trước ngày lễ lớn", s.remindHolidays) { v -> repo.update { it.copy(remindHolidays = v) } }
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-            Text("Giờ thông báo", Modifier.weight(1f))
-            TextButton(onClick = { setHour(ctx, repo, (s.notifyHour + 23) % 24) }) { Text("−") }
-            Text("%02d:00".format(s.notifyHour), fontWeight = FontWeight.Bold)
-            TextButton(onClick = { setHour(ctx, repo, (s.notifyHour + 1) % 24) }) { Text("+") }
-        }
-        Button(onClick = { WidgetUpdater.updateAll(ctx) }) { Text("Làm mới widget") }
-    }
-}
-
-private fun setHour(ctx: android.content.Context, repo: SettingsRepository, h: Int) {
-    repo.update { it.copy(notifyHour = h) }
-    ReminderScheduler.schedule(ctx, h)
-}
-
-@Composable
-private fun SwitchRow(label: String, value: Boolean, onChange: (Boolean) -> Unit) {
-    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        Text(label, Modifier.weight(1f).padding(end = 8.dp))
-        Switch(value, onChange)
-    }
-}

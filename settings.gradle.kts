@@ -18,5 +18,8 @@ rootProject.name = "LichViet"
 include(":app")
 include(":core:lunar")
 include(":core:data")
+include(":core:ui")
 include(":feature:widget")
 include(":feature:reminder")
+include(":feature:tools")
+include(":feature:settings")

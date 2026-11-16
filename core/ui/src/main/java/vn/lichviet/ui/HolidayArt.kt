@@ -1,4 +1,4 @@
-package vn.lichviet.app.ui
+package vn.lichviet.ui
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background

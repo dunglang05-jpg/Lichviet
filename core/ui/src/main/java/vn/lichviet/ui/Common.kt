@@ -1,6 +1,7 @@
-package vn.lichviet.app.ui
+package vn.lichviet.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +28,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import vn.lichviet.app.ui.theme.LocalLich
+import vn.lichviet.ui.theme.LocalLich
+import vn.lichviet.ui.theme.Motif
+import vn.lichviet.ui.theme.MotifBand
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import vn.lichviet.core.DayInfo
 import vn.lichviet.core.LunarCalendar
 
@@ -38,7 +50,7 @@ fun solarText(d: DayInfo) = "${DayInfo.THU[d.weekday]}, ${d.solarDay}/${d.solarM
 
 val CardShape = RoundedCornerShape(20.dp)
 
-/** Khung thẻ nổi có đổ bóng. */
+/** Khung thẻ nổi: viền chỉ mảnh màu đối ứng, hoạ tiết của giao diện mờ ở góc phải. */
 @Composable
 fun ShadowCard(
     modifier: Modifier = Modifier,
@@ -46,17 +58,25 @@ fun ShadowCard(
     container: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val spec = LocalLich.current
     ElevatedCard(
         modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 7.dp),
         shape = CardShape,
         colors = CardDefaults.elevatedCardColors(containerColor = container),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = elevation),
     ) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp), content = content)
+        Box(
+            Modifier.fillMaxWidth().then(
+                if (spec != null) Modifier.border(BorderStroke(1.dp, spec.accent2.copy(alpha = .22f)), CardShape) else Modifier,
+            ),
+        ) {
+            if (spec != null) Motif(spec, Modifier.align(Alignment.TopEnd).padding(10.dp).size(30.dp), alpha = .16f)
+            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp), content = content)
+        }
     }
 }
 
-/** Khung có tiêu đề kèm vạch màu nhấn. */
+/** Khung có tiêu đề kèm hoạ tiết của giao diện. */
 @Composable
 fun Section(title: String, modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
     ShadowCard(modifier) {
@@ -67,12 +87,48 @@ fun Section(title: String, modifier: Modifier = Modifier, content: @Composable C
 
 @Composable
 fun SectionTitle(title: String, color: Color = MaterialTheme.colorScheme.primary) {
+    val spec = LocalLich.current
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 2.dp)) {
-        Box(Modifier.width(4.dp).height(18.dp).clip(RoundedCornerShape(2.dp)).background(color))
+        if (spec != null) Motif(spec, Modifier.size(18.dp))
+        else Box(Modifier.width(4.dp).height(18.dp).clip(RoundedCornerShape(2.dp)).background(color))
         Spacer(Modifier.width(8.dp))
-        Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+        Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
     }
 }
+
+/**
+ * Đầu trang: nền màu nhấn chính chuyển sang màu đối ứng, tên giao diện, nút hành động (cài đặt / quay lại),
+ * mép dưới là dải hoa văn của giao diện.
+ */
+@Composable
+fun AppHeader(
+    title: String,
+    subtitle: String? = null,
+    onBack: (() -> Unit)? = null,
+    onSettings: (() -> Unit)? = null,
+) {
+    val spec = LocalLich.current ?: return
+    val fg = spec.onAccent
+    Column(
+        Modifier.fillMaxWidth().background(Brush.linearGradient(listOf(spec.accent, spec.accent.copy(alpha = .92f).compositeOverSafe(spec.accent2)))),
+    ) {
+        Row(Modifier.fillMaxWidth().statusBarsPadding().padding(start = 4.dp, end = 4.dp, top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            if (onBack != null) IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Quay lại", tint = fg) }
+            else Spacer(Modifier.width(12.dp))
+            Column(Modifier.weight(1f).padding(vertical = 6.dp)) {
+                Text(title, color = fg, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, maxLines = 1)
+                if (subtitle != null) Text(subtitle, color = fg.copy(alpha = .85f), style = MaterialTheme.typography.labelMedium,
+                    maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
+            Motif(spec.copy(accent = spec.onAccent, accent2 = spec.accent2), Modifier.size(26.dp), alpha = .9f)
+            if (onSettings != null) IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Cài đặt", tint = fg) }
+            else Spacer(Modifier.width(12.dp))
+        }
+        Box(Modifier.fillMaxWidth().background(spec.bg).padding(vertical = 3.dp)) { MotifBand(spec, height = 12.dp) }
+    }
+}
+
+private fun Color.compositeOverSafe(c: Color): Color = androidx.compose.ui.graphics.lerp(this, c, .35f)
 
 @Composable
 fun KeyValue(key: String, value: String) {
@@ -96,17 +152,10 @@ fun Pill(text: String, bg: Color, fg: Color, bold: Boolean = false) {
     )
 }
 
-/** Dòng nhóm/tên giao diện đang dùng, vd "MÙA · ĐÔNG — Sương tuyết". */
+/** Tên giao diện nay hiển thị ở đầu trang (AppHeader); giữ hàm để các màn cũ không phải sửa. */
+@Suppress("UNUSED_PARAMETER")
 @Composable
-fun ThemeBadge(modifier: Modifier = Modifier) {
-    val spec = LocalLich.current ?: return
-    Text(
-        "${spec.group.uppercase()} · ${spec.name.uppercase()}  —  ${spec.variant}",
-        style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary,
-        fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis,
-        modifier = modifier.padding(horizontal = 20.dp),
-    )
-}
+fun ThemeBadge(modifier: Modifier = Modifier) = Unit
 
 /** Màu "tốt" của giao diện. */
 @Composable

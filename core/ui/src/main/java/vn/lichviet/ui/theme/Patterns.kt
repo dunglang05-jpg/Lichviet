@@ -1,4 +1,4 @@
-package vn.lichviet.app.ui.theme
+package vn.lichviet.ui.theme
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size

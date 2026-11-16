@@ -1,5 +1,7 @@
 package vn.lichviet.app.ui
 
+import vn.lichviet.ui.*
+
 /** Tục ngữ, ca dao Việt Nam (văn học dân gian) – mỗi ngày một câu. */
 object TucNgu {
     val LIST = listOf(

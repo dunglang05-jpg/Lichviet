@@ -2,6 +2,15 @@
 
 package vn.lichviet.app
 
+import vn.lichviet.ui.*
+import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.mutableStateOf
+import vn.lichviet.ui.theme.MotifBand
+import vn.lichviet.tools.ToolsScreen
+import vn.lichviet.settings.SettingsScreen
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.NavigationBarItemDefaults
+
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
@@ -21,10 +30,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import java.util.Calendar
 import kotlinx.coroutines.delay
-import vn.lichviet.app.ui.dayOf
-import vn.lichviet.app.ui.theme.LichTheme
-import vn.lichviet.app.ui.theme.Themes
-import vn.lichviet.app.ui.theme.drawPattern
+import vn.lichviet.ui.dayOf
+import vn.lichviet.ui.theme.LichTheme
+import vn.lichviet.ui.theme.Themes
+import vn.lichviet.ui.theme.drawPattern
 import vn.lichviet.data.SettingsRepository
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
@@ -50,7 +59,6 @@ import vn.lichviet.app.ui.DayScreen
 import vn.lichviet.app.ui.EventsScreen
 import vn.lichviet.app.ui.MonthScreen
 import vn.lichviet.app.ui.MoonScreen
-import vn.lichviet.app.ui.ToolsScreen
 import vn.lichviet.core.LunarCalendar
 import vn.lichviet.data.Today
 
@@ -65,17 +73,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private enum class Tab(val label: String, val icon: ImageVector) {
-    DAY("Ngày", Icons.Filled.Home),
-    MONTH("Tháng", Icons.Filled.DateRange),
-    MOON("Trăng", Icons.Filled.Star),
-    EVENTS("Sự kiện", Icons.Filled.Notifications),
-    TOOLS("Tiện ích", Icons.Filled.Build),
+private enum class Tab(val label: String, val title: String, val icon: ImageVector) {
+    DAY("Ngày", "Lịch ngày", Icons.Filled.Home),
+    MONTH("Tháng", "Lịch tháng", Icons.Filled.DateRange),
+    MOON("Trăng", "Tuần trăng", Icons.Filled.Star),
+    EVENTS("Sự kiện", "Sự kiện & ngày lễ", Icons.Filled.Notifications),
+    TOOLS("Tiện ích", "Tiện ích", Icons.Filled.Build),
 }
 
 @Composable
 private fun AppRoot(activity: ComponentActivity) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
+    var showSettings by rememberSaveable { mutableStateOf(false) }
     val todayJd = remember { Today.ymd().let { LunarCalendar.jdFromDate(it[0], it[1], it[2]) } }
     var selectedJd by rememberSaveable { mutableIntStateOf(todayJd) }
 
@@ -106,18 +115,30 @@ private fun AppRoot(activity: ComponentActivity) {
     Box(
         Modifier.fillMaxSize().background(spec.bg).drawBehind { drawPattern(spec.pattern, spec.patternColor, spec.patternAlpha) },
     ) {
-    Scaffold(
+    if (showSettings) {
+        SettingsScreen(onBack = { showSettings = false })
+    } else Scaffold(
         containerColor = Color.Transparent,
         contentColor = spec.ink,
+        topBar = {
+            AppHeader(Tab.entries[tab].title, "${spec.name} · ${spec.variant}", onSettings = { showSettings = true })
+        },
         bottomBar = {
-            NavigationBar(containerColor = spec.card) {
-                Tab.entries.forEachIndexed { i, t ->
-                    NavigationBarItem(
-                        selected = tab == i,
-                        onClick = { tab = i },
-                        icon = { Icon(t.icon, contentDescription = t.label) },
-                        label = { Text(t.label) },
-                    )
+            Column {
+                Box(Modifier.background(spec.card).padding(top = 2.dp)) { MotifBand(spec, height = 10.dp, alpha = .9f) }
+                NavigationBar(containerColor = spec.card) {
+                    Tab.entries.forEachIndexed { i, t ->
+                        NavigationBarItem(
+                            selected = tab == i,
+                            onClick = { tab = i },
+                            icon = { Icon(t.icon, contentDescription = t.label) },
+                            label = { Text(t.label) },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = spec.onAccent2, indicatorColor = spec.accent2,
+                                selectedTextColor = spec.accent, unselectedIconColor = spec.dim, unselectedTextColor = spec.dim,
+                            ),
+                        )
+                    }
                 }
             }
         },
@@ -130,6 +151,7 @@ private fun AppRoot(activity: ComponentActivity) {
             Tab.EVENTS -> EventsScreen(todayJd, onOpenDay = { selectedJd = it; tab = 0 }, modifier = m)
             Tab.TOOLS -> ToolsScreen(todayJd, onOpenDay = { selectedJd = it; tab = 0 }, modifier = m)
         }
+    }
     }
     }
     }

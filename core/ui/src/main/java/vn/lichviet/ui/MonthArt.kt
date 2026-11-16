@@ -1,4 +1,4 @@
-package vn.lichviet.app.ui
+package vn.lichviet.ui
 
 import android.content.Context
 import android.graphics.BitmapFactory
