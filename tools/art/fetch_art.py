@@ -108,11 +108,13 @@ def run_ai(only=None):
             print(f"AI {i:02d} THẤT BẠI")
 
 
-GIAP = ["a Vietnamese field rat", "a Vietnamese water buffalo with long curved horns", "an Indochinese tiger", "a Vietnamese domestic cat",
-        "portrait of a Vietnamese dragon, the dragon's head large and fully visible in the center facing the viewer, open mouth, long whiskers, horns, flowing mane, scaled serpentine body curling behind it among clouds, rice fields far below", "a green snake", "a brown horse", "a Vietnamese mountain goat",
-        "a macaque monkey", "a Vietnamese rooster with red comb", "a Vietnamese Phu Quoc dog", "a Vietnamese pot-bellied pig"]
-GIAP_STYLE = ("realistic detailed digital painting of {a}, natural proportions and pose, full body, Vietnamese countryside background "
-              "softly blurred (rice fields, bamboo), warm natural light, painterly, not cartoon, not cute, no text, no watermark")
+GIAP = ["a field rat", "a Vietnamese water buffalo with long curved horns", "a tiger", "a domestic tabby cat",
+        "a Vietnamese dragon with its head fully visible, horns, whiskers and mane, long scaled body coiled below the head",
+        "a green snake coiled with raised head", "a brown horse", "a goat with curved horns", "a macaque monkey",
+        "a rooster with red comb and long tail feathers", "a dog", "a black Vietnamese pig"]
+GIAP_STYLE = ("cartoon illustration of {a}, full body with the head clearly visible, confident natural expression, "
+              "adult proportions (not chibi, not baby-like, not big-eyed, not kawaii), clean bold outlines, flat shading, "
+              "warm Vietnamese folk colors, simple light cream background, centered, no text, no watermark")
 
 SUKIEN = {
     "tet": "Vietnamese Tet table with square green banh chung cakes, a tray of five fruits, pink peach blossom branch in a vase, red lanterns, warm cozy light",
