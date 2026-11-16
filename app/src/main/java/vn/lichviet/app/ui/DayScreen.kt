@@ -47,47 +47,18 @@ fun DayScreen(jd: Int, todayJd: Int, onChange: (Int) -> Unit, modifier: Modifier
     Column(modifier.verticalScroll(rememberScrollState()).padding(top = 12.dp, bottom = 16.dp)) {
         ThemeBadge()
         WeekStrip(jd, todayJd, settings.mondayFirst, onChange)
-        if (jd != todayJd) {
-            TextButton(onClick = { onChange(todayJd) }, modifier = Modifier.padding(start = 12.dp)) { Text("← Về hôm nay", maxLines = 1) }
-        }
+        DaySheet(jd, todayJd, onChange, Modifier.padding(top = 4.dp))
 
-        // Thẻ ngày chính: dương lịch bên trái, âm lịch bên phải
-        ShadowCard(elevation = 8.dp) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1f)) {
-                    Text(DayInfo.THU[d.weekday].uppercase(), style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
-                    Text("${d.solarDay}", fontSize = 76.sp, fontWeight = FontWeight.Black, color = MaterialTheme.colorScheme.primary,
-                        lineHeight = 80.sp)
-                    Text("Tháng ${d.solarMonth}, ${d.solarYear}", style = MaterialTheme.typography.bodyMedium)
-                }
-                Box(Modifier.width(1.dp).height(110.dp).background(MaterialTheme.colorScheme.outlineVariant))
-                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1f)) {
-                    Text("ÂM LỊCH", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text("${d.lunarDay}", fontSize = 52.sp, fontWeight = FontWeight.Bold, lineHeight = 56.sp)
-                    Text("Tháng ${d.lunarMonth}${if (d.leap) " nhuận" else ""}", style = MaterialTheme.typography.bodyMedium)
-                    Text("Năm ${d.yearCanChi}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            }
-            MoonStatus(d, Modifier.padding(top = 4.dp))
+        // Tóm tắt ngày (thông tin chưa có trên tờ lịch)
+        ShadowCard(elevation = 4.dp) {
+            MoonStatus(d)
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(top = 6.dp)) {
                 val good = goodColor()
                 Pill("${d.verdict} ${d.score}/5", (if (d.score >= 4) good else MaterialTheme.colorScheme.primary).copy(alpha = 0.15f),
                     if (d.score >= 4) good else MaterialTheme.colorScheme.primary, bold = true)
-                Pill(if (d.hoangDao) "Hoàng đạo · ${d.than12}" else "Hắc đạo · ${d.than12}",
-                    MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
-                Pill("Ngày ${d.dayCanChi}", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
-                Pill("Tháng ${d.monthCanChi}", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
                 Pill(a.khongMinh, MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
-            }
-        }
-
-        if (d.holidays.isNotEmpty()) {
-            ShadowCard(elevation = 6.dp) {
-                SectionTitle("Ngày lễ")
-                d.holidays.forEach {
-                    HolidayRow(it.name, if (it.lunar) "Theo âm lịch · ${d.lunarText()}" else "Theo dương lịch", major = it.major)
-                }
+                Pill("Hỷ thần ${d.hyThan}", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
+                Pill("Tài thần ${d.taiThan}", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
             }
         }
 

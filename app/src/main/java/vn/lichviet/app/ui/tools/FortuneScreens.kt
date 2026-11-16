@@ -139,35 +139,6 @@ fun ThanSoScreen() {
 }
 
 @Composable
-fun HoangDao12Screen(@Suppress("UNUSED_PARAMETER") todayJd: Int) {
-    val me = mySettings().toPerson()
-    val mine = me?.let { Zodiac.of(it.day, it.month) }
-    if (mine != null) ZodiacCard(mine, true)
-    for (i in 0 until 12) if (i != mine) ZodiacCard(i, false)
-    SourceNote(Sources.ZODIAC)
-}
-
-@Composable
-private fun ZodiacCard(i: Int, mine: Boolean) {
-    var open by remember { mutableStateOf(mine) }
-    Section("${Zodiac.SYMBOL[i]}  ${Zodiac.NAME[i]} (${Zodiac.ENGLISH[i]})${if (mine) " · cung của bạn" else ""}",
-        modifier = Modifier.clickable { open = !open }) {
-        KeyValue("Ngày sinh", Zodiac.RANGE[i])
-        KeyValue("Nguyên tố", Zodiac.ELEMENT[i])
-        if (!open) { Note("Chạm để xem chi tiết"); return@Section }
-        KeyValue("Tính chất", Zodiac.MODALITY[i])
-        KeyValue("Hành tinh chủ quản", Zodiac.PLANET[i])
-        KeyValue("Biểu tượng", Zodiac.EMBLEM[i])
-        KeyValue("Cung đối diện", Zodiac.NAME[Zodiac.opposite(i)])
-        KeyValue("Cùng nguyên tố", Zodiac.sameElement(i))
-        KeyValue("Hợp với", Zodiac.compatible(i))
-        Para(Zodiac.TRAIT[i])
-        Bullet("Ưu điểm: ${Zodiac.PROS[i]}", goodColor())
-        Bullet("Nhược điểm: ${Zodiac.CONS[i]}", badColor())
-    }
-}
-
-@Composable
 fun HopNhauScreen(love: Boolean) {
     val a = PersonPicker(if (love) "Bạn" else "Người thứ nhất", true, if (love) "love-a" else "hop-a")
     val b = PersonPicker(if (love) "Người ấy" else "Người thứ hai", false, if (love) "love-b" else "hop-b")
