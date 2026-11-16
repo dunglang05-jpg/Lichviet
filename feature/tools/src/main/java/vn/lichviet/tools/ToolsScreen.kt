@@ -52,19 +52,22 @@ import vn.lichviet.data.Today
 
 /** Tab Tiện ích: hồ sơ, lưới công cụ, đổi ngày âm/dương, tìm ngày tốt. Cài đặt nằm ở module :feature:settings. */
 @Composable
-fun ToolsScreen(todayJd: Int, onOpenDay: (Int) -> Unit, modifier: Modifier = Modifier) {
+fun ToolsScreen(todayJd: Int, onOpenDay: (Int) -> Unit, onSettings: () -> Unit = {}, modifier: Modifier = Modifier) {
     var openName by rememberSaveable { mutableStateOf<String?>(null) }
     val open = openName?.let { n -> Tool.entries.firstOrNull { it.name == n } }
     if (open != null) {
         ToolPage(open, todayJd, onOpenDay, onBack = { openName = null }, modifier = modifier)
         return
     }
-    Column(modifier.verticalScroll(rememberScrollState()).padding(top = 12.dp, bottom = 16.dp)) {
-        ThemeBadge()
+    Column(modifier) {
+      val spec = vn.lichviet.ui.theme.LocalLich.current
+      AppHeader("Tiện ích", spec?.let { "${it.name} · ${it.variant}" }, onSettings = onSettings)
+      Column(Modifier.verticalScroll(rememberScrollState()).padding(top = 8.dp, bottom = 16.dp)) {
         ProfileCard()
         ToolGrid { openName = it.name }
         ConverterSection(todayJd, onOpenDay)
         FinderSection(todayJd, onOpenDay)
+      }
     }
 }
 

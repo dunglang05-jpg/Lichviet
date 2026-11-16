@@ -121,7 +121,7 @@ private fun AppRoot(activity: ComponentActivity) {
         containerColor = Color.Transparent,
         contentColor = spec.ink,
         topBar = {
-            AppHeader(Tab.entries[tab].title, "${spec.name} · ${spec.variant}", onSettings = { showSettings = true })
+            if (Tab.entries[tab] != Tab.TOOLS) AppHeader(Tab.entries[tab].title, "${spec.name} · ${spec.variant}", onSettings = { showSettings = true })
         },
         bottomBar = {
             Column {
@@ -149,7 +149,8 @@ private fun AppRoot(activity: ComponentActivity) {
             Tab.MONTH -> MonthScreen(selectedJd, todayJd, onPick = { selectedJd = it; tab = 0 }, modifier = m)
             Tab.MOON -> MoonScreen(selectedJd, modifier = m)
             Tab.EVENTS -> EventsScreen(todayJd, onOpenDay = { selectedJd = it; tab = 0 }, modifier = m)
-            Tab.TOOLS -> ToolsScreen(todayJd, onOpenDay = { selectedJd = it; tab = 0 }, modifier = m)
+            Tab.TOOLS -> ToolsScreen(todayJd, onOpenDay = { selectedJd = it; tab = 0 }, onSettings = { showSettings = true },
+                modifier = Modifier.padding(bottom = padding.calculateBottomPadding()))
         }
     }
     }

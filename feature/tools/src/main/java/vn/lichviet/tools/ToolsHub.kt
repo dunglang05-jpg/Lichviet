@@ -47,14 +47,14 @@ enum class Tool(val title: String, val icon: ImageVector, val color: Long, val g
     BAT_TU("Lá Số Bát Tự", Icons.Filled.GridView, 0xFF8D6E63, 0),
     TONG_QUAN_VAN_MENH("Tổng Quan Vận Mệnh", Icons.Filled.AutoAwesome, 0xFFD81B60, 0),
     NOI_BAT("Nổi Bật Hôm Nay", Icons.Filled.Today, 0xFFFB8C00, 0),
-    HOP_NHAU("Mức Độ Hợp Nhau", Icons.Filled.People, 0xFFFFA000, 0),
+    HOP_NHAU("Xem Tuổi Hợp Nhau", Icons.Filled.People, 0xFFFFA000, 0),
     PHONG_THUY("Tư Vấn Phong Thủy", Icons.Filled.Home, 0xFFC0A000, 0),
     GIEO_QUE("Gieo Quẻ Hỏi Việc", Icons.Filled.Casino, 0xFFAD1457, 0),
     CHON_TEN("Chọn Tên Hay", Icons.Filled.Badge, 0xFF1E88E5, 0),
     THANH_VIEN("Thành Viên Gia Đình", Icons.Filled.FamilyRestroom, 0xFFC62828, 0),
     DOI_NGAY("Đổi Ngày", Icons.Filled.SwapHoriz, 0xFF8D3B2F, 0),
     THAN_SO("Thần Số Học", Icons.Filled.Numbers, 0xFF00897B, 0),
-    THONG_TIN("Thông Tin Tổng Quan", Icons.Filled.AccountBox, 0xFF5C6BC0, 0),
+    THONG_TIN("Thông Tin Năm", Icons.Filled.AccountBox, 0xFF5C6BC0, 0),
     GIAI_MA_NGAY_SINH("Giải Mã Ngày Sinh", Icons.Filled.Cake, 0xFF7E57C2, 0),
     NHAC_GIO("Nhắc Ngày Giỗ", Icons.Filled.NotificationsActive, 0xFF6A5ACD, 1),
     VAN_KHAN("Văn Khấn", Icons.Filled.MenuBook, 0xFFEF6C00, 1),
@@ -110,28 +110,23 @@ fun ToolGrid(onOpen: (Tool) -> Unit) {
 @Composable
 fun ToolPage(tool: Tool, todayJd: Int, onOpenDay: (Int) -> Unit, onBack: () -> Unit, modifier: Modifier = Modifier) {
     BackHandler(onBack = onBack)
-    Column(modifier.verticalScroll(rememberScrollState()).padding(bottom = 24.dp)) {
-        Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onBack) { Icon(Icons.Filled.ArrowBack, "Quay lại") }
-            ToolIcon(tool, 36)
-            Text(tool.title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 10.dp))
-        }
+    Column(modifier.verticalScroll(rememberScrollState())) {
+      ToolScaffold(tool.title, onBack) {
         when (tool) {
             Tool.VAN_HAN -> VanHanScreen()
             Tool.TINH_DUYEN -> TinhDuyenScreen()
             Tool.BAT_TU -> BatTuScreen()
             Tool.TONG_QUAN_VAN_MENH -> TongQuanVanMenhScreen()
             Tool.NOI_BAT -> NoiBatScreen(todayJd, onOpenDay)
-            Tool.HOP_NHAU -> HopNhauScreen(love = false)
-            Tool.BOI_TINH_DUYEN -> HopNhauScreen(love = true)
+            Tool.HOP_NHAU -> HopNhauV2(love = false)
+            Tool.BOI_TINH_DUYEN -> HopNhauV2(love = true)
             Tool.PHONG_THUY -> PhongThuyScreen()
             Tool.GIEO_QUE -> GieoQueScreen()
             Tool.CHON_TEN -> ChonTenScreen()
             Tool.THANH_VIEN -> FamilyScreen()
             Tool.DOI_NGAY -> DoiNgayScreen(todayJd, onOpenDay)
             Tool.THAN_SO -> ThanSoScreen()
-            Tool.THONG_TIN -> ThongTinScreen()
+            Tool.THONG_TIN -> ThongTinNamV2()
             Tool.GIAI_MA_NGAY_SINH -> GiaiMaNgaySinhScreen()
             Tool.NHAC_GIO -> NhacGioScreen()
             Tool.VAN_KHAN -> VanKhanScreen(todayJd)
@@ -140,10 +135,11 @@ fun ToolPage(tool: Tool, todayJd: Int, onOpenDay: (Int) -> Unit, onBack: () -> U
             Tool.GIA_PHA -> GiaPhaScreen()
             Tool.HOANG_DAO_12 -> HoangDao12Screen(todayJd)
             Tool.TU_VI_TRON_DOI -> TuViTronDoiScreen()
-            Tool.LO_BAN -> LoBanScreen()
-            Tool.LA_BAN -> LaBanScreen()
+            Tool.LO_BAN -> LoBanV2()
+            Tool.LA_BAN -> LaBanV2()
             Tool.XEM_SAO -> XemSaoScreen()
             Tool.FAQ -> FaqScreen()
         }
+      }
     }
 }

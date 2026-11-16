@@ -127,4 +127,18 @@ public class FortuneTest {
         assertEquals("Sư Tử, Nhân Mã", Zodiac.sameElement(0));
         assertEquals(12, Zodiac.TRAIT.length); assertEquals(12, Zodiac.PROS.length); assertEquals(12, Zodiac.CONS.length);
     }
+
+    @Test public void hopTuoiScore() {
+        // Nam Canh Ngọ 1990 – nữ Nhâm Thân 1992: mệnh 2, can 1, chi 1, cung phi Khảm–Đoài Họa Hại 0, thiên mệnh Thủy–Kim 2 = 6
+        java.util.List<HopTuoi.Criterion> l = HopTuoi.score(new Person("a", true, 1, 7, 1990), new Person("b", false, 1, 7, 1992));
+        assertEquals(6, HopTuoi.total(l));
+        assertEquals("Hợp", HopTuoi.rating(6));
+        assertEquals(0, l.get(3).point);
+    }
+
+    @Test public void loBanSub() {
+        assertEquals("Nhân Lộc", LoBan.CUNG[0][LoBan.cung(0, 81)]);
+        assertEquals("Tiến bửu", LoBan.SUB[0][LoBan.cung(0, 81)][LoBan.sub(0, 81)]);
+        for (int t = 0; t < 3; t++) assertEquals(LoBan.CUNG[t].length, LoBan.SUB[t].length);
+    }
 }

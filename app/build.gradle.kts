@@ -12,8 +12,8 @@ android {
         applicationId = "vn.lichviet.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 110
-        versionName = "0.11.0"
+        versionCode = 120
+        versionName = "0.12.0"
     }
 
     buildTypes {

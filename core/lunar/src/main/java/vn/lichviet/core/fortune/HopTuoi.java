@@ -94,4 +94,54 @@ public final class HopTuoi {
         }
         return sb.toString();
     }
+
+    /** Một tiêu chí trong phép chấm điểm hợp tuổi (0–2 điểm). */
+    public static final class Criterion {
+        public final String name, detail;
+        public final int point;
+        Criterion(String name, String detail, int point) { this.name = name; this.detail = detail; this.point = point; }
+    }
+
+    /**
+     * Chấm điểm 10 theo cách các trang lịch vạn niên Việt Nam dùng (ngaydep.com, xem tuổi vợ chồng):
+     * 5 tiêu chí mệnh nạp âm, thiên can, địa chi, cung phi bát trạch, thiên mệnh (hành của cung phi), mỗi tiêu chí 0–2 điểm.
+     */
+    public static List<Criterion> score(Person a, Person b) {
+        List<Criterion> r = new ArrayList<>();
+        int mh = quanHeHanh(a.menh(), b.menh());
+        String rel = mh == 2 ? (sinhRa(b.menh()).equals(a.menh()) ? a.menh() + " sinh " + b.menh() : b.menh() + " sinh " + a.menh()) + " (tương sinh)"
+            : mh == 1 ? "cùng hành " + a.menh() + " (bình hòa)" : "tương khắc";
+        r.add(new Criterion("Mệnh (ngũ hành nạp âm)", a.napAm() + " – " + b.napAm() + ": " + rel, mh == 2 ? 2 : mh == 1 ? 1 : 0));
+
+        String c = DayInfo.CAN[a.can] + " – " + DayInfo.CAN[b.can] + ": ";
+        if (canHop(a.can, b.can)) r.add(new Criterion("Thiên can", c + "tương hợp", 2));
+        else if (canXung(a.can, b.can)) r.add(new Criterion("Thiên can", c + "tương xung", 0));
+        else r.add(new Criterion("Thiên can", c + "bình thường", 1));
+
+        String z = DayInfo.CHI[a.chi] + " – " + DayInfo.CHI[b.chi] + ": ";
+        if (tamHop(a.chi, b.chi)) r.add(new Criterion("Địa chi", z + "tam hợp", 2));
+        else if (lucHop(a.chi, b.chi)) r.add(new Criterion("Địa chi", z + "lục hợp", 2));
+        else if (lucXung(a.chi, b.chi)) r.add(new Criterion("Địa chi", z + "lục xung", 0));
+        else if (lucHai(a.chi, b.chi)) r.add(new Criterion("Địa chi", z + "lục hại", 0));
+        else r.add(new Criterion("Địa chi", z + "bình thường", 1));
+
+        int ca = BatTrach.cung(a.lunarYear, a.male), cb = BatTrach.cung(b.lunarYear, b.male);
+        int i = java.util.Arrays.asList(BatTrach.huong(ca)).indexOf(BatTrach.PHUONG[cb]);
+        r.add(new Criterion("Cung phi (Bát trạch)", BatTrach.CUNG[ca] + " – " + BatTrach.CUNG[cb] + ": " + BatTrach.HUONG_TEN[i]
+            + (i < 4 ? " (tốt)" : " (xấu)"), i < 4 ? 2 : 0));
+
+        String ha = BatTrach.HANH_CUNG[ca], hb = BatTrach.HANH_CUNG[cb];
+        int th = quanHeHanh(ha, hb);
+        String t = ha + " – " + hb + ": " + (th == 2 ? (sinhRa(hb).equals(ha) ? ha + " sinh " + hb : hb + " sinh " + ha) + " (tương sinh)"
+            : th == 1 ? "cùng hành (bình hòa)" : "tương khắc");
+        r.add(new Criterion("Thiên mệnh", t, th == 2 ? 2 : th == 1 ? 1 : 0));
+        return r;
+    }
+
+    public static int total(List<Criterion> l) { int s = 0; for (Criterion c : l) s += c.point; return s; }
+
+    /** Từ 8 điểm: rất hợp · 6–7: hợp · 4–5: trung bình · dưới 4: không hợp. */
+    public static String rating(int total) {
+        return total >= 8 ? "Rất hợp" : total >= 6 ? "Hợp" : total >= 4 ? "Trung bình" : "Không hợp";
+    }
 }
