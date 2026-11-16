@@ -306,21 +306,17 @@ private fun PaintingSheet(d: DayInfo, today: Boolean) {
 }
 
 
-private val GIAP_TEN = listOf("Chuột", "Trâu", "Hổ", "Mèo", "Rồng", "Rắn", "Ngựa", "Dê", "Khỉ", "Gà", "Chó", "Lợn")
 
 @Composable
 private fun GiapRow(d: DayInfo, dark: Boolean) {
-    val ctx = LocalContext.current
     val yearChi = (d.lunarYear + 8) % 12
     val label = if (dark) Color(0xFFB9A898) else Color(0xFF8A7A6A)
     val value = if (dark) Color(0xFFFFF3E4) else Color(0xFF2B211A)
     val tile = if (dark) Color(0xFF2A201C) else Color(0xFFF3EAD6)
     Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         listOf(Triple("Con giáp ngày", d.dayChi, d.dayCanChi), Triple("Con giáp năm", yearChi, d.yearCanChi)).forEach { (k, chi, cc) ->
-            val bmp = remember(chi) { SheetArt.get(ctx, "giap/%02d.jpg".format(chi)) }
             Row(Modifier.weight(1f).clip(RoundedCornerShape(10.dp)).background(tile).padding(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                if (bmp != null) Image(bmp, GIAP_TEN[chi], contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(46.dp).clip(RoundedCornerShape(8.dp)))
+                GiapImage(chi, 52.dp)
                 Spacer(Modifier.width(8.dp))
                 Column {
                     Text(k, fontSize = 11.sp, color = label)

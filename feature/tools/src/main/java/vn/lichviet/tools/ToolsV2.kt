@@ -85,6 +85,7 @@ import vn.lichviet.core.fortune.Person
 import vn.lichviet.core.fortune.SaoHan
 import vn.lichviet.data.Today
 import vn.lichviet.ui.Section
+import vn.lichviet.ui.GiapImage
 import vn.lichviet.ui.ShadowCard
 import vn.lichviet.ui.KeyValue
 import vn.lichviet.ui.goodColor
@@ -140,6 +141,13 @@ fun YearGenderPicker(title: String, key: String, defYear: Int, defMale: Boolean)
                 contentAlignment = Alignment.Center,
             ) { Text("$year", fontSize = 34.sp, fontWeight = FontWeight.Bold) }
             RoundBtn("+") { if (year < 2100) year++ }
+        }
+        val ly = if (beforeTet) year - 1 else year
+        val lc = Math.floorMod(ly + 8, 12)
+        Row(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+            GiapImage(lc, 44.dp)
+            Spacer(Modifier.width(10.dp))
+            Text("${DayInfo.CAN[Math.floorMod(ly + 6, 10)]} ${DayInfo.CHI[lc]} · tuổi ${DayInfo.CON_GIAP[lc]}", fontWeight = FontWeight.SemiBold)
         }
         Row(Modifier.fillMaxWidth().padding(top = 6.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Segment("Nam", male, Modifier.weight(1f)) { male = true }
@@ -239,7 +247,7 @@ fun HopNhauV2(love: Boolean) {
 
 @Composable
 fun ThongTinNamV2() {
-    var y by rememberSaveable { mutableIntStateOf(Today.ymd()[0]) }
+    var y by rememberSaveable { mutableIntStateOf(Today.ymd()[2]) }
     ShadowCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = { if (y > 1801) y-- }) { Icon(Icons.Filled.ChevronLeft, "Năm trước") }
@@ -255,8 +263,14 @@ fun ThongTinNamV2() {
     val info = remember(y) { yearInfo(y) }
     val can = Math.floorMod(y + 6, 10); val chi = Math.floorMod(y + 8, 12)
     Section("Âm lịch năm ${DayInfo.CAN[can]} ${DayInfo.CHI[chi]}") {
-        Text("Con ${DayInfo.CON_GIAP[chi]}", fontSize = 30.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.secondary)
-        Text("Mệnh ${Almanac.napAm(can, chi)} (hành ${Almanac.hanhNapAm(can, chi)})", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            GiapImage(chi, 96.dp)
+            Spacer(Modifier.width(14.dp))
+            Column {
+                Text("Con ${DayInfo.CON_GIAP[chi]}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.secondary)
+                Text("Mệnh ${Almanac.napAm(can, chi)} (hành ${Almanac.hanhNapAm(can, chi)})", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
         KeyValue("Tết Nguyên Đán", info.tet)
         KeyValue("Kết thúc năm âm", info.end)
         KeyValue("Số ngày năm âm", "${info.days} ngày")

@@ -151,7 +151,10 @@ fun goodColor(): Color = LocalLich.current?.good ?: Color(0xFF2E7D4F)
 @Composable
 fun HolidayRow(name: String, sub: String, trailing: String? = null, major: Boolean = false, modifier: Modifier = Modifier) {
     Row(modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
-        HolidayIcon(name, 44.dp)
+        val photo = holidayPhoto(name)
+        if (photo != null) androidx.compose.foundation.Image(photo, null, contentScale = androidx.compose.ui.layout.ContentScale.Crop,
+            modifier = Modifier.size(width = 84.dp, height = 60.dp).clip(androidx.compose.foundation.shape.RoundedCornerShape(12.dp)))
+        else HolidayIcon(name, 44.dp)
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
             Text(name, fontWeight = if (major) FontWeight.Bold else FontWeight.SemiBold, style = MaterialTheme.typography.bodyLarge)
