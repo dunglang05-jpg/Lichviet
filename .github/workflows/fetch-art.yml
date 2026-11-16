@@ -34,6 +34,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A app/src/main/assets/art tools/art
+          git add -A app/src/main/assets/art app/src/main/assets/giap tools/art
           git diff --cached --quiet || git commit -m "Tranh lịch tháng: cập nhật (tự động)"
           git push

@@ -108,6 +108,37 @@ def run_ai(only=None):
             print(f"AI {i:02d} THẤT BẠI")
 
 
+GIAP = ["rat", "water buffalo", "tiger", "cat", "dragon", "snake", "horse", "goat", "monkey", "rooster", "dog", "pig"]
+GIAP_STYLE = (", a single cute cartoon {a} sitting, Vietnamese Dong Ho folk painting style, bold clean outlines, flat warm colors "
+              "(vermilion red, ochre, indigo, moss green), centered on a plain cream background, full body, sticker style, no text")
+
+
+def run_giap():
+    """12 con giáp kiểu Việt Nam (Mèo thay Thỏ, Trâu nước) -> app/src/main/assets/giap/00..11.png (nền kem)."""
+    acc = os.environ["CF_ACCOUNT_ID"].strip()
+    tok = os.environ["CF_API_TOKEN"].strip()
+    out = os.path.join(ROOT, "app/src/main/assets/giap")
+    os.makedirs(out, exist_ok=True)
+    for i, a in enumerate(GIAP):
+        path = os.path.join(out, f"{i:02d}.jpg")
+        for model in ["@cf/black-forest-labs/flux-1-schnell", "@cf/bytedance/stable-diffusion-xl-lightning"]:
+            body = {"prompt": GIAP_STYLE.format(a=a)}
+            if "flux" in model:
+                body["steps"] = 8
+            try:
+                data, ctype = http(f"https://api.cloudflare.com/client/v4/accounts/{acc}/ai/run/{model}", json.dumps(body).encode(),
+                                   {"Authorization": f"Bearer {tok}", "Content-Type": "application/json"})
+                raw = base64.b64decode(json.loads(data)["result"]["image"]) if "json" in ctype else data
+                img = Image.open(io.BytesIO(raw)).convert("RGB")
+                s = min(img.size); img = img.crop(((img.width - s) // 2, (img.height - s) // 2, (img.width + s) // 2, (img.height + s) // 2)).resize((384, 384))
+                img.save(path, "JPEG", quality=85, optimize=True)
+                print(f"GIAP {i:02d} {a} ok ({model})")
+                break
+            except Exception as e:
+                print(f"GIAP {i:02d} {model} lỗi: {e}")
+                time.sleep(2)
+
+
 FREE = re.compile(r"^(public domain|pd|cc0|cc by(-sa)? ?\d(\.\d)?)", re.I)
 
 
@@ -214,6 +245,8 @@ def run_dongho():
 
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "all"
+    if mode == "giap":
+        run_giap()
     if mode.startswith("ai:"):  # vd ai:1,2,9 -> chỉ vẽ lại các tháng này
         run_ai({int(x) for x in mode[3:].split(",") if x.strip()})
     if mode in ("ai", "all"):
