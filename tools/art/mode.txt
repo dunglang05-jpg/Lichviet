@@ -1,1 +1,1 @@
-giap+sukien
+redo:giap=4;sukien=co,thong,tet

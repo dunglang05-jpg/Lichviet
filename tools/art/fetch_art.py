@@ -109,23 +109,23 @@ def run_ai(only=None):
 
 
 GIAP = ["a Vietnamese field rat", "a Vietnamese water buffalo with long curved horns", "an Indochinese tiger", "a Vietnamese domestic cat",
-        "an Asian dragon (Ly dynasty style, long serpentine body)", "a green snake", "a brown horse", "a Vietnamese mountain goat",
+        "a majestic Vietnamese Ly dynasty dragon, long serpentine scaled body with four clawed legs, flowing whiskers and mane, coiling among clouds above rice fields", "a green snake", "a brown horse", "a Vietnamese mountain goat",
         "a macaque monkey", "a Vietnamese rooster with red comb", "a Vietnamese Phu Quoc dog", "a Vietnamese pot-bellied pig"]
 GIAP_STYLE = ("realistic detailed digital painting of {a}, natural proportions and pose, full body, Vietnamese countryside background "
               "softly blurred (rice fields, bamboo), warm natural light, painterly, not cartoon, not cute, no text, no watermark")
 
 SUKIEN = {
-    "tet": "Vietnamese Lunar New Year (Tet) family altar with banh chung, five-fruit tray, peach blossom branch, red couplets, warm light",
+    "tet": "Vietnamese Tet table with square green banh chung cakes, a tray of five fruits, pink peach blossom branch in a vase, red lanterns, warm cozy light",
     "phao": "fireworks over Hoan Kiem lake and the Huc bridge in Hanoi at night, New Year celebration",
     "trang": "bright full moon over Vietnamese rice fields and a village with bamboo at night, incense smoke",
     "den_long": "Vietnamese Mid-Autumn festival, children carrying red star lanterns, mooncakes, Hoi An lanterns at night",
     "sen": "pink lotus pond in front of an ancient Vietnamese pagoda, peaceful morning",
     "trong": "ancient Dong Son bronze drum in a temple of the Hung Kings, Phu Tho, incense and offerings",
-    "co": "Vietnamese red flag with a yellow star waving over Ba Dinh square in Hanoi, blue sky",
+    "co": "Ba Dinh square and Ho Chi Minh mausoleum in Hanoi on a sunny day, many small red flags along the avenue, wide view",
     "sach": "open books, fountain pen and a bouquet of flowers on a wooden teacher's desk in a Vietnamese classroom",
     "hoa": "bouquet of roses, lotus and sunflowers wrapped in paper, Vietnamese women's day gift",
     "tim": "red roses and a heart-shaped gift box on a table, romantic soft light",
-    "thong": "decorated Christmas tree in front of the Saigon Notre-Dame cathedral at night, festive lights",
+    "thong": "a decorated Christmas tree with warm lights beside a red-brick gothic cathedral at night, Saigon street, no signs",
     "ca_chep": "releasing red carp into a lake for the Kitchen Gods festival (Ong Tao), Vietnamese tradition, paper hats offerings",
     "banh": "Vietnamese traditional rice cakes banh troi and banh chay, banh tro on banana leaves, rustic table",
     "bong": "happy Vietnamese children holding colorful balloons in a park, sunny day",
@@ -152,11 +152,13 @@ def cf_image(prompt):
     return None
 
 
-def run_giap():
+def run_giap(only=None):
     """12 con giáp kiểu Việt Nam (Mèo thay Thỏ, Trâu nước), vẽ tả thực -> assets/giap/00..11.jpg."""
     out = os.path.join(ROOT, "app/src/main/assets/giap")
     os.makedirs(out, exist_ok=True)
     for i, a in enumerate(GIAP):
+        if only and i not in only:
+            continue
         img = cf_image(GIAP_STYLE.format(a=a))
         if img is None:
             continue
@@ -165,11 +167,13 @@ def run_giap():
         print(f"GIAP {i:02d} ok")
 
 
-def run_sukien():
+def run_sukien(only=None):
     """Ảnh minh họa cho thẻ sự kiện theo nhóm ngày lễ -> assets/sukien/<nhom>.jpg (16:9)."""
     out = os.path.join(ROOT, "app/src/main/assets/sukien")
     os.makedirs(out, exist_ok=True)
     for k, a in SUKIEN.items():
+        if only and k not in only:
+            continue
         img = cf_image(SUKIEN_STYLE.format(a=a))
         if img is None:
             continue
@@ -285,6 +289,13 @@ def run_dongho():
 
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "all"
+    if mode.startswith("redo:"):  # vd redo:giap=4;sukien=co,tet
+        for part in mode[5:].split(";"):
+            k, v = part.split("=")
+            if k == "giap":
+                run_giap({int(x) for x in v.split(",")})
+            else:
+                run_sukien(set(v.split(",")))
     if mode in ("giap", "giap+sukien"):
         run_giap()
     if mode in ("sukien", "giap+sukien"):
