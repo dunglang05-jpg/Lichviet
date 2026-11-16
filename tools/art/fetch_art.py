@@ -154,6 +154,17 @@ def cf_image(prompt):
     return None
 
 
+def cf_image_retry(prompt, tries=6):
+    for t in range(tries):
+        img = cf_image(prompt)
+        if img is not None:
+            time.sleep(8)
+            return img
+        print(f"chờ {60 * (t + 1)}s rồi thử lại")
+        time.sleep(60 * (t + 1))
+    return None
+
+
 def run_giap(only=None):
     """12 con giáp kiểu Việt Nam (Mèo thay Thỏ, Trâu nước), vẽ tả thực -> assets/giap/00..11.jpg."""
     out = os.path.join(ROOT, "app/src/main/assets/giap")
@@ -161,7 +172,7 @@ def run_giap(only=None):
     for i, a in enumerate(GIAP):
         if only and i not in only:
             continue
-        img = cf_image(GIAP_STYLE.format(a=a))
+        img = cf_image_retry(GIAP_STYLE.format(a=a))
         if img is None:
             continue
         s = min(img.size); img = img.crop(((img.width - s) // 2, (img.height - s) // 2, (img.width + s) // 2, (img.height + s) // 2)).resize((512, 512))
