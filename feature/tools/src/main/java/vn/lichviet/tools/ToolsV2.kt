@@ -463,7 +463,7 @@ fun LoBanV2() {
             IconButton(onClick = { cm = (cm + .5f).coerceAtMost(1000f) }) { Icon(Icons.Outlined.AddCircleOutline, "Tăng", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(36.dp)) }
         }
         Ruler(type, cm) { cm = it }
-        Text("Kéo thước sang trái, phải để đổi số đo. Ô xanh là cung tốt, ô xám là cung xấu.", color = MaterialTheme.colorScheme.onSurfaceVariant,
+        Text("Kéo thước sang trái, phải để đổi số đo. Cung đỏ là cung tốt, cung đen là cung xấu.", color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
     }
     val c = LoBan.cung(type, cm.toDouble())
@@ -497,17 +497,16 @@ fun LoBanV2() {
 
 private fun fmt(v: Float): String = if (v == floor(v)) v.toInt().toString() else "%.1f".format(v).replace('.', ',')
 
+/** Thước Lỗ Ban vẽ như thước cuộn thật: thân vàng, cung tốt màu đỏ, cung xấu màu đen, kim xanh ở giữa. */
 @Composable
 private fun Ruler(type: Int, cm: Float, onChange: (Float) -> Unit) {
     val tm = rememberTextMeasurer()
-    val good = goodColor(); val ink = MaterialTheme.colorScheme.onSurface
-    val dim = MaterialTheme.colorScheme.onSurfaceVariant
-    val red = MaterialTheme.colorScheme.primary
-    val bgBad = MaterialTheme.colorScheme.outlineVariant.copy(alpha = .35f)
-    val pxPerCm = 34f
+    val body = Color(0xFFF5C842); val bodyDark = Color(0xFFE0A91E); val ink = Color(0xFF1B1B1B)
+    val red = Color(0xFFC62828); val needle = Color(0xFF1565C0)
+    val pxPerCm = 40f
     var drag by remember { mutableFloatStateOf(cm) }
     Canvas(
-        Modifier.fillMaxWidth().height(150.dp).padding(top = 10.dp).pointerInput(type) {
+        Modifier.fillMaxWidth().height(210.dp).padding(vertical = 10.dp).clip(RoundedCornerShape(10.dp)).pointerInput(type) {
             detectHorizontalDragGestures(onDragStart = { drag = cm }) { ch, dx ->
                 ch.consume(); drag = (drag - dx / (pxPerCm * density)).coerceIn(1f, 1000f)
                 onChange((drag * 10).roundToInt() / 10f)
@@ -519,38 +518,46 @@ private fun Ruler(type: Int, cm: Float, onChange: (Float) -> Unit) {
         val len = LoBan.LEN[type].toFloat(); val n = LoBan.CUNG[type].size; val w = len / n
         val from = cm - cx / k; val to = cm + cx / k
         val x = { v: Float -> cx + (v - cm) * k }
-        // vạch cm
-        var t = floor(from).toInt()
-        while (t <= to) {
-            val big = t % 5 == 0
-            drawLine(if (big) ink else dim, Offset(x(t.toFloat()), 30f), Offset(x(t.toFloat()), if (big) 64f else 48f), if (big) 4f else 2f)
-            val m = tm.measure("$t", TextStyle(fontSize = 13.sp, color = if (big) ink else dim, fontWeight = if (big) FontWeight.Bold else FontWeight.Normal))
-            drawText(m, topLeft = Offset(x(t.toFloat()) - m.size.width / 2, 0f))
-            t++
+        val H = size.height
+        // thân thước vàng, viền dưới đậm như mép kim loại
+        drawRect(body, Offset.Zero, Size(size.width, H))
+        drawRect(bodyDark, Offset(0f, H - 8f), Size(size.width, 8f))
+        // vạch mm / cm
+        val mmFrom = floor(from * 10).toInt(); val mmTo = (to * 10).toInt()
+        for (mm in mmFrom..mmTo) {
+            val xx = x(mm / 10f)
+            val h = when { mm % 10 == 0 -> 34f * density / 2.6f; mm % 5 == 0 -> 24f * density / 2.6f; else -> 14f * density / 2.6f }
+            drawLine(ink, Offset(xx, 0f), Offset(xx, h), if (mm % 10 == 0) 3f else 1.3f)
+            if (mm % 10 == 0) {
+                val v = mm / 10
+                val m = tm.measure("$v", TextStyle(fontSize = 14.sp, fontWeight = if (v % 5 == 0) FontWeight.ExtraBold else FontWeight.SemiBold, color = ink))
+                drawText(m, topLeft = Offset(xx - m.size.width / 2, 36f * density / 2.6f))
+            }
         }
-        // cung lớn và cung nhỏ
+        // dải cung lớn và cung nhỏ
+        val bandY = H * .42f; val bandH = H * .24f; val subY = bandY + bandH + 3f; val subH = H * .22f
         var g = floor(from / w).toInt()
         while (g * w <= to) {
             val ci = Math.floorMod(g, n); val ok = LoBan.TOT[type][ci]
+            val col = if (ok) red else ink
             val x0 = x(g * w); val x1 = x((g + 1) * w)
-            drawRect(if (ok) good else bgBad, Offset(x0, 70f), Size(x1 - x0 - 2f, 64f * density / 2.6f))
-            val m = tm.measure(LoBan.CUNG[type][ci], TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold, color = if (ok) Color.White else ink))
-            val mid = ((x0 + x1) / 2).coerceIn(x0 + m.size.width / 2f, x1 - m.size.width / 2f)
-            drawText(m, topLeft = Offset(mid - m.size.width / 2, 70f + (64f * density / 2.6f - m.size.height) / 2))
+            drawRect(col, Offset(x0, bandY), Size(x1 - x0 - 2f, bandH))
+            val m = tm.measure(LoBan.CUNG[type][ci].uppercase(), TextStyle(fontSize = 15.sp, fontWeight = FontWeight.ExtraBold, color = body))
+            val mid = ((x0 + x1) / 2).coerceIn(x0 + m.size.width / 2f + 4f, x1 - m.size.width / 2f - 4f)
+            drawText(m, topLeft = Offset(mid - m.size.width / 2, bandY + (bandH - m.size.height) / 2))
             val subs = LoBan.SUB[type][ci]; val sw = (x1 - x0) / subs.size
-            val y0 = 70f + 64f * density / 2.6f + 4f
             subs.forEachIndexed { j, sn ->
                 val sx = x0 + j * sw
-                drawRect(if (ok) good.copy(alpha = .14f) else bgBad.copy(alpha = .25f), Offset(sx, y0), Size(sw - 2f, 30f * density / 1.3f))
-                val ms = tm.measure(sn, TextStyle(fontSize = 11.sp, color = if (ok) good else dim), maxLines = 1, overflow = TextOverflow.Ellipsis,
-                    constraints = androidx.compose.ui.unit.Constraints(maxWidth = (sw - 6f).toInt().coerceAtLeast(1)))
-                drawText(ms, topLeft = Offset(sx + (sw - ms.size.width) / 2, y0 + (30f * density / 1.3f - ms.size.height) / 2))
+                drawLine(col, Offset(sx, subY), Offset(sx, subY + subH), 2f)
+                val ms = tm.measure(sn, TextStyle(fontSize = 11.sp, fontWeight = FontWeight.Bold, color = col), maxLines = 2,
+                    overflow = TextOverflow.Ellipsis, constraints = androidx.compose.ui.unit.Constraints(maxWidth = (sw - 6f).toInt().coerceAtLeast(1)))
+                drawText(ms, topLeft = Offset(sx + (sw - ms.size.width) / 2, subY + (subH - ms.size.height) / 2))
             }
             g++
         }
-        // kim đỏ ở giữa
-        drawLine(red, Offset(cx, 22f), Offset(cx, size.height), 6f)
-        val tri = Path().apply { moveTo(cx - 14f, 18f); lineTo(cx + 14f, 18f); lineTo(cx, 38f); close() }
-        drawPath(tri, red)
+        // kim đo
+        drawLine(needle, Offset(cx, 0f), Offset(cx, H), 5f)
+        val tri = Path().apply { moveTo(cx - 16f, 0f); lineTo(cx + 16f, 0f); lineTo(cx, 22f); close() }
+        drawPath(tri, needle)
     }
 }

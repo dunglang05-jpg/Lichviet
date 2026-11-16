@@ -239,6 +239,7 @@ private fun PaperSheet(d: DayInfo, today: Boolean) {
                 CC("Năm", d.yearCanChi); CC("Tháng", d.monthCanChi); CC("Ngày", d.dayCanChi); CC("Tiết", d.tietKhiCurrent)
             }
         }
+        GiapRow(d, dark = false)
         Text("Giờ hoàng đạo: ${goodHours(d)}", style = MaterialTheme.typography.bodySmall, color = Color(0xFF2B211A),
             modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp))
         val good = d.hoangDao
@@ -294,6 +295,7 @@ private fun PaintingSheet(d: DayInfo, today: Boolean) {
             }
         }
         d.holidays.firstOrNull()?.let { Text(it.name, color = Color(0xFFF0C24A), fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 10.dp)) }
+        GiapRow(d, dark = true)
         Text("Giờ hoàng đạo: ${goodHours(d)}", color = Color(0xFFF3E6D8), fontSize = 12.5.sp, modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp))
         val good = d.hoangDao
         Text("${if (good) "Hoàng đạo" else "Hắc đạo"} · ${d.than12} · Trực ${d.truc}", fontWeight = FontWeight.Bold,
@@ -303,3 +305,29 @@ private fun PaintingSheet(d: DayInfo, today: Boolean) {
     }
 }
 
+
+private val GIAP_TEN = listOf("Chuột", "Trâu", "Hổ", "Mèo", "Rồng", "Rắn", "Ngựa", "Dê", "Khỉ", "Gà", "Chó", "Lợn")
+
+@Composable
+private fun GiapRow(d: DayInfo, dark: Boolean) {
+    val ctx = LocalContext.current
+    val yearChi = (d.lunarYear + 8) % 12
+    val label = if (dark) Color(0xFFB9A898) else Color(0xFF8A7A6A)
+    val value = if (dark) Color(0xFFFFF3E4) else Color(0xFF2B211A)
+    val tile = if (dark) Color(0xFF2A201C) else Color(0xFFF3EAD6)
+    Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        listOf(Triple("Con giáp ngày", d.dayChi, d.dayCanChi), Triple("Con giáp năm", yearChi, d.yearCanChi)).forEach { (k, chi, cc) ->
+            val bmp = remember(chi) { SheetArt.get(ctx, "giap/%02d.jpg".format(chi)) }
+            Row(Modifier.weight(1f).clip(RoundedCornerShape(10.dp)).background(tile).padding(6.dp), verticalAlignment = Alignment.CenterVertically) {
+                if (bmp != null) Image(bmp, GIAP_TEN[chi], contentScale = ContentScale.Crop,
+                    modifier = Modifier.size(46.dp).clip(RoundedCornerShape(8.dp)))
+                Spacer(Modifier.width(8.dp))
+                Column {
+                    Text(k, fontSize = 11.sp, color = label)
+                    Text(GIAP_TEN[chi], fontSize = 14.sp, fontWeight = FontWeight.Bold, color = value)
+                    Text(cc, fontSize = 11.sp, color = label)
+                }
+            }
+        }
+    }
+}

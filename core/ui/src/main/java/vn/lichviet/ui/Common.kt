@@ -79,9 +79,9 @@ fun Section(title: String, modifier: Modifier = Modifier, content: @Composable C
 }
 
 @Composable
-fun SectionTitle(title: String, color: Color = MaterialTheme.colorScheme.primary) {
+fun SectionTitle(title: String, color: Color = MaterialTheme.colorScheme.primary, modifier: Modifier = Modifier) {
     val spec = LocalLich.current
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 2.dp)) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.padding(bottom = 2.dp)) {
         Box(Modifier.width(4.dp).height(18.dp).clip(RoundedCornerShape(2.dp)).background(spec?.accent ?: color))
         Spacer(Modifier.width(8.dp))
         Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)

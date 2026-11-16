@@ -140,3 +140,52 @@ fun Motif(spec: ThemeSpec, modifier: Modifier, alpha: Float = 1f, swap: Boolean 
         drawMotif(spec.pattern, size.width / 2, size.height / 2, size.minDimension * .45f, if (swap) b else a, if (swap) a else b)
     }
 }
+
+/**
+ * Hoa văn ẩn ở nền: mặt trống đồng Đông Sơn (góc trên phải, khuất một nửa) và ruộng bậc thang (dưới đáy).
+ * Vẽ rất mờ để chỉ thấy khi nhìn kỹ, không làm rối nội dung.
+ */
+fun DrawScope.drawHeritage(color: Color, alpha: Float = .06f) {
+    val c = color.copy(alpha = alpha)
+    val w = size.width; val h = size.height
+    // trống đồng
+    val r = w * .62f
+    val o = Offset(w * 1.02f, h * .1f)
+    drawCircle(c, r, o, style = Stroke(2.5f))
+    for (k in 1..6) drawCircle(c, r * (1f - k * .13f), o, style = Stroke(if (k % 2 == 0) 4f else 1.5f))
+    // ngôi sao 14 cánh ở tâm trống
+    val star = Path()
+    for (i in 0 until 28) {
+        val rr = if (i % 2 == 0) r * .2f else r * .07f
+        val a = i * PI / 14
+        val x = o.x + (rr * cos(a)).toFloat(); val y = o.y + (rr * sin(a)).toFloat()
+        if (i == 0) star.moveTo(x, y) else star.lineTo(x, y)
+    }
+    star.close(); drawPath(star, c)
+    // vành chim Lạc bay (cách điệu bằng các chữ V)
+    for (i in 0 until 36) {
+        val a = i * 2 * PI / 36
+        val rr = r * .55f
+        val px = o.x + (rr * cos(a)).toFloat(); val py = o.y + (rr * sin(a)).toFloat()
+        rotate((a * 180 / PI).toFloat() + 90f, Offset(px, py)) {
+            drawLine(c, Offset(px - 8f, py - 5f), Offset(px, py), 2f)
+            drawLine(c, Offset(px, py), Offset(px + 8f, py - 5f), 2f)
+        }
+    }
+    // ruộng bậc thang
+    for (k in 0 until 7) {
+        val y0 = h * (.8f + k * .035f)
+        val p = Path().apply {
+            moveTo(0f, y0)
+            cubicTo(w * .25f, y0 - h * .03f, w * .5f, y0 + h * .025f, w * .75f, y0 - h * .015f)
+            quadraticBezierTo(w * .9f, y0 - h * .03f, w, y0 - h * .01f)
+        }
+        drawPath(p, c, style = Stroke(2f))
+        // bông lúa nhỏ dọc bờ
+        for (j in 0 until 9) {
+            val x = w * (.05f + j * .11f) + k * 7f
+            val yy = y0 - 6f + (j % 3) * 3f
+            drawLine(c, Offset(x, yy), Offset(x + 3f, yy - 10f), 1.5f)
+        }
+    }
+}

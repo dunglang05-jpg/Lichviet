@@ -84,23 +84,19 @@ fun ConverterSection(todayJd: Int, onOpenDay: (Int) -> Unit) {
     val num = KeyboardOptions(keyboardType = KeyboardType.Number)
 
     Section("Dương lịch → Âm lịch") {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedTextField(sd, { sd = it }, Modifier.weight(1f), label = { Text("Ngày") }, keyboardOptions = num, singleLine = true)
-            OutlinedTextField(sm, { sm = it }, Modifier.weight(1f), label = { Text("Tháng") }, keyboardOptions = num, singleLine = true)
-            OutlinedTextField(sy, { sy = it }, Modifier.weight(1.4f), label = { Text("Năm") }, keyboardOptions = num, singleLine = true)
-        }
+        DateFields(sd, sm, sy, "Ngày dương lịch") { a, b, c -> sd = a; sm = b; sy = c }
         val d = sd.toIntOrNull(); val m = sm.toIntOrNull(); val y = sy.toIntOrNull()
         if (d != null && m != null && y != null && m in 1..12 && y in 1800..2199 && d in 1..vn.lichviet.core.Holidays.daysInMonth(m, y)) {
             val info = DayInfo.of(d, m, y)
-            Text(info.lunarFull(), fontWeight = FontWeight.Bold, modifier = Modifier.clickable { onOpenDay(info.jd) })
+            Text(info.lunarFull(), fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium, modifier = Modifier.clickable { onOpenDay(info.jd) })
             Text("${DayInfo.THU[info.weekday]} · Ngày ${info.dayCanChi} · ${info.verdict}", style = MaterialTheme.typography.bodySmall)
-        } else Text("Ngày không hợp lệ (hỗ trợ năm 1800–2199)", color = MaterialTheme.colorScheme.error)
+        }
     }
     Section("Âm lịch → Dương lịch") {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedTextField(ld, { ld = it }, Modifier.weight(1f), label = { Text("Ngày") }, keyboardOptions = num, singleLine = true)
-            OutlinedTextField(lm, { lm = it }, Modifier.weight(1f), label = { Text("Tháng") }, keyboardOptions = num, singleLine = true)
-            OutlinedTextField(ly, { ly = it }, Modifier.weight(1.4f), label = { Text("Năm") }, keyboardOptions = num, singleLine = true)
+            NumberStepper("Ngày", ld.toIntOrNull() ?: 1, 1..30, Modifier.weight(1f)) { ld = it.toString() }
+            NumberStepper("Tháng", lm.toIntOrNull() ?: 1, 1..12, Modifier.weight(1f)) { lm = it.toString() }
+            NumberStepper("Năm", ly.toIntOrNull() ?: 2026, 1800..2199, Modifier.weight(1.3f)) { ly = it.toString() }
         }
         Row(verticalAlignment = Alignment.CenterVertically) { Switch(leap, { leap = it }); Text("  Tháng nhuận") }
         val d = ld.toIntOrNull(); val m = lm.toIntOrNull(); val y = ly.toIntOrNull()

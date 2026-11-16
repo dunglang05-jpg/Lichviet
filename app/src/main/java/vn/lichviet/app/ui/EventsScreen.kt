@@ -124,27 +124,25 @@ fun EventsScreen(todayJd: Int, onOpenDay: (Int) -> Unit, modifier: Modifier = Mo
                         }
                     }
                 }
-                item {
-                    ShadowCard {
-                        SectionTitle("Tháng $month / $year")
-                        if (monthItems.isEmpty()) Text("Không có ngày lễ.", color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        monthItems.forEachIndexed { i, row ->
-                            val jd = row[0] as Int
-                            val item = row[4] as Holidays.Item
-                            val d = dayOf(jd)
-                            val left = jd - todayJd
-                            val trailing = when {
-                                left == 0 -> "Hôm nay"
-                                left > 0 -> "còn $left ngày"
-                                else -> null
-                            }
-                            if (i > 0) Box(Modifier.fillMaxWidth().height(1.dp).background(MaterialTheme.colorScheme.outlineVariant))
-                            HolidayRow(
-                                item.name,
-                                "${DayInfo.THU_NGAN[d.weekday]} ${d.solarDay}/${d.solarMonth} · ${d.lunarText()} âm" + if (item.major) " · nghỉ lễ" else "",
-                                trailing, item.major, Modifier.clickable { onOpenDay(jd) },
-                            )
-                        }
+                item { SectionTitle("Tháng $month / $year", modifier = Modifier.padding(start = 20.dp, top = 10.dp)) }
+                if (monthItems.isEmpty()) item { ShadowCard { Text("Không có ngày lễ.", color = MaterialTheme.colorScheme.onSurfaceVariant) } }
+                items(monthItems.size) { i ->
+                    val row = monthItems[i]
+                    val jd = row[0] as Int
+                    val item = row[4] as Holidays.Item
+                    val d = dayOf(jd)
+                    val left = jd - todayJd
+                    val trailing = when {
+                        left == 0 -> "Hôm nay"
+                        left > 0 -> "còn $left ngày"
+                        else -> null
+                    }
+                    ShadowCard(Modifier.clickable { onOpenDay(jd) }, elevation = 2.dp) {
+                        HolidayRow(
+                            item.name,
+                            "${DayInfo.THU_NGAN[d.weekday]} ${d.solarDay}/${d.solarMonth} · ${d.lunarText()} âm" + if (item.major) " · nghỉ lễ" else "",
+                            trailing, item.major,
+                        )
                     }
                 }
             } else {

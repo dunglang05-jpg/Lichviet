@@ -5,6 +5,9 @@ package vn.lichviet.app.ui
 import vn.lichviet.ui.*
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -101,25 +104,30 @@ fun MonthScreen(selectedJd: Int, todayJd: Int, onPick: (Int) -> Unit, modifier: 
                         d.weekday == 0 || d.holidays.any { it.major } -> MaterialTheme.colorScheme.error
                         else -> MaterialTheme.colorScheme.onSurface
                     }
+                    val border = when {
+                        isToday || isSel -> MaterialTheme.colorScheme.primary
+                        else -> MaterialTheme.colorScheme.outlineVariant.copy(alpha = if (inMonth) .7f else .3f)
+                    }
                     Column(
-                        Modifier.weight(1f).height(60.dp).padding(2.dp).clip(RoundedCornerShape(10.dp)).background(bg)
+                        Modifier.weight(1f).height(70.dp).padding(2.dp).clip(RoundedCornerShape(12.dp)).background(bg)
+                            .border(if (isSel && !isToday) 2.dp else 1.dp, border, RoundedCornerShape(12.dp))
                             .clickable { onPick(d.jd) },
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                     ) {
-                        Text("${d.solarDay}", color = fg, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                        Text(if (d.lunarDay == 1) "${d.lunarDay}/${d.lunarMonth}" else "${d.lunarDay}", color = fg, fontSize = 10.sp)
-                        val dot = when {
-                            !inMonth -> Color.Transparent
-                            d.holidays.isNotEmpty() -> MaterialTheme.colorScheme.primary
-                            d.score >= 4 -> goodColor()
-                            else -> Color.Transparent
+                        Text("${d.solarDay}", color = fg, fontWeight = FontWeight.ExtraBold, fontSize = 21.sp, lineHeight = 24.sp)
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+                            Text(if (d.lunarDay == 1) "${d.lunarDay}/${d.lunarMonth}" else "${d.lunarDay}", color = fg.copy(alpha = .8f), fontSize = 11.sp)
+                            val dot = when {
+                                !inMonth -> Color.Transparent
+                                d.holidays.isNotEmpty() -> MaterialTheme.colorScheme.secondary
+                                d.score >= 4 -> goodColor()
+                                else -> Color.Transparent
+                            }
+                            Box(Modifier.size(5.dp).clip(CircleShape).background(dot))
                         }
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-                            val mp = remember(d.jd) { MoonPhase.of(d.solarDay, d.solarMonth, d.solarYear) }
-                            MoonDisc(mp.fraction, Modifier.size(9.dp), dark = fg.copy(alpha = 0.22f), ring = fg)
-                            Text("●", color = dot, fontSize = 7.sp)
-                        }
+                        val mp = remember(d.jd) { MoonPhase.of(d.solarDay, d.solarMonth, d.solarYear) }
+                        MoonDisc(mp.fraction, Modifier.padding(top = 2.dp).size(10.dp), dark = fg.copy(alpha = 0.22f), ring = fg)
                     }
                 }
             }
@@ -127,18 +135,17 @@ fun MonthScreen(selectedJd: Int, todayJd: Int, onPick: (Int) -> Unit, modifier: 
         Text("● ngày tốt   ● ngày lễ   · chạm một ngày để xem chi tiết", style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 6.dp))
         }
-        ShadowCard {
-            SectionTitle("Ngày lễ trong tháng $month")
-            if (monthHolidays.isEmpty()) Text("Không có ngày lễ.", color = MaterialTheme.colorScheme.onSurfaceVariant)
-            monthHolidays.forEach { row ->
-                val jd = row[0] as Int
-                val item = row[4] as Holidays.Item
-                val d = dayOf(jd)
-                val left = jd - todayJd
+        SectionTitle("Ngày lễ trong tháng $month", modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 2.dp))
+        if (monthHolidays.isEmpty()) Text("Không có ngày lễ.", color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 20.dp))
+        monthHolidays.forEach { row ->
+            val jd = row[0] as Int
+            val item = row[4] as Holidays.Item
+            val d = dayOf(jd)
+            val left = jd - todayJd
+            ShadowCard(Modifier.clickable { onPick(jd) }, elevation = 2.dp) {
                 HolidayRow(
                     item.name, "${DayInfo.THU_NGAN[d.weekday]} ${d.solarDay}/${d.solarMonth} · ${d.lunarText()} âm",
                     if (left == 0) "Hôm nay" else if (left > 0) "còn $left ngày" else null, item.major,
-                    Modifier.clickable { onPick(jd) },
                 )
             }
         }

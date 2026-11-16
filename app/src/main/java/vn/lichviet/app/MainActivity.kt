@@ -33,6 +33,7 @@ import vn.lichviet.ui.dayOf
 import vn.lichviet.ui.theme.LichTheme
 import vn.lichviet.ui.theme.Themes
 import vn.lichviet.ui.theme.drawPattern
+import vn.lichviet.ui.theme.drawHeritage
 import vn.lichviet.data.SettingsRepository
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
@@ -112,7 +113,7 @@ private fun AppRoot(activity: ComponentActivity) {
 
     LichTheme(spec) {
     Box(
-        Modifier.fillMaxSize().background(spec.bg),
+        Modifier.fillMaxSize().background(spec.bg).drawBehind { drawHeritage(spec.ink, if (spec.dark) .07f else .05f) },
     ) {
     if (showSettings) {
         SettingsScreen(onBack = { showSettings = false })

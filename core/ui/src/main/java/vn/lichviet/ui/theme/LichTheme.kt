@@ -7,6 +7,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import vn.lichviet.ui.R
+
+/** Be Vietnam Pro – font chữ do người Việt thiết kế, hiển thị dấu tiếng Việt rõ ràng. */
+val BeVietnam = FontFamily(
+    Font(R.font.be_vietnam_pro_regular, FontWeight.Normal),
+    Font(R.font.be_vietnam_pro_medium, FontWeight.Medium),
+    Font(R.font.be_vietnam_pro_semibold, FontWeight.SemiBold),
+    Font(R.font.be_vietnam_pro_bold, FontWeight.Bold),
+    Font(R.font.be_vietnam_pro_extrabold, FontWeight.ExtraBold),
+    Font(R.font.be_vietnam_pro_extrabold, FontWeight.Black),
+)
+
+private val base = Typography()
+val LichTypography = Typography(
+    displayLarge = base.displayLarge.copy(fontFamily = BeVietnam), displayMedium = base.displayMedium.copy(fontFamily = BeVietnam),
+    displaySmall = base.displaySmall.copy(fontFamily = BeVietnam), headlineLarge = base.headlineLarge.copy(fontFamily = BeVietnam),
+    headlineMedium = base.headlineMedium.copy(fontFamily = BeVietnam), headlineSmall = base.headlineSmall.copy(fontFamily = BeVietnam),
+    titleLarge = base.titleLarge.copy(fontFamily = BeVietnam, fontWeight = FontWeight.Bold), titleMedium = base.titleMedium.copy(fontFamily = BeVietnam),
+    titleSmall = base.titleSmall.copy(fontFamily = BeVietnam), bodyLarge = base.bodyLarge.copy(fontFamily = BeVietnam),
+    bodyMedium = base.bodyMedium.copy(fontFamily = BeVietnam), bodySmall = base.bodySmall.copy(fontFamily = BeVietnam),
+    labelLarge = base.labelLarge.copy(fontFamily = BeVietnam), labelMedium = base.labelMedium.copy(fontFamily = BeVietnam),
+    labelSmall = base.labelSmall.copy(fontFamily = BeVietnam),
+)
 
 /** Giao diện đang dùng, để màn hình lấy màu tốt/xấu, tên nhóm... */
 val LocalLich = staticCompositionLocalOf<ThemeSpec?> { null }
@@ -47,6 +74,8 @@ fun LichTheme(spec: ThemeSpec, content: @Composable () -> Unit) {
         )
     }
     CompositionLocalProvider(LocalLich provides spec) {
-        MaterialTheme(colorScheme = scheme, content = content)
+        MaterialTheme(colorScheme = scheme, typography = LichTypography) {
+            androidx.compose.material3.ProvideTextStyle(LichTypography.bodyMedium, content)
+        }
     }
 }

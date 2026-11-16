@@ -3,6 +3,14 @@
 package vn.lichviet.tools
 
 import vn.lichviet.ui.*
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -59,12 +67,63 @@ fun mySettings(): AppSettings {
 
 /** Ô nhập ngày/tháng/năm dương lịch. */
 @Composable
-fun DateFields(d: String, m: String, y: String, onChange: (String, String, String) -> Unit) {
-    val kb = KeyboardOptions(keyboardType = KeyboardType.Number)
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        OutlinedTextField(d, { onChange(it.filter(Char::isDigit).take(2), m, y) }, Modifier.weight(1f), label = { Text("Ngày") }, singleLine = true, keyboardOptions = kb)
-        OutlinedTextField(m, { onChange(d, it.filter(Char::isDigit).take(2), y) }, Modifier.weight(1f), label = { Text("Tháng") }, singleLine = true, keyboardOptions = kb)
-        OutlinedTextField(y, { onChange(d, m, it.filter(Char::isDigit).take(4)) }, Modifier.weight(1.4f), label = { Text("Năm") }, singleLine = true, keyboardOptions = kb)
+fun DateFields(d: String, m: String, y: String, label: String = "Ngày sinh (dương lịch)", onChange: (String, String, String) -> Unit) {
+    var open by remember { mutableStateOf(false) }
+    val has = validDate(d.toIntOrNull() ?: 0, m.toIntOrNull() ?: 0, y.toIntOrNull() ?: 0)
+    InputBox(label, if (has) "$d/$m/$y" else "Chọn ngày", has, Modifier.fillMaxWidth()) { open = true }
+    if (open) {
+        val init = if (has) java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC")).apply {
+            clear(); set(y.toInt(), m.toInt() - 1, d.toInt())
+        }.timeInMillis else null
+        val st = androidx.compose.material3.rememberDatePickerState(initialSelectedDateMillis = init, initialDisplayMode = androidx.compose.material3.DisplayMode.Input,
+            yearRange = 1900..2100)
+        androidx.compose.material3.DatePickerDialog(
+            onDismissRequest = { open = false },
+            confirmButton = { TextButton(onClick = {
+                st.selectedDateMillis?.let { ms ->
+                    val c = java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC")).apply { timeInMillis = ms }
+                    onChange(c.get(java.util.Calendar.DAY_OF_MONTH).toString(), (c.get(java.util.Calendar.MONTH) + 1).toString(), c.get(java.util.Calendar.YEAR).toString())
+                }
+                open = false
+            }) { Text("Chọn") } },
+            dismissButton = { TextButton(onClick = { open = false }) { Text("Hủy") } },
+        ) { androidx.compose.material3.DatePicker(st, showModeToggle = true, title = null) }
+    }
+}
+
+/** Ô nhập kiểu thẻ: nhãn nhỏ phía trên, giá trị lớn, viền bo tròn; bấm để mở bộ chọn. */
+@Composable
+fun InputBox(label: String, value: String, filled: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    Column(
+        modifier.clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .35f))
+            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(16.dp))
+            .clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 10.dp),
+    ) {
+        Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(value, style = MaterialTheme.typography.titleLarge, fontWeight = if (filled) FontWeight.Bold else FontWeight.Normal,
+                color = if (filled) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(1f))
+            androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Filled.CalendarMonth, null, tint = MaterialTheme.colorScheme.primary)
+        }
+    }
+}
+
+/** Bộ chỉnh số: nhãn, nút −, giá trị, nút +. */
+@Composable
+fun NumberStepper(label: String, value: Int, range: IntRange, modifier: Modifier = Modifier, onChange: (Int) -> Unit) {
+    Column(
+        modifier.clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = .35f))
+            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(16.dp)).padding(vertical = 6.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("−", fontSize = 22.sp, color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clip(CircleShape).clickable { onChange(if (value <= range.first) range.last else value - 1) }.padding(horizontal = 10.dp))
+            Text("$value", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+            Text("+", fontSize = 22.sp, color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clip(CircleShape).clickable { onChange(if (value >= range.last) range.first else value + 1) }.padding(horizontal = 10.dp))
+        }
     }
 }
 
@@ -97,7 +156,6 @@ fun FullProfileDialog(onDismiss: () -> Unit) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(name, { name = it }, label = { Text("Họ và tên") }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 GenderChips(male) { male = it }
-                Text("Ngày sinh dương lịch", style = MaterialTheme.typography.labelMedium)
                 DateFields(d, m, y) { a, b, c -> d = a; m = b; y = c }
                 OutlinedTextField(hour, { hour = it.filter(Char::isDigit).take(2) }, label = { Text("Giờ sinh 0–23 (không bắt buộc)") },
                     singleLine = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), modifier = Modifier.fillMaxWidth())
@@ -175,8 +233,13 @@ fun PersonPicker(title: String, preferMe: Boolean = true, key: String = title): 
             item { FilterChip(sel == "other", { sel = "other" }, label = { Text("Người khác") }) }
         }
         if (sel == "me" && me == null) {
-            Text("Bạn chưa nhập ngày sinh.", color = MaterialTheme.colorScheme.error)
-            TextButton(onClick = { edit = true }) { Text("Nhập hồ sơ") }
+            val ctx2 = LocalContext.current
+            Text("Nhập ngày sinh của bạn (lưu vào hồ sơ):", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            GenderChips(s.male) { v -> SettingsRepository.get(ctx2).update { it.copy(male = v) } }
+            DateFields("", "", "") { a, b, c ->
+                val dd = a.toInt(); val mm = b.toInt(); val yy = c.toInt()
+                SettingsRepository.get(ctx2).update { it.copy(birthD = dd, birthM = mm, birthY = yy, birthYear = LunarCalendar.solarToLunar(dd, mm, yy)[2]) }
+            }
         }
         if (sel == "other") {
             OutlinedTextField(name, { name = it }, label = { Text("Họ tên (không bắt buộc)") }, singleLine = true, modifier = Modifier.fillMaxWidth())
