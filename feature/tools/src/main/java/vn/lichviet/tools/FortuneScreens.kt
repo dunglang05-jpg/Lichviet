@@ -45,12 +45,8 @@ internal fun badColor() = MaterialTheme.colorScheme.error
 
 /** Dòng nguồn ở cuối màn hình. */
 @Composable
-fun SourceNote(vararg src: String) {
-    Section("Nguồn") {
-        src.forEach { Note(it) }
-        Note(Sources.DAN_GIAN)
-    }
-}
+@Suppress("UNUSED_PARAMETER")
+fun SourceNote(vararg src: String) = Unit // phần trích nguồn đã bỏ khỏi giao diện
 
 @Composable
 fun VanHanSection(p: Person, year: Int) {

@@ -159,9 +159,7 @@ fun VanKhanScreen(todayJd: Int) {
             Text(VanKhan.fill(e[1], ngayAmText(jd), s.userName, s.address), style = MaterialTheme.typography.bodyLarge)
         }
     }
-    Section("Nguồn") {
-        Note("Bài khấn soạn theo khuôn mẫu văn khấn cổ truyền phổ biến (mở đầu Nam mô A Di Đà Phật, kính lạy chư vị, ngày tháng, tín chủ, lễ vật, lời cầu). Mình chưa đối chiếu từng chữ với sách \"Văn khấn cổ truyền Việt Nam\"; nên tham khảo thêm sách hoặc nhà chùa nơi bạn ở.")
-    }
+    Note("Bài khấn theo khuôn mẫu văn khấn cổ truyền phổ biến; nên tham khảo thêm nhà chùa nơi bạn ở.")
 }
 
 @Composable
@@ -172,7 +170,7 @@ fun SongKhoeScreen(@Suppress("UNUSED_PARAMETER") todayJd: Int) {
             Para(e[1])
         }
     }
-    Section("Nguồn") { Note(Sources.SUC_KHOE); Note("Thông tin chung, không thay cho tư vấn của bác sĩ.") }
+    Note("Thông tin chung, không thay cho tư vấn của bác sĩ.")
 }
 
 @Composable
@@ -200,7 +198,6 @@ fun ChonTenScreen() {
             KeyValue("Số nhân cách", Numerology.nameNumber(n, 2).toString())
         }
     }
-    Section("Nguồn") { Note("Bảng quy đổi chữ cái A=1 … I=9, J=1 … theo thần số học Pythagoras (hellobacsi.com).") }
 }
 
 @Composable
@@ -229,7 +226,6 @@ fun LoBanScreen() {
         }
         Note("Chiều dài một vòng thước: ${LoBan.LEN[type]} cm.")
     }
-    Section("Nguồn") { Note(Sources.LO_BAN); Note(Sources.DAN_GIAN) }
 }
 
 private val LOBAN_388_Y = mapOf(
