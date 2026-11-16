@@ -439,11 +439,6 @@ fun NguHanhTuoiXungCard(d: DayInfo, a: Almanac) {
 fun KienTruTuCard(d: DayInfo) {
     val i = NhiThapBatTu.index(d.tu)
     ShadowCard {
-        SectionTitle("Thập nhị kiến trừ")
-        Text("Trực: ${d.truc}", fontWeight = FontWeight.Bold)
-        Text("Nên: " + d.nenLam.joinToString(", "), style = MaterialTheme.typography.bodySmall)
-        Text("Kỵ: " + d.kyLam.joinToString(", "), style = MaterialTheme.typography.bodySmall)
-        Spacer(Modifier.height(6.dp))
         SectionTitle("Nhị thập bát tú")
         if (i >= 0) {
             Text(

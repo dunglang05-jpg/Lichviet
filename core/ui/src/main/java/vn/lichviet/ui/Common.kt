@@ -65,14 +65,7 @@ fun ShadowCard(
         colors = CardDefaults.elevatedCardColors(containerColor = container),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = elevation),
     ) {
-        Box(
-            Modifier.fillMaxWidth().then(
-                if (spec != null) Modifier.border(BorderStroke(1.dp, spec.accent2.copy(alpha = .22f)), CardShape) else Modifier,
-            ),
-        ) {
-            if (spec != null) Motif(spec, Modifier.align(Alignment.TopEnd).padding(10.dp).size(30.dp), alpha = .16f)
-            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp), content = content)
-        }
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp), content = content)
     }
 }
 
@@ -89,8 +82,7 @@ fun Section(title: String, modifier: Modifier = Modifier, content: @Composable C
 fun SectionTitle(title: String, color: Color = MaterialTheme.colorScheme.primary) {
     val spec = LocalLich.current
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 2.dp)) {
-        if (spec != null) Motif(spec, Modifier.size(18.dp))
-        else Box(Modifier.width(4.dp).height(18.dp).clip(RoundedCornerShape(2.dp)).background(color))
+        Box(Modifier.width(4.dp).height(18.dp).clip(RoundedCornerShape(2.dp)).background(spec?.accent ?: color))
         Spacer(Modifier.width(8.dp))
         Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
     }
@@ -110,21 +102,16 @@ fun AppHeader(
     val spec = LocalLich.current ?: return
     val fg = spec.onAccent
     Column(
-        Modifier.fillMaxWidth().background(Brush.linearGradient(listOf(spec.accent, spec.accent.copy(alpha = .92f).compositeOverSafe(spec.accent2)))),
+        Modifier.fillMaxWidth().background(spec.accent),
     ) {
         Row(Modifier.fillMaxWidth().statusBarsPadding().padding(start = 4.dp, end = 4.dp, top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             if (onBack != null) IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Quay lại", tint = fg) }
             else Spacer(Modifier.width(12.dp))
-            Column(Modifier.weight(1f).padding(vertical = 6.dp)) {
-                Text(title, color = fg, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, maxLines = 1)
-                if (subtitle != null) Text(subtitle, color = fg.copy(alpha = .85f), style = MaterialTheme.typography.labelMedium,
-                    maxLines = 1, overflow = TextOverflow.Ellipsis)
-            }
-            Motif(spec.copy(accent = spec.onAccent, accent2 = spec.accent2), Modifier.size(26.dp), alpha = .9f)
+            Text(title, color = fg, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, maxLines = 1,
+                modifier = Modifier.weight(1f).padding(vertical = 12.dp))
             if (onSettings != null) IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Cài đặt", tint = fg) }
             else Spacer(Modifier.width(12.dp))
         }
-        Box(Modifier.fillMaxWidth().background(spec.bg).padding(vertical = 3.dp)) { MotifBand(spec, height = 12.dp) }
     }
 }
 

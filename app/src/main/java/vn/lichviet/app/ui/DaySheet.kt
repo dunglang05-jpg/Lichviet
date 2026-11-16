@@ -163,8 +163,7 @@ fun DaySheet(jd: Int, todayJd: Int, onChange: (Int) -> Unit, modifier: Modifier 
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = { onChange(shown - 1) }) { Text("‹", fontSize = 22.sp, color = MaterialTheme.colorScheme.primary) }
-            Text("Vuốt lên hoặc bấm để lật tờ lịch", style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center, modifier = Modifier.weight(1f))
+            Spacer(Modifier.weight(1f))
             IconButton(onClick = { onChange(shown + 1) }) { Text("›", fontSize = 22.sp, color = MaterialTheme.colorScheme.primary) }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

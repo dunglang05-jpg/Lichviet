@@ -61,7 +61,6 @@ fun MonthScreen(selectedJd: Int, todayJd: Int, onPick: (Int) -> Unit, modifier: 
 
     val monthHolidays = remember(month, year) { Holidays.listYear(year).filter { (it[2] as Int) == month } }
     Column(modifier.verticalScroll(rememberScrollState()).padding(vertical = 12.dp)) {
-        ThemeBadge(Modifier.padding(bottom = 4.dp))
         // Tờ lịch tháng: tranh dân gian + tiêu đề tháng, như lịch treo tường
         ShadowCard(elevation = 8.dp) {
             MonthPainting(month, settings.artSet) {

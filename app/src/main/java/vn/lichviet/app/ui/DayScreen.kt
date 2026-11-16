@@ -47,7 +47,6 @@ fun DayScreen(jd: Int, todayJd: Int, onChange: (Int) -> Unit, modifier: Modifier
     val a = remember(jd) { d.almanac() }
 
     Column(modifier.verticalScroll(rememberScrollState()).padding(top = 12.dp, bottom = 16.dp)) {
-        ThemeBadge()
         WeekStrip(jd, todayJd, settings.mondayFirst, onChange)
         DaySheet(jd, todayJd, onChange, Modifier.padding(top = 4.dp))
 
@@ -58,7 +57,6 @@ fun DayScreen(jd: Int, todayJd: Int, onChange: (Int) -> Unit, modifier: Modifier
                 val good = goodColor()
                 Pill("${d.verdict} ${d.score}/5", (if (d.score >= 4) good else MaterialTheme.colorScheme.primary).copy(alpha = 0.15f),
                     if (d.score >= 4) good else MaterialTheme.colorScheme.primary, bold = true)
-                Pill(a.khongMinh, MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
                 Pill("Hỷ thần ${d.hyThan}", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
                 Pill("Tài thần ${d.taiThan}", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
             }
@@ -102,25 +100,6 @@ fun DayScreen(jd: Int, todayJd: Int, onChange: (Int) -> Unit, modifier: Modifier
         NguHanhTuoiXungCard(d, a)
         KienTruTuCard(d)
 
-        Section("Giờ hoàng đạo") {
-            d.hours.chunked(3).forEach { row ->
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    row.forEach { h ->
-                        val bg = if (h.good) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
-                        val fg = if (h.good) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
-                        Column(
-                            Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).background(bg).padding(vertical = 8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Text(h.canChi, color = fg, fontWeight = if (h.good) FontWeight.Bold else FontWeight.Normal,
-                                style = MaterialTheme.typography.bodyMedium, maxLines = 1)
-                            Text("${h.range}h", color = fg, style = MaterialTheme.typography.labelSmall, maxLines = 1)
-                        }
-                    }
-                }
-            }
-            Text("Ô đậm là giờ hoàng đạo", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
         Section("Giờ xuất hành Lý Thuần Phong") {
             Text(a.huongText(), style = MaterialTheme.typography.bodyMedium)
             a.xuatHanh.take(6).forEachIndexed { i, h ->

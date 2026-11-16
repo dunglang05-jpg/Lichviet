@@ -5,7 +5,6 @@ package vn.lichviet.app
 import vn.lichviet.ui.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.mutableStateOf
-import vn.lichviet.ui.theme.MotifBand
 import vn.lichviet.tools.ToolsScreen
 import vn.lichviet.settings.SettingsScreen
 import androidx.compose.foundation.layout.Column
@@ -113,7 +112,7 @@ private fun AppRoot(activity: ComponentActivity) {
 
     LichTheme(spec) {
     Box(
-        Modifier.fillMaxSize().background(spec.bg).drawBehind { drawPattern(spec.pattern, spec.patternColor, spec.patternAlpha) },
+        Modifier.fillMaxSize().background(spec.bg),
     ) {
     if (showSettings) {
         SettingsScreen(onBack = { showSettings = false })
@@ -125,7 +124,6 @@ private fun AppRoot(activity: ComponentActivity) {
         },
         bottomBar = {
             Column {
-                Box(Modifier.background(spec.card).padding(top = 2.dp)) { MotifBand(spec, height = 10.dp, alpha = .9f) }
                 NavigationBar(containerColor = spec.card) {
                     Tab.entries.forEachIndexed { i, t ->
                         NavigationBarItem(

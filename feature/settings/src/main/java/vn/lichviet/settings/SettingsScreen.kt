@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.fillMaxSize
 
 import vn.lichviet.ui.*
-import vn.lichviet.ui.theme.MotifBand
 import vn.lichviet.ui.theme.ThemeSpec
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -92,7 +91,6 @@ private fun ThemeCard(id: Int, selected: Boolean, modifier: Modifier, onClick: (
     ) {
         Box(Modifier.fillMaxWidth().height(26.dp).background(a1))
         Column(Modifier.fillMaxWidth().background(bg).padding(horizontal = 8.dp, vertical = 6.dp)) {
-            MotifBand(preview, height = 14.dp)
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 6.dp)) {
                 Box(Modifier.size(14.dp).clip(CircleShape).background(a1))
                 Spacer(Modifier.width(4.dp))
@@ -112,8 +110,6 @@ private fun ThemeSection() {
     val s by repo.settings.collectAsState()
     val current = LocalLich.current
     Section("Giao diện") {
-        Text("Mỗi giao diện có một cặp màu đối ứng (màu chính và màu tương phản cùng độ đậm) và một bộ hoa văn riêng, dùng xuyên suốt ở đầu trang, tiêu đề, góc thẻ và thanh điều hướng.",
-            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Themes.GROUP_ORDER.forEach { group ->
             Text(group.uppercase(), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 6.dp))

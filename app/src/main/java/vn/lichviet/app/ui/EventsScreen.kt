@@ -81,7 +81,6 @@ fun EventsScreen(todayJd: Int, onOpenDay: (Int) -> Unit, modifier: Modifier = Mo
     Box(modifier) {
         LazyColumn(contentPadding = PaddingValues(bottom = 96.dp)) {
             item {
-                ThemeBadge(Modifier.padding(top = 12.dp))
                 // Thẻ đếm ngược Tết
                 ShadowCard(elevation = 8.dp, container = MaterialTheme.colorScheme.primary) {
                     Row(verticalAlignment = Alignment.CenterVertically) {

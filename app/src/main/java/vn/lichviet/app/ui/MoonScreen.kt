@@ -38,7 +38,6 @@ fun MoonScreen(jd: Int, modifier: Modifier = Modifier) {
     val p = remember(jd) { MoonPhase.of(d.solarDay, d.solarMonth, d.solarYear) }
     val events = remember(jd) { MoonPhase.upcoming(d.solarDay, d.solarMonth, d.solarYear, 8) }
     Column(modifier.verticalScroll(rememberScrollState()).padding(bottom = 16.dp)) {
-        ThemeBadge(Modifier.padding(top = 12.dp))
         // Thẻ trăng gọn: hình nhỏ + thông tin
         ShadowCard(elevation = 6.dp) {
             Row(verticalAlignment = Alignment.CenterVertically) {
