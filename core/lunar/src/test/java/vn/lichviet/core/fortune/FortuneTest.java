@@ -110,6 +110,12 @@ public class FortuneTest {
         assertTrue(!t.gioTot.isEmpty());
     }
 
+    @Test public void numerologyProfile() {
+        for (int n : new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 22})
+            for (String x : Numerology.profile(n)) assertFalse("so " + n, x.isEmpty());
+        assertEquals(10, Numerology.lifePath(26, 5, 1995));
+    }
+
     @Test public void numerologyExtras() {
         // fptshop.com.vn: Trần An Nhiên -> linh hồn 7; viettelstore.vn: Nguyễn Văn An -> linh hồn 1
         assertEquals(7, Numerology.nameNumber("Trần An Nhiên", 1));

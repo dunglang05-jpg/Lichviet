@@ -288,10 +288,14 @@ private fun ThanSoResult(name: String, d: Int, m: Int, y: Int, onBack: () -> Uni
             Body("Cách tính: cộng tất cả chữ số của ngày sinh rồi rút gọn đến khi được 2–11; tổng bằng 22 giữ là 22/4.")
             Calc(lifePathSteps(d, m, y))
         }
+        val pf = Numerology.profile(r.lifePath)
         Fold("ĐẶC ĐIỂM SỐ CHỦ ĐẠO LÀ ${Numerology.label(r.lifePath)}", true) {
-            Numerology.keyword(r.lifePath).takeIf { it.isNotEmpty() }?.let { Body("Từ khóa: $it.") }
-            Body(Numerology.meaning(r.lifePath))
+            Numerology.keyword(r.lifePath).takeIf { it.isNotEmpty() }?.let { Tag(it) }
+            Body(pf[0])
         }
+        Fold("ĐIỂM CẦN LƯU Ý", true) { Body(pf[1]) }
+        Fold("NGHỀ NGHIỆP PHÙ HỢP", false) { Body(pf[2]) }
+        Fold("LỜI KHUYÊN", false) { Body(pf[3]) }
         Fold("NĂM CÁ NHÂN", false) {
             for (k in 0..2) {
                 val py = Numerology.personalYear(d, m, year + k)
@@ -340,6 +344,10 @@ private fun Fold(title: String, initiallyOpen: Boolean, content: @Composable () 
 
 @Composable
 private fun Body(t: String) = Text(t, fontSize = 17.sp, lineHeight = 26.sp, color = Color(0xFF2E3338), textAlign = TextAlign.Justify)
+
+@Composable
+private fun Tag(t: String) = Text(t, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 14.sp,
+    modifier = Modifier.clip(RoundedCornerShape(16.dp)).background(Deep).padding(horizontal = 14.dp, vertical = 6.dp))
 
 @Composable
 private fun Calc(t: String) = Text(t, fontSize = 14.sp, lineHeight = 20.sp, color = Ink,

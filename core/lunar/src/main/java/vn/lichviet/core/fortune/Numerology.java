@@ -127,4 +127,68 @@ public final class Numerology {
             default: return "";
         }
     }
+    /**
+     * Chi tiết số chủ đạo: {tính cách và điểm mạnh, điểm cần lưu ý, nghề nghiệp phù hợp, lời khuyên}.
+     * Tổng hợp, diễn đạt lại từ dienmayxanh.com, careerviet.vn và momo.vn.
+     */
+    public static String[] profile(int n) {
+        switch (n) {
+            case 2: return new String[]{
+                "Người hòa giải giàu trực giác. Bạn nhạy cảm, khiêm tốn, biết lắng nghe và có lòng trắc ẩn, thường là người kết nối, giữ hòa khí cho tập thể.",
+                "Dễ thiếu quyết đoán và dễ tổn thương trước lời nói của người khác.",
+                "Tư vấn, giảng dạy, ngoại giao, đàm phán, công tác xã hội, trị liệu tâm lý; cũng hợp viết lách, thiết kế thời trang, diễn xuất, ca hát. Làm tốt khi có người dẫn dắt năng động.",
+                "Rèn sự tự tin, dám nói ra mong muốn của mình và biết đặt ranh giới."};
+            case 3: return new String[]{
+                "Người truyền cảm hứng sáng tạo: tư duy nhanh, linh hoạt, hài hước, lạc quan và giao tiếp lôi cuốn, có năng khiếu nghệ thuật.",
+                "Dễ phân tán, thiếu kiên nhẫn, đôi khi hời hợt; nhanh chán với việc tỉ mỉ, lặp đi lặp lại.",
+                "Diễn xuất, làm phim, hội họa, nhiếp ảnh, thiết kế, viết lách, báo chí, MC, marketing; ngoài ra có luật, giảng dạy, tư vấn, tâm lý học.",
+                "Học cách tập trung và giữ kỷ luật để biến ý tưởng thành kết quả."};
+            case 4: return new String[]{
+                "Người xây dựng thực tế: ổn định, chăm chỉ, có nguyên tắc, giỏi lập kế hoạch và tổ chức, giải quyết vấn đề một cách cụ thể, logic; là người đáng tin cậy.",
+                "Có thể cứng nhắc, bảo thủ, quá sa vào chi tiết mà bỏ qua bức tranh toàn cảnh.",
+                "Kỹ sư, kiến trúc sư, kế toán, lập trình viên, quản lý dự án, lập kế hoạch, quản lý tài chính hoặc doanh nghiệp, luật sư, giáo viên, nghề mộc.",
+                "Linh hoạt hơn và cởi mở với ý tưởng mới."};
+            case 5: return new String[]{
+                "Người yêu tự do: thích phiêu lưu và trải nghiệm, đa tài, sáng tạo, thích nghi nhanh và giao tiếp tốt.",
+                "Thiếu cam kết, dễ chán, khó gắn bó lâu một chỗ; dễ đổi việc khi thấy bị gò bó.",
+                "Du lịch, hướng dẫn viên, tổ chức sự kiện, báo chí, bán hàng, kinh doanh, tiếp thị, diễn xuất, nghệ thuật.",
+                "Rèn tính kiên định và học cách giữ cam kết."};
+            case 6: return new String[]{
+                "Người của gia đình: giàu yêu thương, có trách nhiệm, ấm áp, sáng tạo, yêu cái đẹp và đề cao sự công bằng.",
+                "Dễ hy sinh quá mức, gánh quá nhiều việc; đôi khi bao bọc và muốn kiểm soát người thân.",
+                "Giáo viên mầm non, bác sĩ, y tá, chăm sóc người cao tuổi, trị liệu tâm lý, thiết kế nội thất hoặc thời trang, kiến trúc, đầu bếp, nghệ thuật.",
+                "Biết cân bằng giữa chăm lo cho người khác và cho chính mình."};
+            case 7: return new String[]{
+                "Người tri thức: ham học hỏi, giỏi phân tích, quan sát tinh tường, hay chiêm nghiệm; kỷ luật, kiên nhẫn và sẵn sàng nghiên cứu sâu, quan tâm đến điều bí ẩn và tâm linh.",
+                "Sống nội tâm, khó gần, đôi khi hoài nghi.",
+                "Nhà khoa học, nhà nghiên cứu, phân tích dữ liệu, lập trình viên, giảng viên, phóng viên, diễn giả, trị liệu tâm lý, điêu khắc, thủ công mỹ nghệ.",
+                "Học cách chia sẻ và tin tưởng người khác."};
+            case 8: return new String[]{
+                "Người điều hành: tự tin, độc lập, có tham vọng, tư duy chiến lược và năng lực lãnh đạo; có tiềm năng về tài chính, kinh doanh và thành công vật chất.",
+                "Khó cân bằng công việc với cuộc sống, có thể độc đoán, quá chú trọng tiền bạc và khó bộc lộ cảm xúc.",
+                "Chủ doanh nghiệp, quản lý, tài chính, pháp luật, chính trị; ngoài ra có diễn xuất, nghệ thuật.",
+                "Dùng quyền lực một cách nhân đạo và cân bằng công việc với cuộc sống."};
+            case 9: return new String[]{
+                "Người cho đi: nhân ái, vị tha, có trách nhiệm với xã hội, hoài bão và tầm nhìn lớn.",
+                "Dễ lý tưởng hóa, đôi khi lúng túng với chính vấn đề của bản thân; không hợp việc tính toán, quản lý tài chính.",
+                "Giáo dục, công tác xã hội, tình nguyện, y tế nhân đạo, tâm lý học, quản lý hành chính, nghệ thuật, thiết kế, nhiếp ảnh.",
+                "Học cách buông bỏ."};
+            case 10: return new String[]{
+                "Người tiên phong dễ thích nghi: tự tin, quyết đoán, lạc quan, dám đối mặt thử thách, có tố chất lãnh đạo, sáng tạo và truyền cảm hứng.",
+                "Có thể tự cao và thiếu kiên nhẫn với người chậm hơn mình.",
+                "Quản lý, trưởng nhóm, khởi nghiệp, kinh doanh, bán hàng, thể thao, giải trí, đạo diễn, giảng dạy, thiết kế, kiến trúc, kỹ thuật.",
+                "Rèn sự kiên nhẫn với người xung quanh."};
+            case 11: return new String[]{
+                "Con số Master, phiên bản nâng cao của số 2: trực giác rất nhạy, thấu cảm sâu, chân thật, yêu cái đẹp, luôn dành tình cảm cho gia đình, bạn bè; có khả năng truyền cảm hứng, dẫn dắt và phán đoán tốt.",
+                "Nhạy cảm quá mức nên dễ căng thẳng thần kinh.",
+                "Tư vấn tâm lý, nghệ sĩ, nhạc sĩ, nhà văn, họa sĩ, diễn giả, ngoại giao, quan hệ quốc tế, PR, phiên dịch, chiến lược, kinh doanh.",
+                "Chú ý giữ cân bằng cảm xúc để tránh căng thẳng."};
+            case 22: return new String[]{
+                "Con số Master, được gọi là \"con số vua\": tầm nhìn lớn đi cùng sự kỷ luật, thực tế của số 4; thông minh, sáng tạo, giỏi giải quyết vấn đề, có khả năng biến ước mơ lớn thành hiện thực và thường đạt mục đích dù khó khăn.",
+                "Đôi khi thiếu kiên nhẫn và khó hợp tác với người khác.",
+                "Kiến trúc, xây dựng, kỹ thuật, thiết kế, quản trị, lãnh đạo doanh nghiệp, chiến lược, chính trị, giảng dạy.",
+                "Học cách kiên nhẫn và hợp tác với người khác."};
+            default: return new String[]{"", "", "", ""};
+        }
+    }
 }
