@@ -71,24 +71,29 @@ fun DateFields(d: String, m: String, y: String, label: String = "Ngày sinh (dư
     var open by remember { mutableStateOf(false) }
     val has = validDate(d.toIntOrNull() ?: 0, m.toIntOrNull() ?: 0, y.toIntOrNull() ?: 0)
     InputBox(label, if (has) "$d/$m/$y" else "Chọn ngày", has, Modifier.fillMaxWidth()) { open = true }
-    if (open) {
-        val init = if (has) java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC")).apply {
-            clear(); set(y.toInt(), m.toInt() - 1, d.toInt())
-        }.timeInMillis else null
-        val st = androidx.compose.material3.rememberDatePickerState(initialSelectedDateMillis = init, initialDisplayMode = androidx.compose.material3.DisplayMode.Input,
-            yearRange = 1900..2100)
-        androidx.compose.material3.DatePickerDialog(
-            onDismissRequest = { open = false },
-            confirmButton = { TextButton(onClick = {
-                st.selectedDateMillis?.let { ms ->
-                    val c = java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC")).apply { timeInMillis = ms }
-                    onChange(c.get(java.util.Calendar.DAY_OF_MONTH).toString(), (c.get(java.util.Calendar.MONTH) + 1).toString(), c.get(java.util.Calendar.YEAR).toString())
-                }
-                open = false
-            }) { Text("Chọn") } },
-            dismissButton = { TextButton(onClick = { open = false }) { Text("Hủy") } },
-        ) { androidx.compose.material3.DatePicker(st, showModeToggle = true, title = null) }
-    }
+    if (open) BirthDatePickerDialog(d, m, y, { open = false }) { a, b, c -> onChange(a, b, c) }
+}
+
+/** Hộp thoại chọn ngày dương lịch (nhập tay hoặc lịch). */
+@Composable
+fun BirthDatePickerDialog(d: String, m: String, y: String, onDismiss: () -> Unit, onPick: (String, String, String) -> Unit) {
+    val has = validDate(d.toIntOrNull() ?: 0, m.toIntOrNull() ?: 0, y.toIntOrNull() ?: 0)
+    val init = if (has) java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC")).apply {
+        clear(); set(y.toInt(), m.toInt() - 1, d.toInt())
+    }.timeInMillis else null
+    val st = androidx.compose.material3.rememberDatePickerState(initialSelectedDateMillis = init, initialDisplayMode = androidx.compose.material3.DisplayMode.Input,
+        yearRange = 1900..2100)
+    androidx.compose.material3.DatePickerDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = { TextButton(onClick = {
+            st.selectedDateMillis?.let { ms ->
+                val c = java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC")).apply { timeInMillis = ms }
+                onPick(c.get(java.util.Calendar.DAY_OF_MONTH).toString(), (c.get(java.util.Calendar.MONTH) + 1).toString(), c.get(java.util.Calendar.YEAR).toString())
+            }
+            onDismiss()
+        }) { Text("Chọn") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Hủy") } },
+    ) { androidx.compose.material3.DatePicker(st, showModeToggle = true, title = null) }
 }
 
 /** Ô nhập kiểu thẻ: nhãn nhỏ phía trên, giá trị lớn, viền bo tròn; bấm để mở bộ chọn. */
