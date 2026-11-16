@@ -109,7 +109,7 @@ def run_ai(only=None):
 
 
 GIAP = ["a Vietnamese field rat", "a Vietnamese water buffalo with long curved horns", "an Indochinese tiger", "a Vietnamese domestic cat",
-        "a majestic Vietnamese Ly dynasty dragon, long serpentine scaled body with four clawed legs, flowing whiskers and mane, coiling among clouds above rice fields", "a green snake", "a brown horse", "a Vietnamese mountain goat",
+        "portrait of a Vietnamese dragon, the dragon's head large and fully visible in the center facing the viewer, open mouth, long whiskers, horns, flowing mane, scaled serpentine body curling behind it among clouds, rice fields far below", "a green snake", "a brown horse", "a Vietnamese mountain goat",
         "a macaque monkey", "a Vietnamese rooster with red comb", "a Vietnamese Phu Quoc dog", "a Vietnamese pot-bellied pig"]
 GIAP_STYLE = ("realistic detailed digital painting of {a}, natural proportions and pose, full body, Vietnamese countryside background "
               "softly blurred (rice fields, bamboo), warm natural light, painterly, not cartoon, not cute, no text, no watermark")
