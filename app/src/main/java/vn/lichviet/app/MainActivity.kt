@@ -154,5 +154,4 @@ private fun AppRoot(activity: ComponentActivity) {
     }
     }
     }
-    }
 }
