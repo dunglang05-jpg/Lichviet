@@ -68,7 +68,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import vn.lichviet.core.fortune.KinhDich
-import kotlin.random.Random
 
 private val Red1 = Color(0xFFC8352E)
 private val Red2 = Color(0xFF8E1B1B)
@@ -107,7 +106,7 @@ fun GieoQueV2(onBack: () -> Unit) {
     var seed by rememberSaveable { mutableLongStateOf(0L) }
     var shown by rememberSaveable { mutableIntStateOf(0) } // số hào đã hiện (0..6)
     var menu by remember { mutableStateOf(false) }
-    val cast = remember(seed) { if (seed == 0L) null else KinhDich.cast(Random(seed)) }
+    val cast = remember(seed) { if (seed == 0L) null else KinhDich.cast(java.util.Random(seed)) }
     BackHandler { if (seed != 0L) { seed = 0L; shown = 0 } else onBack() }
 
     LaunchedEffect(seed) {
