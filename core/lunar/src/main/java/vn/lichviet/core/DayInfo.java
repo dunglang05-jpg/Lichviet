@@ -28,6 +28,11 @@ public final class DayInfo {
         {"Khai trương", "Động thổ", "Cưới hỏi", "Xuất hành", "Nhận việc"},
         {"Đắp đê", "Lấp hố", "Giữ gìn, nghỉ ngơi"}
     };
+    public static java.util.List<String> trucNen(int i) { return java.util.Arrays.asList(TRUC_NEN[i]); }
+    public static java.util.List<String> trucKy(int i) { return java.util.Arrays.asList(TRUC_KY[i]); }
+    /** 1 tốt, 0 trung bình, -1 xấu, -2 rất xấu. */
+    public static int trucScore(int i) { return TRUC_SCORE[i]; }
+
     private static final String[][] TRUC_KY = {
         {"Động thổ", "Đào giếng", "Chôn cất"},
         {"Cưới hỏi", "Xuất hành xa", "Nhậm chức"},

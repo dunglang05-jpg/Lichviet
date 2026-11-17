@@ -50,76 +50,21 @@ fun DayScreen(jd: Int, todayJd: Int, onChange: (Int) -> Unit, modifier: Modifier
         WeekStrip(jd, todayJd, settings.mondayFirst, onChange)
         DaySheet(jd, todayJd, onChange, Modifier.padding(top = 4.dp))
 
-        // Tóm tắt ngày (thông tin chưa có trên tờ lịch)
-        ShadowCard(elevation = 4.dp) {
-            MoonStatus(d)
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(top = 6.dp)) {
-                val good = goodColor()
-                Pill("${d.verdict} ${d.score}/5", (if (d.score >= 4) good else MaterialTheme.colorScheme.primary).copy(alpha = 0.15f),
-                    if (d.score >= 4) good else MaterialTheme.colorScheme.primary, bold = true)
-                Pill("Hỷ thần ${d.hyThan}", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
-                Pill("Tài thần ${d.taiThan}", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
-            }
-        }
-
-        // Nhân: hợp tuổi
+        DayOverviewCard(d)
+        NenTranhCards(d, fits.takeIf { it.isNotEmpty() }?.joinToString(", ") { it.label })
+        GioHoangDaoCard(d)
         ThienDiaNhanCard(d, settings) { editProfile = true }
-
-        // Thiên: việc nên / không nên
-        Section("Việc nên làm · không nên làm") {
-            Text("NÊN LÀM", style = MaterialTheme.typography.labelLarge, color = goodColor(), fontWeight = FontWeight.Bold)
-            d.nenLam.forEach { Text("• $it") }
-            Text("KHÔNG NÊN", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.error,
-                fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 4.dp))
-            d.kyLam.forEach { Text("• $it") }
-            if (fits.isNotEmpty()) {
-                Text("Ngày hợp cho: " + fits.joinToString(", ") { it.label }, fontWeight = FontWeight.SemiBold,
-                    color = goodColor(), modifier = Modifier.padding(top = 4.dp))
-            }
-            d.luuY.forEach { Text("⚠ $it", color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
-        }
-
+        NguHanhTuoiXungCard(d, a)
+        NgayKyCard(d, a)
+        BanhToCard(a)
+        KhongMinhCard(a)
+        NhiThapBatTuCard(d)
+        TrucCard(d)
+        NgocHapCard(a)
+        HuongXuatHanhCard(a)
+        LyThuanPhongCard(a)
         ActivityGridCard(jd, onChange)
         TietKhiCard(d)
-
-        // Thông tin thêm
-        Section("Sao tốt · sao xấu (Ngọc Hạp Thông Thư)") {
-            Text("SAO TỐT", style = MaterialTheme.typography.labelLarge, color = goodColor(), fontWeight = FontWeight.Bold)
-            if (a.goodStars.isEmpty()) Text("Không có")
-            a.goodStars.forEach { Text("• ${it.name}: ${it.desc}", style = MaterialTheme.typography.bodySmall) }
-            Text("SAO XẤU", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.error,
-                fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 4.dp))
-            if (a.badStars.isEmpty()) Text("Không có")
-            a.badStars.forEach { Text("• ${it.name}: ${it.desc}", style = MaterialTheme.typography.bodySmall) }
-            if (a.kyNhat.isNotEmpty()) {
-                Text("NGÀY KỴ", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.error,
-                    fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 4.dp))
-                a.kyNhat.forEach { Text("⚠ ${it.name}: ${it.desc}", style = MaterialTheme.typography.bodySmall) }
-            }
-        }
-        NguHanhTuoiXungCard(d, a)
-        KienTruTuCard(d)
-
-        Section("Giờ xuất hành Lý Thuần Phong") {
-            Text(a.huongText(), style = MaterialTheme.typography.bodyMedium)
-            a.xuatHanh.take(6).forEachIndexed { i, h ->
-                val h2 = a.xuatHanh[i + 6]
-                Column(Modifier.padding(top = 4.dp)) {
-                    Text("${h.chi} (${h.range}h) & ${h2.chi} (${h2.range}h) · ${h.name}", fontWeight = FontWeight.SemiBold,
-                        color = if (h.good) goodColor() else MaterialTheme.colorScheme.error)
-                    Text(h.desc, style = MaterialTheme.typography.bodySmall)
-                }
-            }
-        }
-        Section("Khổng Minh lục diệu") {
-            Text("Ngày ${a.khongMinh} (${if (a.khongMinhTot) "cát" else "hung"})", fontWeight = FontWeight.Bold,
-                color = if (a.khongMinhTot) goodColor() else MaterialTheme.colorScheme.error)
-            Text(a.khongMinhDesc)
-        }
-        Section("Bành Tổ bách kỵ") {
-            Text(a.banhToCan, style = MaterialTheme.typography.bodySmall)
-            Text(a.banhToChi, style = MaterialTheme.typography.bodySmall)
-        }
     }
 
     if (editProfile) {
