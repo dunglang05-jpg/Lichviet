@@ -17,7 +17,7 @@ public class FortuneTest {
 
     @Test public void numerologyMaster() {
         assertEquals(11, Numerology.reduce(29));
-        assertEquals(33, Numerology.reduce(33));
+        assertEquals(6, Numerology.reduce(33)); // tracuuthansohoc.com chỉ giữ 11, 22
         assertEquals("NGUYEN VAN DUNG", Numerology.plain("Nguyễn Văn Dũng"));
         assertTrue(Numerology.nameNumber("Nguyễn Văn Dũng", 0) > 0);
     }
@@ -114,6 +114,24 @@ public class FortuneTest {
         for (int n : new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 22})
             for (String x : Numerology.profile(n)) assertFalse("so " + n, x.isEmpty());
         assertEquals(10, Numerology.lifePath(26, 5, 1995));
+    }
+
+    @Test public void numerologyTraCuu() {
+        // tracuuthansohoc.com: thái độ 28/07 -> (2+8)+(0+7) = 17 -> 8; năng lực tự nhiên ngày 29 -> 11 -> 2
+        assertEquals(8, Numerology.attitude(28, 7));
+        assertEquals(2, Numerology.naturalAbility(29));
+        assertEquals(2, Numerology.maturity(11, 9)); // 11 + 9 = 20 -> 2
+        assertEquals(13, Numerology.karmic(49));      // 49 -> 13 -> 4
+        assertEquals(0, Numerology.karmic(37));
+        // NGUYEN: Y giữa hai nguyên âm là phụ âm; LY: Y là nguyên âm
+        assertEquals(7, Numerology.nameSum("Ly", 1));
+        assertEquals(8, Numerology.nameSum("Nguyen", 1)); // U3 + E5
+        int[] c = Numerology.chart(26, 5, 1995, null);
+        assertEquals(2, c[5]); assertEquals(2, c[9]); assertEquals(0, c[3]);
+        assertEquals(0, Numerology.arrowState(c, "147"));
+        assertEquals(-1, Numerology.arrowState(Numerology.chart(10, 1, 2000, null), "456"));
+        // kim tự tháp: số chủ đạo 11 -> đỉnh 1 ở tuổi 25
+        assertEquals(25, Numerology.pinnacles(15, 2, 2001)[0].fromAge);
     }
 
     @Test public void numerologyExtras() {

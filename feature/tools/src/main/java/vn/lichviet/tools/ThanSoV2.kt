@@ -296,29 +296,51 @@ private fun ThanSoResult(name: String, d: Int, m: Int, y: Int, onBack: () -> Uni
         Fold("ĐIỂM CẦN LƯU Ý", true) { Body(pf[1]) }
         Fold("NGHỀ NGHIỆP PHÙ HỢP", false) { Body(pf[2]) }
         Fold("LỜI KHUYÊN", false) { Body(pf[3]) }
+        Fold("BIỂU ĐỒ NGÀY SINH", true) { BirthChart(name, d, m, y) }
+        Fold("NĂNG LỰC TỰ NHIÊN VÀ THÁI ĐỘ", false) {
+            NumRow("Năng lực tự nhiên (ngày $d)", r.birthDay.toString(), Numerology.naturalMeaning(r.birthDay))
+            NumRow("Thái độ (ngày + tháng)", r.attitude.toString(), Numerology.attitudeMeaning(r.attitude))
+            Calc("Năng lực tự nhiên: cộng chữ số ngày sinh. Thái độ: cộng chữ số ngày và tháng sinh. Cả hai rút gọn về 1–9.")
+        }
+        Fold("CHỈ SỐ THEO TÊN", false) {
+            if (r.expression > 0) {
+                NumRow("Sứ mệnh (cả họ tên)", Numerology.label(r.expression), Numerology.keyword(r.expression))
+                NumRow("Linh hồn (nguyên âm)", r.soul.toString(), Numerology.soulMeaning(r.soul))
+                NumRow("Nhân cách (phụ âm)", r.personality.toString(), Numerology.personalityMeaning(r.personality))
+                val mt = Numerology.maturity(r.lifePath, r.expression)
+                NumRow("Trưởng thành (chủ đạo + sứ mệnh)", mt.toString(), Numerology.maturityMeaning(mt))
+                Calc("Họ tên khai sinh bỏ dấu: A J S = 1, B K T = 2, C L U = 3, D M V = 4, E N W = 5, F O X = 6, G P Y = 7, H Q Z = 8, I R = 9. " +
+                    "Nguyên âm A, E, I, O, U, Y (Y đứng giữa hai nguyên âm như NGUYEN tính là phụ âm). Rút gọn về 1–9, giữ 11 và 22. " +
+                    "Chỉ số trưởng thành thường thể hiện rõ từ khoảng 35–40 tuổi.")
+            } else Body("Nhập họ tên khai sinh ở trang trước để xem các chỉ số sứ mệnh, linh hồn, nhân cách và trưởng thành.")
+        }
+        Fold("NỢ NGHIỆP", false) {
+            val found = remember(name, d, m, y) {
+                val l = mutableListOf<Pair<String, Int>>()
+                fun add(t: String, sum: Int) { Numerology.karmic(sum).takeIf { it > 0 }?.let { l += t to it } }
+                add("Số chủ đạo", Numerology.birthSum(d, m, y))
+                add("Năng lực tự nhiên", d)
+                add("Thái độ", Numerology.birthSum(d, m, 0))
+                if (name.isNotBlank()) {
+                    add("Sứ mệnh", Numerology.nameSum(name, 0)); add("Linh hồn", Numerology.nameSum(name, 1)); add("Nhân cách", Numerology.nameSum(name, 2))
+                }
+                l
+            }
+            if (found.isEmpty()) Body("Không có số nợ nghiệp (13, 14, 16, 19) trong các chỉ số của bạn.")
+            else found.forEach { (t, k) -> NumRow(t, k.toString(), Numerology.karmicMeaning(k)) }
+            Calc("Nợ nghiệp là khi tổng chưa rút gọn của một chỉ số (chủ đạo, thái độ, năng lực tự nhiên, sứ mệnh, linh hồn, nhân cách) là 13, 14, 16 hoặc 19.")
+        }
         Fold("NĂM CÁ NHÂN", false) {
             for (k in 0..2) {
                 val py = Numerology.personalYear(d, m, year + k)
                 NumRow("Năm ${year + k}", py.toString(), Numerology.keyword(py))
             }
-            Calc("Cộng chữ số ngày, tháng sinh và năm cần xem, rút gọn về 1–9.")
+            Calc("Cộng chữ số ngày, tháng sinh và năm cần xem, rút gọn về 1–9. Năm cá nhân đi theo chu kỳ 9 năm.")
         }
         Fold("4 ĐỈNH CAO CUỘC ĐỜI", false) {
-            pk.forEachIndexed { i, x -> NumRow("Đỉnh ${i + 1} · từ ${x.fromAge} tuổi", x.number.toString(), Numerology.keyword(x.number)) }
-            Calc("Đỉnh 1 = tháng + ngày, đỉnh 2 = ngày + năm, đỉnh 3 = đỉnh 1 + đỉnh 2, đỉnh 4 = tháng + năm (đều rút gọn). " +
+            pk.forEachIndexed { i, x -> NumRow("Đỉnh ${i + 1} · ${x.fromAge} tuổi", x.number.toString(), Numerology.keyword(x.number)) }
+            Calc("Đỉnh 1 = tháng + ngày, đỉnh 2 = ngày + năm (rút gọn 1 chữ số); đỉnh 3 = đỉnh 1 + đỉnh 2, đỉnh 4 = tháng + năm (giữ từ 2 đến 11). " +
                 "Tuổi đỉnh 1 = 36 − số chủ đạo, mỗi đỉnh sau cộng 9 năm.")
-        }
-        Fold("CHỈ SỐ NGÀY SINH VÀ THÁI ĐỘ", false) {
-            NumRow("Số ngày sinh (ngày $d)", r.birthDay.toString(), Numerology.keyword(r.birthDay))
-            NumRow("Số thái độ (ngày + tháng)", r.attitude.toString(), Numerology.keyword(r.attitude))
-        }
-        if (r.expression > 0) Fold("CHỈ SỐ THEO TÊN", false) {
-            NumRow("Số sứ mệnh (cả họ tên)", r.expression.toString(), Numerology.keyword(r.expression))
-            NumRow("Số linh hồn (nguyên âm)", r.soul.toString(), Numerology.keyword(r.soul))
-            NumRow("Số nhân cách (phụ âm)", r.personality.toString(), Numerology.keyword(r.personality))
-            Calc("Họ tên khai sinh bỏ dấu, A=1 … I=9, J=1 … R=9, S=1 … Z=8. Nguyên âm: A, E, I, O, U.")
-        } else Fold("CHỈ SỐ THEO TÊN", false) {
-            Body("Nhập họ tên khai sinh ở trang trước để xem số sứ mệnh, linh hồn và nhân cách.")
         }
         Spacer(Modifier.height(32.dp))
     }
@@ -355,15 +377,68 @@ private fun Calc(t: String) = Text(t, fontSize = 14.sp, lineHeight = 20.sp, colo
 
 @Composable
 private fun NumRow(label: String, n: String, kw: String) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(verticalAlignment = Alignment.Top) {
         Box(Modifier.size(44.dp).clip(CircleShape).background(Deep), contentAlignment = Alignment.Center) {
             Text(n, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
         }
         Spacer(Modifier.width(14.dp))
         Column(Modifier.weight(1f)) {
             Text(label, fontSize = 13.sp, color = Color(0xFF6B7680))
-            Text(kw.ifEmpty { "—" }, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFF2E3338))
+            Text(kw.ifEmpty { "—" }, fontSize = 16.sp, lineHeight = 23.sp, color = Color(0xFF2E3338))
         }
     }
 }
 
+
+/** Biểu đồ ngày sinh 3×3 (1 2 3 / 4 5 6 / 7 8 9) và các mũi tên. */
+@Composable
+private fun BirthChart(name: String, d: Int, m: Int, y: Int) {
+    var withName by rememberSaveable { mutableStateOf(false) }
+    val useName = withName && name.isNotBlank()
+    val c = remember(name, d, m, y, useName) { Numerology.chart(d, m, y, if (useName) Numerology.nameDigits(name) else null) }
+    if (name.isNotBlank()) Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        listOf(false to "Ngày sinh", true to "Ngày sinh + tên").forEach { (v, t) ->
+            Text(t, color = if (withName == v) Color.White else Deep, fontSize = 14.sp, fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.clip(RoundedCornerShape(16.dp)).background(if (withName == v) Deep else Color(0xFFEAF4FA))
+                    .clickable { withName = v }.padding(horizontal = 14.dp, vertical = 6.dp))
+        }
+    }
+    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+        Column(Modifier.width(264.dp).clip(RoundedCornerShape(16.dp)).border(2.dp, Deep, RoundedCornerShape(16.dp))) {
+            for (row in 0..2) {
+                Row {
+                    for (col in 0..2) {
+                        val n = row * 3 + col + 1
+                        val has = c[n] > 0
+                        Box(
+                            Modifier.size(88.dp).background(if (has) Color(0xFFEAF4FA) else Color.White)
+                                .border(0.5.dp, Color(0xFFBFD9E8)),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(if (has) n.toString().repeat(c[n]) else n.toString(), fontSize = if (c[n] > 3) 16.sp else 24.sp,
+                                fontWeight = if (has) FontWeight.Bold else FontWeight.Normal,
+                                color = if (has) Ink else Color(0xFFD0D6DB))
+                        }
+                    }
+                }
+            }
+        }
+    }
+    val missing = (1..9).filter { c[it] == 0 }
+    Body(if (missing.isEmpty()) "Biểu đồ có đủ các số từ 1 đến 9." else "Số còn thiếu: ${missing.joinToString(", ")}.")
+    val arrows = Numerology.ARROWS.mapNotNull { a ->
+        when (Numerology.arrowState(c, a[0])) { 1 -> Triple(true, a[1] + " " + a[0], a[2]); -1 -> Triple(false, a[3] + " " + a[0], a[4]); else -> null }
+    }
+    if (arrows.isEmpty()) Body("Không có mũi tên nào (không hàng, cột hay đường chéo nào đủ hoặc trống cả ba số).")
+    arrows.forEach { (full, t, mean) ->
+        Row(verticalAlignment = Alignment.Top) {
+            Text(if (full) "↗" else "○", color = if (full) Deep else Color(0xFFE07A5F), fontSize = 20.sp, fontWeight = FontWeight.Bold,
+                modifier = Modifier.width(28.dp))
+            Column {
+                Text(t, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = if (full) Ink else Color(0xFFB4533A))
+                Text(mean, fontSize = 15.sp, lineHeight = 22.sp, color = Color(0xFF2E3338))
+            }
+        }
+    }
+    Calc("Mỗi chữ số khác 0 trong ngày sinh được đặt vào ô của nó; số lặp lại thì ghi nhiều lần. Mũi tên là một hàng, cột hoặc đường chéo có đủ cả ba số; mũi tên trống là khi cả ba ô đều trống.")
+}
