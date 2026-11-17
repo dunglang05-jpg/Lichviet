@@ -29,7 +29,7 @@ jobs:
         run: |
           MODE="${{ github.event.inputs.mode }}"
           if [ -z "$MODE" ] && [ -f tools/art/mode.txt ]; then MODE=$(cat tools/art/mode.txt); fi
-          python tools/art/fetch_art.py "${MODE:-all}"
+          python -u tools/art/fetch_art.py "${MODE:-all}"
       - name: Lưu tranh vào repo
         run: |
           git config user.name "github-actions[bot]"

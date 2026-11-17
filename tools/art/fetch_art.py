@@ -154,14 +154,20 @@ def cf_image(prompt):
     return None
 
 
-def cf_image_retry(prompt, tries=6):
+DEADLINE = time.time() + 25 * 60
+
+
+def cf_image_retry(prompt, tries=4):
     for t in range(tries):
+        if time.time() > DEADLINE:
+            print("hết giờ, dừng")
+            return None
         img = cf_image(prompt)
         if img is not None:
             time.sleep(8)
             return img
-        print(f"chờ {60 * (t + 1)}s rồi thử lại")
-        time.sleep(60 * (t + 1))
+        print(f"chờ {45 * (t + 1)}s rồi thử lại")
+        time.sleep(45 * (t + 1))
     return None
 
 
