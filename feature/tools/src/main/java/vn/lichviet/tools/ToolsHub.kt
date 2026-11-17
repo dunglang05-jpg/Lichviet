@@ -56,6 +56,7 @@ enum class Tool(val title: String, val icon: ImageVector, val color: Long, val g
     THAN_SO("Thần Số Học", Icons.Filled.Numbers, 0xFF00897B, 0),
     THONG_TIN("Thông Tin Năm", Icons.Filled.AccountBox, 0xFF5C6BC0, 0),
     GIAI_MA_NGAY_SINH("Giải Mã Ngày Sinh", Icons.Filled.Cake, 0xFF7E57C2, 0),
+    CAN_XUONG("Cân Xương Tính Số", Icons.Filled.Scale, 0xFF6D4C41, 0),
     NHAC_GIO("Nhắc Ngày Giỗ", Icons.Filled.NotificationsActive, 0xFF6A5ACD, 1),
     VAN_KHAN("Văn Khấn", Icons.Filled.MenuBook, 0xFFEF6C00, 1),
     SONG_KHOE("Sống Khỏe", Icons.Filled.SelfImprovement, 0xFF7CB342, 1),
@@ -129,6 +130,7 @@ fun ToolPage(tool: Tool, todayJd: Int, onOpenDay: (Int) -> Unit, onBack: () -> U
             Tool.THAN_SO -> ThanSoScreen()
             Tool.THONG_TIN -> ThongTinNamV2()
             Tool.GIAI_MA_NGAY_SINH -> GiaiMaNgaySinhScreen()
+            Tool.CAN_XUONG -> CanXuongScreen()
             Tool.NHAC_GIO -> NhacGioScreen()
             Tool.VAN_KHAN -> VanKhanScreen(todayJd)
             Tool.SONG_KHOE -> SongKhoeScreen(todayJd)

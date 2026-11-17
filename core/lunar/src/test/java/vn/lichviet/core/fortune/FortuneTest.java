@@ -134,6 +134,13 @@ public class FortuneTest {
         assertEquals(25, Numerology.pinnacles(15, 2, 2001)[0].fromAge);
     }
 
+    @Test public void canXuong() {
+        // tracuutuvi.com: giờ Dần 0.7 + ngày 24 0.9 + tháng 10 1.8 + năm Canh Thìn 1.2 = 4 lượng 6 chỉ
+        assertEquals(46, CanXuong.total(6, 4, 10, 24, 2));
+        assertEquals("4 lượng 6 chỉ", CanXuong.text(46));
+        assertFalse(CanXuong.meaning(46).isEmpty());
+    }
+
     @Test public void numerologyExtras() {
         // fptshop.com.vn: Trần An Nhiên -> linh hồn 7; viettelstore.vn: Nguyễn Văn An -> linh hồn 1
         assertEquals(7, Numerology.nameNumber("Trần An Nhiên", 1));
