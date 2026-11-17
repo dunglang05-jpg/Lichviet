@@ -112,6 +112,7 @@ fun ToolGrid(onOpen: (Tool) -> Unit) {
 fun ToolPage(tool: Tool, todayJd: Int, onOpenDay: (Int) -> Unit, onBack: () -> Unit, modifier: Modifier = Modifier) {
     BackHandler(onBack = onBack)
     if (tool == Tool.THAN_SO) { Box(modifier) { ThanSoV2(onBack) }; return }
+    if (tool == Tool.GIEO_QUE) { Box(modifier) { GieoQueV2(onBack) }; return }
     Column(modifier.verticalScroll(rememberScrollState())) {
       ToolScaffold(tool.title, onBack) {
         when (tool) {

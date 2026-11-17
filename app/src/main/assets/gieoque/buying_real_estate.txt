@@ -1,0 +1,64 @@
+1|T|Thời vận đã đến, mua nhà đất thuận buồm xuôi gió. Có thể chủ động, mạnh dạn tiến hành.
+2|T|Thuận lợi, như ý; nhà đất mua lúc này là nền móng vững cho tương lai.
+3|X|Còn rối ren, chưa rõ ràng. Thận trọng, đừng vội xuống tiền.
+4|X|Chưa nên mua lúc này; giao dịch dễ trục trặc, có thể mất mát tài chính.
+5|T|Vận tốt đã đến, chọn mua lúc này hợp thời; vẫn nên kiên nhẫn chọn kỹ.
+6|X|Không thuận, dễ vướng tranh chấp về pháp lý hay quyền sở hữu. Xem xét thật kỹ.
+7|T|Mã đáo thành công, thời cơ mua đã đến, dễ chọn được nơi ưng ý.
+8|T|Thuận lợi như thuyền gặp gió; chủ động tìm hiểu, nhờ người giúp khi cần, thương lượng có lợi.
+9|B|Chưa phải lúc thích hợp, mọi thứ như sẵn sàng nhưng chưa thành. Nhẫn nại chờ thời.
+10|T|Thời điểm thuận lợi, có cơ hội đầu tư sinh lời; tiến hành cẩn trọng từng bước.
+11|T|Đại cát, giao dịch suôn sẻ, hai bên mua bán đều hài lòng.
+12|X|Không thuận, dễ trở ngại, thiếu hòa hợp. Nên chờ thời cơ tốt hơn.
+13|T|Suôn sẻ, có thể gặp người am hiểu giúp đỡ; vẫn chọn lựa cẩn thận.
+14|T|Hanh thông nhưng phải tìm hiểu, đánh giá kỹ trước khi quyết; đừng vội.
+15|T|Hanh thông; giữ hòa nhã, thận trọng, đừng quá tự tin; giao dịch có lợi.
+16|T|Gặp hung hóa cát, có cơ hội tốt; vẫn tìm hiểu kỹ, đừng chủ quan.
+17|B|Đi từng bước theo khả năng tài chính thực tế; lên kế hoạch chi tiết, đừng cố chấp.
+18|X|Chưa phải quyết định chuẩn; có thể đang thiếu thông tin. Cẩn thận với quyết định tài chính lớn.
+19|T|Thời vận hanh thông, thuận lợi để mua; vẫn giữ sự cẩn trọng.
+20|T|Thuận lợi, có quý nhân giúp; khó khăn trước mắt được gỡ.
+21|T|Gặp may, thủ tục pháp lý nhanh gọn, thời điểm tốt để giao dịch.
+22|T|Vạn sự như ý, mua bán suôn sẻ, không gặp trở ngại lớn.
+23|X|Nhiều khó khăn, có thể có người gây trở ngại; dễ mất mát. Xem xét kỹ.
+24|X|Dễ có tranh chấp hoặc bất đồng giữa các bên. Kiểm tra kỹ hợp đồng, giấy tờ.
+25|X|Không may, có thể chưa đúng thời điểm cho giao dịch lớn. Suy xét lại.
+26|T|Thời điểm thuận lợi, trở ngại pháp lý, tài chính được gỡ; cần chuẩn bị đầy đủ.
+27|T|Đại cát, thuận cho đầu tư nhà đất; tiến hành với chuẩn bị kỹ.
+28|X|Không nên mua lúc này, cố theo đuổi dễ thất bại, mất mát. Chờ thời.
+29|X|Dễ uổng công, dự án không như kỳ vọng. Cẩn trọng, đừng đặt quá nhiều hy vọng.
+30|T|Điềm lành, suôn sẻ, có thể tìm được mái ấm ưng ý và là khởi đầu thịnh vượng.
+31|T|Thời vận đã đến, mưu tính thành công; nắm bắt cơ hội.
+32|T|Thuận lợi, dễ dàng như cá vào lưới; dễ tìm được nơi ưng ý.
+33|X|Mưu sự khó thành, dễ trở ngại, mất mát. Kiên nhẫn chờ thời, đừng vội.
+34|T|Vận khí sắp lên, cơ hội để thực hiện dự định lớn; chuẩn bị kỹ.
+35|T|Vận đỏ sắp đến, rất tốt, có thể có thỏa thuận có lợi.
+36|X|Không thuận, dễ cãi cọ, bất ổn, đàm phán khó thành.
+37|X|Có thể đang đặt hy vọng vào thứ không thực tế, giá trị không như mong. Xem xét kỹ.
+38|X|Giao dịch dễ trắc trở. Chờ thời hoặc tính kỹ phương án phòng rủi ro.
+39|X|Nhiều trở ngại, tốn sức tốn thời gian mà khó như ý. Cân nhắc kỹ.
+40|T|Khó khăn được giải quyết, gặp may trong chọn lựa và giao dịch.
+41|X|Thời vận chưa đến, cố làm dễ uổng công. Kiên nhẫn chờ.
+42|T|Rất tốt: dù trước mắt có khó, cuối cùng sẽ thành công.
+43|T|Thời điểm tốt, hung hóa cát; quyết đoán nhưng vẫn cảnh giác rủi ro ẩn.
+44|T|Thời vận đã đến, giao dịch dễ thành; cơ hội tốt để mua bán.
+45|T|Thuận lợi, suôn sẻ, tốt cho đầu tư bất động sản.
+46|T|Kế hoạch mua thuận lợi, mang lại ổn định và tài lộc cho gia đình.
+47|X|Bất ổn, coi chừng bị gây khó; kiểm tra kỹ thông tin và pháp lý.
+48|T|Vận tốt đã đến, có thể tìm được nơi tốt.
+49|T|Vận tốt, khó khăn được gỡ; thời điểm tốt để làm thủ tục.
+50|T|Rất thuận lợi, lợi kép; giao dịch thành công.
+51|T|Mọi sự thành công, mua bán suôn sẻ.
+52|X|Gặp trở lực về tài chính, pháp lý hoặc khó thống nhất giá với bên bán.
+53|B|Thận trọng, tiến từng bước; có rủi ro chưa lường trước.
+54|X|Mưu sự chưa thành, chưa hợp quyết định lớn. Chờ thời kỳ thuận hơn.
+55|T|Vận tốt trở lại, có thể tiến hành kế hoạch; vẫn cẩn thận.
+56|X|Không thuận, dễ tranh chấp, mất mát. Nên tạm hoãn.
+57|T|Khốn cực sinh phúc: kết quả cuối cùng tốt nếu mềm mỏng, linh hoạt khi thương lượng.
+58|T|Vô cùng thuận tiện, mọi việc tiến triển nhẹ nhàng.
+59|X|Dễ uổng công, trục trặc; thấy cơ hội nhưng khó nắm.
+60|T|Thời điểm thuận, không cần e ngại nhiều; nhưng biết tiết chế, đừng vung tay quá trán.
+61|T|Rất tốt, dễ tìm được tổ ấm ưng ý, bình yên.
+62|B|Tiến hành thận trọng, từ từ; không vội cũng không do dự quá lâu.
+63|T|Cát khánh như ý, rất thuận; thời điểm thích hợp để thực hiện.
+64|X|Không thuận, coi chừng kẻ xấu và rủi ro bất ngờ. Tránh giao dịch quan trọng lúc này.

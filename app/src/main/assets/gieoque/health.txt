@@ -1,0 +1,64 @@
+1|T|Đại cát, sức khỏe có chiều hướng tốt lên, khí thế dồi dào như rồng gặp nước.
+2|T|Sức khỏe dần hồi phục, mạnh lên từng bước. Chăm sóc bản thân và lắng nghe cơ thể.
+3|X|Thời kỳ khó khăn, bệnh có thể dai dẳng. Kiên nhẫn, chọn cách điều trị phù hợp, đừng chạy chữa mù quáng.
+4|X|Có thể mệt mỏi, bất ổn chưa rõ nguyên nhân. Đừng trông vào giải pháp nhanh; dành thời gian nghỉ ngơi, kiểm tra.
+5|T|Điềm tốt, kiên trì thì sức khỏe cải thiện theo thời gian. Giữ tâm thoải mái, đừng nôn nóng.
+6|X|Căng thẳng, tranh cãi ảnh hưởng sức khỏe. Tránh xung đột, giữ tinh thần thư thái.
+7|T|Hồi phục nhanh, có cải thiện rõ. Giữ lạc quan và theo đúng hướng điều trị.
+8|T|Tiến triển thuận lợi; nếu có vấn đề sẽ tìm được hướng giải quyết, có người giúp đỡ.
+9|B|Cần kiên nhẫn, đang có cảm giác bế tắc. Giữ vững tinh thần, đừng sốt ruột.
+10|T|Điềm rất lành, quá trình hồi phục thuận lợi. Lạc quan và theo đúng hướng dẫn.
+11|T|Đại cát, thân tâm hài hòa, nhiều năng lượng. Duy trì lối sống cân bằng.
+12|X|Không thuận, chăm sóc sức khỏe có thể vất vả, dễ không như mong. Cần thận trọng, kiên nhẫn.
+13|T|Giai đoạn thuận lợi, sức khỏe cải thiện nếu đang có vấn đề.
+14|B|Làm chắc chắn: đừng tùy tiện thử phương pháp chưa kiểm chứng; theo cách đã được chứng minh hiệu quả.
+15|T|Khiêm tốn lắng nghe cơ thể, đừng chủ quan; chia sẻ và tìm hỗ trợ khi cần.
+16|T|Gặp hung hóa cát, tinh thần vui vẻ giúp cải thiện sức khỏe; vui nhưng đừng buông lỏng.
+17|T|Khổ tận cam lai: kiên nhẫn và chăm sóc đúng cách thì sức khỏe tốt dần.
+18|X|Có thể đang có thói quen chưa lành mạnh hoặc chăm sóc sai cách. Xem lại ăn uống, sinh hoạt.
+19|T|Tiến triển tích cực, vấn đề sức khỏe được cải thiện. Ăn uống điều độ, sống lành mạnh.
+20|T|Dù đang khó chịu, sắp có chuyển biến tốt; đón nhận sự giúp đỡ, động viên của người khác.
+21|T|Thời kỳ khởi sắc, cải thiện nếu biết nghỉ ngơi đúng cách và theo lời khuyên y tế.
+22|T|Tinh thần vui vẻ là liều thuốc tốt; chăm sóc toàn diện: ăn uống, tập luyện, nghỉ ngơi.
+23|X|Không thuận, có thể có vấn đề khó gỡ hoặc dễ bỏ qua. Chú ý cơ thể, đi kiểm tra khi cần.
+24|X|Mất cân bằng do căng thẳng, áp lực. Nghỉ ngơi, hồi phục tinh thần, sống điều độ.
+25|X|Không mấy thuận, có thể kéo dài. Chăm sóc kỹ hơn, kiên nhẫn và lạc quan.
+26|T|Không còn trở ngại, sức khỏe cải thiện rõ; vẫn cần duy trì thói quen tốt.
+27|T|Tiến triển tốt nếu biết bồi bổ, nuôi dưỡng nguyên khí và sống đúng cách.
+28|X|Có thể đang cố quá sức hoặc dùng cách không hợp, gây mệt mỏi. Điều chỉnh lại.
+29|X|Khó khỏi nhanh. Kiên nhẫn, đừng tin phương pháp chữa nhanh thiếu cơ sở, theo điều trị đều đặn.
+30|T|Hanh thông, khí sắc tốt, sức khỏe cải thiện đáng kể; giữ lạc quan.
+31|T|Tin vui, thời điểm thuận lợi để hồi phục; bồi bổ cả thể chất lẫn tinh thần.
+32|T|Điềm khỏe lên; tuy vậy đừng lơ là, duy trì ăn uống cân đối và tập luyện.
+33|X|Có thể có bất ổn; chú trọng nghỉ ngơi, tĩnh dưỡng và sống lành mạnh.
+34|T|Rất tốt, khả năng khắc phục vấn đề sức khỏe hoặc cải thiện rõ trong thời gian tới.
+35|T|Khỏe mạnh, nhiều năng lượng; giữ tích cực, đừng ỷ vào may mắn mà bỏ chăm sóc.
+36|X|Rất khó khăn, có thể kéo dài. Kiên nhẫn, theo dõi và làm theo chỉ dẫn của bác sĩ.
+37|X|Không tốt lắm; có thể đang có thay đổi chưa phù hợp với sức khỏe. Tránh mục tiêu thiếu thực tế.
+38|X|Cần dè chừng, có thể không dễ khỏi. Chăm sóc cẩn thận, tránh việc biết là có hại.
+39|X|Nhiều mệt mỏi, gánh nặng quá sức. Giảm tải, nghỉ ngơi hợp lý.
+40|T|May mắn, khó khăn và căng thẳng về sức khỏe sắp qua, trở lại khỏe khoắn.
+41|X|Đang không ổn định, dồn sức vào việc không quan trọng gây kiệt sức. Cải thiện ăn, tập, nghỉ.
+42|T|Hiện chưa hoàn toàn tốt nhưng sẽ chuyển biến tích cực, như cây khô nở hoa.
+43|T|Có khó khăn nhưng sẽ vượt qua, sức khỏe dần phục hồi; đừng lo lắng quá mức.
+44|T|Thời vận đến, các vấn đề cũ bắt đầu cải thiện, thêm năng lượng.
+45|T|Quẻ tốt, đang hồi phục; cố gắng và kiên trì sẽ khỏe hẳn.
+46|T|Đang trong quá trình hồi phục, sức khỏe cải thiện dần; tin vào quá trình.
+47|X|Có thể mất cân bằng, áp lực hoặc chăm sóc chưa đủ. Cẩn thận với lối sống, ăn uống.
+48|T|Vận tốt đến, sức khỏe dần phục hồi; nhưng phải tự chăm sóc thì mới bền.
+49|T|Sau thời gian không tốt, sắp cải thiện rõ; giữ lạc quan.
+50|T|Rất tốt, phục hồi và dồi dào; cần chăm sóc tỉ mỉ, kiên nhẫn.
+51|T|Sức khỏe vững vàng, tinh thần lạc quan; tập luyện đều đặn để giữ gìn.
+52|X|Không nên chủ quan với tình trạng hiện tại; cân nhắc kỹ mọi quyết định liên quan sức khỏe.
+53|B|Cẩn trọng trong lựa chọn sinh hoạt; chú ý cả thể chất lẫn tinh thần, tiến từng bước.
+54|X|Có trở ngại; có thể cách chữa chưa phù hợp. Nên hỏi thêm ý kiến chuyên gia, đừng tự điều trị.
+55|T|Vận tốt trở lại, sức khỏe dần phục hồi như gương cũ sáng lại.
+56|X|Khó khăn trong chăm sóc sức khỏe, có thể do thiếu kiên trì. Giữ lối sống lành mạnh.
+57|T|Điềm tốt; kiên nhẫn, lạc quan, khó khăn ban đầu sẽ qua và thân tâm hồi phục.
+58|T|Rất thuận lợi, sức khỏe dồi dào; giữ tinh thần vui vẻ.
+59|X|Chưa phải lúc mong cải thiện nhanh hay tìm cách chữa thần kỳ; đừng kỳ vọng quá sức.
+60|T|Tốt lành; cân bằng là quan trọng nhất, hạn chế thói quen xấu, vận động đều.
+61|T|Rất tốt lành, có dấu hiệu hồi phục rõ rệt.
+62|B|Đừng chần chừ né tránh vấn đề sức khỏe; xử lý từng bước, tìm giúp đỡ khi cần.
+63|T|Cát khánh như ý, sức khỏe dần ổn định, tiến triển tốt; tiếp tục kiên trì.
+64|X|Chưa phải thời điểm tốt cho sức khỏe, dễ có trục trặc. Chú ý giữ gìn, phòng bệnh.

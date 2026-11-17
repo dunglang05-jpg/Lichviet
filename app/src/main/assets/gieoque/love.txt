@@ -1,0 +1,64 @@
+1|T|Tình duyên gặp nhiều may mắn, sắp có bước ngoặt tích cực. Mở lòng và trân trọng cơ hội đang tới.
+2|T|Tình cảm thuận lợi, dễ chịu. Người độc thân sớm gặp người khiến mình rung động; người đã có đôi thì hiểu lầm dần được gỡ.
+3|X|Tình cảm rối ren, dễ cãi vã chuyện nhỏ, khó hòa giải. Kiên nhẫn, đừng hấp tấp hay ép buộc, cho mối quan hệ thời gian hàn gắn.
+4|X|Chưa thuận cho tình cảm; quyết định còn mơ hồ dễ gây hiểu lầm, thất vọng. Khó khăn này chỉ tạm thời, nên nhìn lại cho rõ lòng mình.
+5|T|Vận đẹp cho tình duyên, mối quan hệ tiến triển hòa hợp. Kiên nhẫn chờ, mọi thứ sẽ đến đúng lúc.
+6|X|Dễ phát sinh mâu thuẫn, hiểu lầm. Giữ bình tĩnh, tránh tranh cãi và làm to chuyện; hãy lắng nghe nhau.
+7|T|Mối quan hệ sắp có bước tiến rõ rệt. Vun đắp chân thành, kiên nhẫn; khi cả hai sẵn sàng mọi thứ sẽ tự nhiên.
+8|T|Việc gì cũng lợi, tình cảm vui vẻ, hôn nhân tốt đẹp. Giữ tinh thần chia sẻ, nâng đỡ nhau.
+9|B|Chưa phải lúc đẩy nhanh hay kỳ vọng nhiều vào tình cảm. Tập trung phát triển và yêu thương bản thân, chờ thời cơ.
+10|T|Quan hệ hài hòa, đôi bên tôn trọng và chia sẻ, tình cảm ngày càng sâu đậm. Tiếp tục vun đắp.
+11|T|Tin mừng tình duyên, âm dương giao hòa, hôn nhân dễ thành và bền lâu. Khó khăn cũ được giải quyết.
+12|X|Cát ít hung nhiều; hai bên khó gặp nhau, dễ mâu thuẫn. Chưa nên quyết định lớn về tình cảm, hãy suy ngẫm thêm.
+13|T|Đồng lòng, hòa hợp; tình cảm tốt khi cùng chia sẻ, tin tưởng và có mục tiêu chung. Thời gian tốt để gắn kết.
+14|B|Tình cảm cần cân nhắc kỹ, không vội trước những bước lớn. Xây nền tảng tin cậy, chắc chắn rồi mới tiến xa.
+15|T|Tình duyên may mắn nhờ khiêm nhường, biết nhường nhịn và thấu hiểu. Hôn nhân về sau như ý.
+16|T|Gặp hung hóa cát: hiểu lầm dần được hóa giải, hai người hòa thuận vui vẻ. Vui rồi vẫn nên giữ chừng mực.
+17|T|Tình cảm tiến lên từng bước, trở ngại hiện tại vượt qua được. Kiên nhẫn, không nóng vội, cần sự hỗ trợ từ hai phía.
+18|X|Coi chừng làm sai cách khiến quan hệ trục trặc. Thận trọng lời nói, việc làm; khéo léo gỡ hiểu lầm.
+19|T|Thời vận thuận lợi, hôn nhân và tình cảm tiến triển tốt, trở ngại cũ dần qua. Giữ chân thành, tử tế.
+20|T|Thuận để mở rộng tình cảm, có người giúp đỡ, mai mối. Trân trọng các mối quan hệ quan trọng.
+21|T|Điềm lành, hôn nhân thành, hai người hòa hợp và bổ sung cho nhau. Nuôi dưỡng tình cảm bằng sự chân thành.
+22|T|Hỷ sự, vạn sự như ý, quan hệ hòa hợp. Chăm chút, gìn giữ tình cảm cả bên ngoài lẫn trong lòng.
+23|X|Tình duyên gặp trục trặc, có thể bị người hoặc việc làm rạn nứt. Đừng đặt niềm tin quá mức, giải quyết nhẹ nhàng, kiên nhẫn.
+24|X|Chưa thuận, dễ bất hòa. Nhẫn nhịn, hiểu tâm tư đối phương; thông cảm cho nhau thì cuối cùng sẽ ổn.
+25|X|Thời kỳ bất lợi, cầu hạnh phúc chưa như ý. Bớt kỳ vọng, chấp nhận thực tế và cho mình thời gian suy ngẫm.
+26|T|Không còn trở ngại, chuyện tình cảm rõ ràng và suôn sẻ hơn. Tự tin, chủ động tạo dựng cơ hội.
+27|T|Đại cát nếu biết nuôi dưỡng tình cảm: lắng nghe, tôn trọng và hiểu người mình thương.
+28|X|Đang cho đi quá mức mà nhận lại không xứng. Nhìn lại mối quan hệ, bình tĩnh, đừng mơ mộng xa vời.
+29|X|Bỏ nhiều công sức nhưng khó được như mong đợi; có thể đang hy vọng vào điều không thực tế. Xem lại mong muốn, đôi khi nên buông.
+30|T|Giai đoạn rực rỡ, được yêu thương và trân trọng. Giữ chân thành, sẻ chia và quan tâm người bạn đời.
+31|T|Rất tích cực: thời vận đến, hai người ngày càng gắn bó, cùng vượt khó.
+32|T|Rất tốt: tình cảm thuận lợi, bền vững, đến tự nhiên không cần cưỡng cầu. Hợp để bắt đầu hoặc vun đắp quan hệ.
+33|X|Mưu sự khó thành: muốn tiến xa nhưng vướng trở ngại, chưa đúng lúc. Chưa nên vội quyết chuyện hôn nhân.
+34|T|Sắp gặp may: chờ lâu nay có kết quả, gặp người phù hợp hoặc đủ điều kiện về chung một nhà.
+35|T|Điềm lành, dễ gặp người tốt, tình cảm ngọt ngào. Xây dựng trên sự chân thành, đừng đặt tiền tài lên hàng đầu.
+36|X|Tình cảm khó khăn, bất ổn, dễ mâu thuẫn. Tĩnh tâm, kiên nhẫn, coi đây là thử thách để hoàn thiện mình.
+37|X|Đang theo đuổi bóng hình xa vời, như hoa trong gương. Thực tế hơn, nhận ra hạnh phúc thật ở đâu.
+38|X|Dễ bất hòa, hiểu lầm do khác biệt quan điểm, tính cách. Tôn trọng, lắng nghe, đừng để tự ái làm nguội tình cảm.
+39|X|Tình cảm gian truân, dễ hiểu sai ý nhau. Xem lại cách cư xử; có lúc nên lùi lại suy nghĩ và chờ thời.
+40|T|Rất tốt: trở ngại cũ được gỡ, tình yêu thăng hoa, bền vững. Giữ niềm tin và lòng chân thành.
+41|X|Nên lo hoàn thiện bản thân hơn là dồn sức cho mối quan hệ chưa hiệu quả; đầu tư quá sâu lúc này dễ uổng công.
+42|T|Bĩ cực thái lai: sau thời gian lận đận, sắp gặp người mình chờ đợi hoặc mối tình khởi sắc.
+43|T|Rắc rối tình cảm đã hoặc sắp được giải quyết, mọi việc theo ý. Tránh gây hiểu lầm, xích mích không đáng.
+44|T|Thời vận đã đến, có thể gặp người hợp ý một cách bất ngờ. Chú ý những tín hiệu quanh mình.
+45|T|Tình duyên đổi mới, phát triển mạnh; có thể có người mới hoặc cả hai bước sang giai đoạn mới.
+46|T|Tình cảm đi lên vui vẻ. Độc thân có thể sớm gặp người thương; đã có đôi thì quan hệ tiếp tục thuận lợi, lâu dài.
+47|X|Khốn đốn, trắc trở, có thể do yếu tố bên ngoài can thiệp. Không hợp bắt đầu quan hệ mới hay níu kéo điều không còn khả thi.
+48|T|Vận tốt đến, khó khăn trong tình yêu được giải quyết. Vẫn cần cố gắng, kiên nhẫn và nắm bắt cơ hội.
+49|T|Vận tốt đã đến: sau thời gian khó khăn, hiểu lầm, tình cảm thay đổi theo hướng tích cực như hạn gặp mưa.
+50|T|Duyên đến bất ngờ từ sự việc không ngờ tới, có thể quen ai đó tình cờ rồi nên duyên.
+51|T|Chuyện tình cảm rõ ràng và thành công; người ấy mang tin vui. Mở lòng đón nhận rung động mới.
+52|X|Tình cảm khó khăn, cố cũng khó như ý lúc này. Đừng nản, tập trung nâng giá trị bản thân, thời gian sẽ mở lối.
+53|B|Mối quan hệ như đi trên băng mỏng, cần thận trọng từng bước. Bình tĩnh, xây dựng dần trên tin tưởng, lấy hòa làm quý.
+54|X|Mưu sự khó thành, muốn tiến xa hoặc kết duyên nhưng chưa như ý; không hẳn do lỗi của bạn, chỉ là chưa đúng thời.
+55|T|Sau thời gian u ám, tình duyên sẽ sáng lại. Có hiểu lầm hay xa cách thì mạnh dạn bày tỏ và tha thứ; người đi có thể quay về.
+56|X|Quan hệ bất ổn, dễ hiểu lầm, mất cảm giác an toàn. Giữ bình tĩnh, tránh quyết định vội vàng theo cảm xúc.
+57|T|Kiên nhẫn và dịu dàng thì tình cảm sẽ thuận dòng. Giải quyết hiểu lầm nhẹ nhàng, giao tiếp tinh tế.
+58|T|Vô cùng thuận tiện, tình cảm vui vẻ hạnh phúc. Độc thân dễ gặp cơ hội; có đôi thì êm đềm, mặn nồng.
+59|X|Dễ uổng công: bỏ nhiều tâm huyết mà không được đáp lại xứng đáng, mong một điều đẹp nhưng còn cách trở.
+60|T|Giai đoạn thuận lợi, hạnh phúc nếu biết điều hòa, tiết chế. Hợp để cùng nhau xây dựng lâu dài.
+61|T|Rất tốt, hôn nhân hòa hợp, ngày càng gắn bó. Giữ chữ tín, trung thành và chân thành.
+62|B|Đã rõ ràng thì nên tiến tới, đừng dềnh dàng; nhưng vẫn cần tỉ mỉ, thận trọng, không vội mà thiếu cân nhắc.
+63|T|Vạn sự như ý, tình cảm hanh thông và thăng hoa. Giữ chân thành, tôn trọng lẫn nhau.
+64|X|Chưa thuận để xây dựng quan hệ mới; coi chừng hiểu lầm, ghen tuông hay người thứ ba. Cưỡng cầu lúc này dễ thất vọng.

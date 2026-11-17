@@ -1,0 +1,64 @@
+1|T|Anh chị em hòa thuận, hiểu lầm cũ được gỡ. Thời điểm tốt để cùng nhau tương trợ.
+2|T|Hòa thuận, gắn kết; tình cảm cải thiện nếu cư xử nhẹ nhàng, kiên nhẫn và bao dung.
+3|X|Dễ có hiểu lầm, rắc rối khó gỡ, có thể từ khúc mắc cũ. Cần thời gian và sự thấu hiểu.
+4|X|Thời vận chưa thuận, thiếu cảm thông, sẻ chia. Cẩn trọng, tránh tranh cãi không đáng.
+5|T|Tình cảm tiến triển hòa hợp, sâu đậm hơn; tranh chấp nhỏ trước đây dần được giải quyết.
+6|X|Dễ xung đột, ai cũng giữ ý mình. Đừng để mâu thuẫn leo thang thành tranh cãi lớn hay kiện tụng.
+7|T|Ngày càng khăng khít, bất đồng cũ dần qua, tình thân sâu đậm hơn.
+8|T|Điềm lành; quan hệ vui vẻ hơn khi mỗi người mở lòng và giúp đỡ nhau.
+9|B|Tạm thời phải nhẫn: có hiểu lầm nhỏ, kỳ vọng chưa được đáp ứng. Kiên nhẫn chờ dịp.
+10|T|Hòa thuận, may mắn; có dịp hợp tác, chia sẻ và trân trọng nhau.
+11|T|Đại cát, hòa thuận và may mắn; biết cảm thông, hỗ trợ thì càng gắn kết.
+12|X|Bế tắc, thiếu hiểu nhau, nhiều trở ngại. Thận trọng trong lời nói và cách giải quyết.
+13|T|Đoàn kết, hòa hợp; chú trọng giữ sự đồng lòng, thông cảm và ủng hộ nhau.
+14|T|Hanh thông nếu rõ ràng, chắc chắn và hiểu đúng về nhau, cùng chung mục tiêu.
+15|T|Giữ tình cảm bằng khiêm tốn, nhường nhịn, chia sẻ công bằng; anh em hòa thì cùng được lợi.
+16|T|Vui vẻ, hòa hợp, gắn bó hơn; khó khăn, hiểu lầm trước kia được giải quyết.
+17|B|Cư xử mềm mỏng, thuận theo hoàn cảnh; có khó khăn nhưng nương tựa nhau thì cùng tiến.
+18|X|Có thể đang hiểu lầm hoặc xa cách do cư xử chưa đúng. Tôn trọng, kiên nhẫn và tìm cách thấu hiểu.
+19|T|Hòa thuận, gắn kết; sống nhân hậu, dành thời gian lắng nghe nhau.
+20|T|Căng thẳng hiện tại sẽ sớm qua, có người đứng ra giúp hòa giải.
+21|T|Thời điểm tốt để giải quyết hiểu lầm cũ, quan hệ ấm áp và gắn kết lại.
+22|T|Thân thiết, hài hòa; thể hiện tình cảm chân thành, sẵn lòng hỗ trợ nhau.
+23|X|Điềm không lành, có thể có ghen ghét, đố kỵ, người cảm thấy bị gạt ra. Quan tâm và giữ hòa khí.
+24|X|Có bất hòa, hiểu lầm. Đừng vội phán xét; lắng nghe và cảm thông để hòa giải.
+25|X|Khó khăn, xa cách cả về khoảng cách lẫn tình cảm. Nhẫn nại, đừng mong thay đổi ngay.
+26|T|Không còn trở ngại, bất hòa dần được gỡ. Kiên nhẫn, vị tha, tạo không khí tích cực.
+27|T|Nuôi dưỡng tình thân bằng sự chân thành, tôn trọng, thấu hiểu; tạo nếp nhà hòa thuận.
+28|X|Cảm xúc, hành động đang quá đà, dễ gây hiểu lầm, xung đột. Giữ cân bằng, tiết chế.
+29|X|Bỏ nhiều công sức mà chưa được đáp lại; nỗ lực hòa giải chưa có kết quả. Tạm lùi và kiên nhẫn.
+30|T|Ấm áp, gắn kết, hỗ trợ nhau. Chủ động chia sẻ để cùng vượt khó.
+31|T|Gần gũi và hòa thuận hơn, có thể có bước ngoặt tích cực. Mở lòng, cảm thông.
+32|T|Vạn sự như ý, quan hệ ngày càng thuận hòa, xích mích được giải quyết nhẹ nhàng.
+33|X|Dễ có hiểu lầm, cãi vã như mây đen kéo đến. Thận trọng lời nói, tránh làm tổn thương nhau.
+34|T|Giai đoạn tốt, quan hệ phát triển tích cực, hòa hợp và tôn trọng nhau hơn.
+35|T|Sắp có thay đổi tốt, bớt xung đột, tình cảm ấm áp hơn; vẫn cần cố gắng từ hai phía.
+36|X|Nhiều khó khăn, mâu thuẫn liên tiếp, có thể dẫn đến xa cách. Thận trọng, cố gắng hòa giải sớm.
+37|X|Có thể đang mong đợi điều không thực tế ở anh chị em. Nhìn lại kỳ vọng của mình.
+38|X|Đang có xung đột và hiểu lầm; chưa phải lúc giải quyết dứt điểm, nên lùi lại cho lắng xuống.
+39|X|Có khó khăn, xung đột; tìm hiểu nguyên nhân, đừng cố gượng ép.
+40|T|Đang qua giai đoạn gian nan nhưng sẽ vượt qua và gắn kết hơn; thấu hiểu và thông cảm.
+41|X|Cố hòa hợp mà chưa có kết quả, dễ mệt mỏi thất vọng. Tạm giữ khoảng cách hợp lý.
+42|T|Cơ hội mới đáng mừng, mâu thuẫn cũ được chữa lành, cây khô nở hoa.
+43|T|Gặp hung hóa cát, mâu thuẫn được giải quyết. Giao tiếp thẳng thắn, rõ ràng, đừng né tránh.
+44|T|Khi gặp khó khăn, anh chị em sẽ là chỗ dựa quan trọng; hãy chia sẻ trăn trở với họ.
+45|T|Tụ hợp, đồng sức; anh em đoàn kết sẽ làm nên chuyện lớn.
+46|T|Quan hệ phát triển tốt; thời điểm hay để cùng nhau lên kế hoạch hay làm việc chung.
+47|X|Bất ổn, có hiểu lầm hoặc thiếu tôn trọng nhau. Kiên nhẫn tìm cách tháo gỡ.
+48|T|Quan hệ cải thiện, có thể cùng hợp tác hay giúp nhau vượt khó; lúc lý tưởng để gắn kết.
+49|T|Vận tốt đến, xích mích cũ được giải quyết như hạn gặp mưa.
+50|T|Hỗ trợ lẫn nhau thì mỗi người đều được lợi và cả nhà cùng thịnh vượng.
+51|T|Mọi sự thành công; chủ động, mạnh dạn hàn gắn hiểu lầm.
+52|X|Giao tiếp không thuận, khó hiểu nhau. Đừng gượng ép, chờ thời điểm phù hợp.
+53|B|Quan hệ đang mong manh; thận trọng, kiên nhẫn, tiến từng bước, đừng làm quá.
+54|X|Chưa thuận để làm quan hệ bền chặt hơn; vẫn nên cố gắng thấu hiểu mỗi người có cách riêng.
+55|T|Vận tốt trở lại, mâu thuẫn cũ được làm mới, quan hệ tốt đẹp hơn.
+56|X|Dễ rạn nứt do hiểu lầm, mâu thuẫn. Đừng hấp tấp, dùng tình thương để giải quyết.
+57|T|Khốn cực sinh phúc: thử thách sẽ làm quan hệ chặt chẽ hơn nếu biết mềm mỏng, khéo léo.
+58|T|Rất hòa hợp, không có cãi vã lớn; thời điểm tốt để gần gũi, chia sẻ.
+59|X|Dễ uổng công: cố mấy cũng khó đạt sự gắn kết mong muốn lúc này.
+60|T|Hài hòa, thuận lợi nếu biết giữ cân bằng, tiết chế trong cư xử.
+61|T|Rất tốt lành, quan hệ thoải mái, tự nhiên; gò bó và hiểu lầm trước đây được giải quyết.
+62|B|Cẩn trọng nhưng đừng do dự; giải quyết dứt khoát, không kéo dài vấn đề.
+63|T|Cát khánh như ý, quan hệ hanh thông lâu dài, hiểu lầm được giải quyết.
+64|X|Cảnh báo có thể có xung đột, đố kỵ, người xấu xen vào. Nhẫn nhịn, không cưỡng ép.

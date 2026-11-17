@@ -1,0 +1,64 @@
+1|T|Đại cát, tượng sinh sôi nảy nở, hợp với mong muốn có thêm con. Dù từng trắc trở, nay đã gặp thời.
+2|T|Tốt lành, viên mãn; mong ước về con cái dễ được đáp ứng, gia đình đón tin vui.
+3|X|Khởi đầu gian nan, lòng nhiều lo lắng, mọi việc còn rối. Cần kiên trì, bình tâm, không nóng vội.
+4|X|Chưa phải lúc thuận lợi nhất, có thể gặp trở ngại ngoài ý muốn. Nên chuẩn bị thêm và chờ thời.
+5|T|Vận tốt đã đến, mưu việc tất thành. Giữ lạc quan, bình tĩnh và kiên nhẫn chờ đúng thời điểm.
+6|X|Chưa thuận, có thể hai vợ chồng chưa đồng lòng hoặc còn mâu thuẫn. Hòa giải, thấu hiểu nhau trước.
+7|T|Mã đáo thành công, mong ước thêm con thuận lợi. Giữ lạc quan, chăm sóc sức khỏe, sống điều độ.
+8|T|Việc gì cũng lợi, có người trợ giúp, khó khăn được gỡ. Biết chia sẻ, nhờ cậy người thân.
+9|B|Cần kiên nhẫn, chưa phải thời điểm tốt nhất; như cây chờ mưa, cần thêm thời gian và điều kiện.
+10|T|Điềm lành, nỗ lực được đền đáp. Chọn thời điểm thuận, làm mọi việc chu đáo, ôn hòa.
+11|T|Đại cát, âm dương giao hòa, mọi sự hanh thông. Giữ tinh thần vui vẻ, môi trường sống tốt.
+12|X|Cát ít hung nhiều, nhiều trở ngại. Kiên nhẫn chờ thời, tham khảo người có kinh nghiệm.
+13|T|Đi đâu cũng lợi. Vợ chồng đồng lòng, chia sẻ cùng người thân và nghe lời khuyên của người hiểu biết.
+14|T|Chuẩn bị kỹ cả tâm thế lẫn sức khỏe thì mọi việc hanh thông. Nên tìm thêm tư vấn chuyên môn.
+15|T|Rất tốt, mong ước có thể thành mỹ mãn. Giữ khiêm nhường, biết ơn, quan tâm người bạn đời.
+16|T|Gặp hung hóa cát, mong muốn dễ được đáp ứng. Gia đình giữ không khí vui vẻ, hòa hợp.
+17|T|Như ý nếu kiên nhẫn đi từng bước, không áp đặt khi cơ thể và tinh thần chưa sẵn sàng.
+18|X|Có thể đang làm chưa đúng cách hoặc chuẩn bị còn thiếu. Xem lại kế hoạch, sức khỏe và tinh thần.
+19|T|Thời vận hanh thông, sinh sôi nảy nở, nguyện vọng dễ như ý. Tích cực thực hiện.
+20|T|Có quý nhân giúp đỡ, như hoa sen gặp nước sau hạn; khả năng mở rộng gia đình tốt.
+21|T|Gặp may và thuận lợi, mong mỏi được đáp ứng như người đói được ăn.
+22|T|Vạn sự như ý, hỷ khí đầy nhà; thời điểm tốt để thực hiện nguyện vọng, gia đình hòa thuận.
+23|X|Việc làm khó thành lúc này, nhiều thách thức. Kiên nhẫn, xem lại đây có phải đúng thời điểm.
+24|X|Cần nhẫn nại; sự hòa thuận vợ chồng là điều tiên quyết, nên điều chỉnh để gia đình êm ấm hơn.
+25|X|Chưa thuận ở hiện tại. Đừng nản, giữ niềm tin và lạc quan chờ thời kỳ tốt.
+26|T|Không còn trở ngại, thời điểm thuận lợi. Chuẩn bị đầy đủ thể chất và tinh thần.
+27|T|Thuận để nuôi dưỡng, vun đắp gia đình; sống hiền hòa, đức độ thì mọi việc như ý.
+28|X|Có thể gặp thách thức, không dễ như mong. Kiên nhẫn và nhìn nhận thực tế hơn.
+29|X|Dễ uổng công, chưa đạt như mong. Kiên nhẫn và nên tìm hỗ trợ, tư vấn từ bác sĩ.
+30|T|Điềm lành, hanh thông, tượng sinh sôi như ánh lửa ấm áp trong đêm.
+31|T|Thời vận đã đến, giao cảm sinh sôi như mầm nhú khỏi đất. Giữ lạc quan.
+32|T|Vạn sự như ý, nguyện vọng dễ được đáp ứng. Vẫn cần chuẩn bị, chăm sóc sức khỏe.
+33|X|Mưu sự khó thành, chưa phải thời điểm thuận, có trở ngại che khuất. Nên tạm hoãn.
+34|T|Vận khí đang lên, rất thuận cho việc thêm con nếu đã có kế hoạch, chuẩn bị.
+35|T|Tiến lên, thuận lợi; gia đình có thể sớm đón thành viên mới.
+36|X|Không thuận, gặp ngăn trở. Kiên nhẫn, tu tâm, cố gắng vượt qua.
+37|X|Dễ gặp khó khăn; mong muốn có thể chưa hợp hoàn cảnh thực tế. Xem xét kỹ điều kiện hiện tại.
+38|X|Khó khăn do chưa hòa hợp; có thể vợ chồng chưa đồng lòng hoặc chưa sẵn sàng. Xem lại điều chưa ổn.
+39|X|Trở ngại đáng kể, có thể do sức khỏe hay vấn đề khác cần giải quyết trước. Suy nghĩ thấu đáo.
+40|T|Khó khăn tiêu tan, thời gian thuận lợi. Kiên trì, giữ niềm tin.
+41|X|Nỗ lực chưa đem lại kết quả, điều kiện chưa phù hợp. Nên tạm dừng, chưa có nghĩa là không thể.
+42|B|Lúc này có thể còn khó, nhưng bĩ cực thái lai; kiên nhẫn không bỏ cuộc thì may mắn sẽ tới.
+43|T|Thoát khó, hung hóa cát. Tiếp tục ý định, kiên trì và chuẩn bị cẩn thận.
+44|T|Đang gặp thời thuận lợi, vận khí đi lên; nếu có ý định thì đây là lúc thích hợp.
+45|T|Quẻ tốt, như cá chép hóa rồng; gia đình có dấu hiệu sắp mở rộng.
+46|T|Tin vui, đi lên như cây mọc; việc mở rộng gia đình hứa hẹn sớm thành.
+47|X|Đang bất ổn, chưa phải thời điểm thích hợp. Chờ đợi, cải thiện tình hình và tạo nền tảng trước.
+48|T|Vận tốt đã đến, như giếng khô có nước; điều kiện đang thuận để đón điều mới.
+49|T|Rất lành, đổi mới và tái sinh như mầm cây gặp mưa sau hạn.
+50|T|Một công đôi việc, mọi sự dồi dào, thuận lợi cho việc đón thành viên mới.
+51|T|Mọi sự thành công; dù có lúc khó, cuối cùng đạt kết quả tốt.
+52|X|Mọi việc chưa thuận. Kiên nhẫn, không vội, chuẩn bị kỹ thể chất và tinh thần.
+53|X|Nhiều bất ổn, như đi trên băng mỏng. Cực kỳ thận trọng, tiến từng bước chắc chắn.
+54|X|Mưu sự chưa thành. Chờ thời vận thích hợp, đừng cố một cách gò ép.
+55|T|Vận tốt trở lại, khả năng có thêm con rõ ràng, như gương cũ sáng lại.
+56|X|Không mấy lạc quan, dễ chậm trễ hoặc trắc trở. Chuẩn bị tinh thần và kiên nhẫn.
+57|T|Khốn cực sinh phúc: có thể gặp thử thách nhưng giữ niềm tin, kiên nhẫn thì sẽ có phúc.
+58|T|Rất thuận, hòa hợp, may mắn. Giữ tâm thái vui vẻ, lạc quan.
+59|X|Dễ uổng công, gặp trở ngại lớn. Chấp nhận rằng mong muốn không phải lúc nào cũng dễ đạt.
+60|T|Không phải kiêng kỵ, kế hoạch thuận lợi; thời điểm tốt để mở rộng gia đình, giữ chừng mực.
+61|T|Rất tốt lành, gia đình hòa hợp yên bình, thuận để sinh thêm con.
+62|B|Đang ở bước ngoặt; tiến tới thì có lợi, do dự có thể lỡ cơ hội, nhưng vẫn cần thận trọng.
+63|T|Việc đã thành, cát khánh như ý; như chờ một tin vui sắp đến.
+64|X|Chưa thuận để mở rộng gia đình, có trở ngại. Không nên cưỡng cầu, kiên nhẫn chờ.

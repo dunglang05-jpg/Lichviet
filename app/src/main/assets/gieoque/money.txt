@@ -1,0 +1,64 @@
+1|T|Thời vận tài chính đã đến, kế hoạch tiền bạc suôn sẻ. Nên chủ động mở rộng làm ăn, đầu tư, giữ đầu óc tỉnh táo và lập trường vững.
+2|T|Tiền bạc thuận lợi, việc làm ăn có thể vượt kỳ vọng. Giữ khiêm tốn, đừng chủ quan; tranh thủ củng cố tài chính để phòng lúc khó.
+3|X|Chuyện tiền bạc đang rối, dễ trật kế hoạch. Thận trọng với đầu tư và chi tiêu lớn; cần vạch hướng đi rõ ràng trước khi làm.
+4|X|Chưa phải lúc cầu tài, dễ hao hụt, mất mát. Nên tạm gác đầu tư và dự án mới liên quan đến tiền.
+5|T|Vận tốt đã tới, công việc có lời, khó khăn tài chính dần được gỡ. Tuy vậy cần kiên nhẫn, chờ đúng thời cơ, đừng vội vung tiền.
+6|X|Dễ vướng tranh chấp về tiền, cầu tài có thể tốn công vô ích. Tránh kiện cáo, đầu tư mạo hiểm; nhường một bước là khôn ngoan.
+7|T|Điềm lành: khó khăn tài chính sắp qua, tiền đã mất có thể quay về. Làm ăn chuẩn bị kỹ, đúng thời điểm sẽ thành.
+8|T|Cầu tài được lợi lớn, nhưng nhờ các mối quan hệ. Hãy giữ gìn quan hệ tốt, giúp người thì sẽ được người giúp.
+9|B|Chưa phải lúc mong lời lớn hay đầu tư mạo hiểm. Quản lý chặt tiền đang có, bớt chi tiêu thừa, tiết kiệm phòng bất trắc.
+10|T|Cầu tài được lợi, thu nhập có thể tăng. Nhưng phải đi từng bước cẩn trọng, tránh làm ẩu.
+11|T|Đại cát: tài chính hanh thông, có thể thu hồi của mất, làm ăn được lợi lớn. Hợp mở rộng giao dịch, vẫn nên suy xét kỹ.
+12|X|Tiền bạc bế tắc, mua bán khó thành. Đừng vội đầu tư hay quyết định lớn; giữ gìn nguồn lực và chờ thời.
+13|T|Đi đâu cũng có lợi, tài chính sắp tới nhiều thuận lợi. Đường có thể dài nhưng cuối cùng đạt mục tiêu; giao dịch, cầu tài đều tốt.
+14|T|Đang thời phồn thịnh. Muốn giữ và tăng tài sản thì làm chắc tay, không đổ tiền vào việc mình chưa hiểu rõ.
+15|T|Tiền bạc thuận lợi nhờ khiêm tốn và công bằng. Hùn vốn, hợp tác tốt nếu không ích kỷ, tranh giành.
+16|T|Gặp hung hóa cát, giao dịch và góp vốn dễ thành. Sau khi thắng lợi nhớ giữ cảnh giác, đừng sinh tự mãn.
+17|B|Tiền bạc cần đi từng bước, kiên nhẫn và có kế hoạch, không cố chấp theo việc thiếu thực tế. Gặp khó hãy hỏi người có kinh nghiệm.
+18|X|Cảnh báo quyết định tài chính sai cách, dễ thất bại, mất mát. Xem xét kỹ, không mạo hiểm, không tiêu xài thiếu kiểm soát.
+19|T|Thời cơ thăng tiến về tài chính đã tới, cầu tài có kết quả. Giữ đức, sống lành mạnh, tập trung vào việc và quan hệ có giá trị.
+20|T|Có quý nhân giúp, khó khăn tiền bạc sẽ được gỡ nhờ người khác. Đừng ngại nhờ giúp đỡ và cũng nên giúp lại người.
+21|T|Làm ăn, đầu tư gặp may, hợp mở rộng kinh doanh. Biết nắm cơ hội và hợp tác đúng cách thì tiền sẽ tới.
+22|T|Vạn sự như ý về tiền bạc: của mất tìm lại, công sức được đền đáp. Có thể đầu tư vào lĩnh vực phù hợp, nhưng cần giữ chừng mực.
+23|X|Không thuận để đầu tư hay mở rộng, dễ mất mát. Coi chừng người ghen ghét, đố kỵ; giữ hòa khí với xung quanh.
+24|X|Tài lộc đang khó, dễ gặp trở ngại bất ngờ. Nhẫn nại, tiết kiệm, không làm dự án lớn khi chưa tính kỹ.
+25|X|Bất lợi cho tiền bạc, mong lời lớn dễ thất vọng. Giữ vững, không mạo hiểm, chờ thời cơ tốt hơn.
+26|T|Chuẩn bị kỹ thì tiền bạc thuận lợi, hết trở ngại. Đây là lúc tích lũy năng lực và vốn liếng để thu lời.
+27|T|Tài chính có đà tăng trưởng nhờ nuôi dưỡng năng lực bản thân. Chăm chỉ, học hỏi, hợp tác tốt sẽ thu hút tiền bạc.
+28|X|Chạy theo tiền mà thiếu kế hoạch chỉ thêm mệt. Sống thực tế, đừng trông vào may rủi; cần cù và quản lý tiền thông minh.
+29|X|Không phải lúc cầu tài, dễ uổng công. Tránh bỏ tiền lớn vào việc mập mờ; đợi đúng thời và cân nhắc kỹ.
+30|T|Phát phúc sinh tài, đầu tư kinh doanh có lời, có thể gặp cơ hội bất ngờ. Biết chia sẻ, đừng tham quá kẻo bị đố kỵ.
+31|T|Thời vận đã đến, mưu sự thành, buôn bán phát đạt. Làm ăn nên biết chọn hàng hợp thời, hơn người về chất lượng hoặc giá.
+32|T|Kiên trì làm việc thì tiền và cơ hội tự đến. Đừng ỷ vào may mắn, luôn chuẩn bị để nắm cơ hội.
+33|X|Mưu sự khó thành: mất của khó tìm, giao dịch trắc trở, góp vốn bất lợi. Giữ an toàn tài chính, chưa nên mở dự án mới.
+34|T|Rất tốt: có thể gặp cơ hội tăng thu nhập hoặc khoản tiền bất ngờ. Dùng tiền khôn ngoan, chỉ đầu tư vào thứ mình hiểu rõ.
+35|T|Vận đỏ sắp đến, làm ăn phát triển, có lời lớn. Đừng phung phí, tiếp tục chăm chỉ, không tự mãn.
+36|X|Tài chính đang rất khó khăn. Cẩn trọng với đầu tư và giao dịch lớn, tiết kiệm, đừng để lòng tham lấn lý trí.
+37|X|Dễ chạy theo mục tiêu viển vông về tiền. Bỏ bớt kỳ vọng không thực tế, xây kế hoạch tài chính chắc chắn.
+38|X|Tiền bạc dễ trục trặc, lo được việc này hỏng việc kia. Kiểm soát dòng tiền, đừng tin lời hứa mơ hồ.
+39|X|Làm ăn, giữ tiền đều gặp trở ngại, tiến chậm. Xem lại kế hoạch, kiên nhẫn tìm hướng mới, cẩn trọng chi tiêu.
+40|T|Giai đoạn may mắn về tài chính, cầu tài hanh thông. Chủ động nắm cơ hội, sòng phẳng và biết ơn trong giao dịch.
+41|X|Dễ uổng công về tiền bạc, chưa hợp đầu tư lớn. Giảm chi tiêu, tránh phung phí, tiết kiệm và chờ thời.
+42|T|Cây khô nở hoa: tiền bạc sẽ cải thiện, làm ăn phát triển, giao dịch thành. Giữ niềm tin và kiên trì.
+43|T|Gặp hung hóa cát, khó khăn tài chính bắt đầu xoay chuyển, có cơ hội làm giàu. Quản lý tiền cẩn thận, đừng vội đầu tư.
+44|T|Thời vận đã đến, tài chính dần khả quan, của mất có thể quay về. Áp lực tiền bạc giảm bớt.
+45|T|Có cơ hội tăng lợi nhuận, nhất là khi góp sức, hợp tác với người khác. Từ cơ hội nhỏ có thể thành lớn nếu đủ can đảm.
+46|T|Tiền bạc tiếp tục đi lên, kế hoạch tài chính dần thành. Cần cù, sáng tạo, kiên trì để đạt điều mong muốn.
+47|X|Cẩn thận khi hợp tác với người thiếu uy tín. Tài chính có thể bất ổn trong thời gian gần; lấy khó khăn làm động lực.
+48|T|Vận tốt đã đến, kiên trì thì tài chính cải thiện rõ, danh tiếng tăng. Vẫn phải nỗ lực và học hỏi.
+49|T|Vận tốt: của mất lại về, cầu tài đắc lộc, khó khăn cũ được giải quyết. Giữ niềm tin, chủ động nắm cơ hội.
+50|T|Điềm lành, làm ăn dễ có lời, có thể được lợi từ hai phía. Mạnh dạn đầu tư nhưng chuẩn bị kỹ.
+51|T|Mọi sự thành công, cầu tài không tốn sức. Dù dễ dàng cũng không lơ là quản lý tiền.
+52|X|Khó tìm nguồn tiền, chưa thuận mở rộng hay đầu tư mới. Kiên nhẫn, giữ vị thế hiện tại, tiết kiệm, đừng tham.
+53|B|Đường tài lộc không bằng phẳng, cần tiến từng bước. Tránh cơ hội hấp dẫn nhưng rủi ro, giữ bình tĩnh.
+54|X|Chưa thuận cho tiền bạc, cách làm hiện tại có thể sai hướng. Xem lại cách tiếp cận, bỏ qua cơ hội không hợp hoàn cảnh.
+55|T|Cơ hội tiền bạc sẽ đến, vận tài chính dần khôi phục dù có thể không lớn ngay. Quản lý tốt, chăm chỉ và khéo léo.
+56|X|Điềm không lành cho tài chính, buôn bán dễ lỗ, cầu tài khó. Giữ gìn, không mạo hiểm dự án mới.
+57|T|Khốn cực sinh phúc: dù đang khó về tiền, sẽ tìm được lối ra, cầu tài có lợi. Giữ niềm tin và nắm lấy cơ hội.
+58|T|Vô cùng thuận tiện, tài chính suôn sẻ, có thể có nguồn thu bất ngờ. Giữ thái độ tích cực và hòa khí.
+59|X|Dễ uổng công phí sức trong cầu tài, kết quả không như mong. Đánh giá thực tế, đừng chấp nhận rủi ro quá mức.
+60|T|Tiền bạc thuận lợi, kinh doanh có lợi nếu biết tiết chế, không hoang phí, cân bằng chi tiêu.
+61|T|Cầu tài được lợi, buôn bán và góp vốn thuận. Giữ nguyên tắc, đạo đức kinh doanh, đừng để lòng tham dẫn lối.
+62|B|Nên cẩn thận, không vội trong quyết định tài chính; tránh vay mượn và đầu tư mạo hiểm, tiến từng bước.
+63|T|Cát lợi, tài chính có bước tiến mạnh, kế hoạch làm ăn thuận. Giữ thành quả và cân nhắc kỹ mỗi khoản đầu tư.
+64|X|Không thuận cho tài chính, kinh doanh. Chưa nên đầu tư hay mở rộng; tránh cho vay, đi vay, coi chừng kẻ xấu lợi dụng.

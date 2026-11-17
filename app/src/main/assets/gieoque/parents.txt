@@ -1,0 +1,64 @@
+1|T|Quan hệ với bố mẹ thuận lợi, hạnh phúc, sau khó khăn càng vững. Lúc tốt để bày tỏ lòng biết ơn.
+2|T|Hòa thuận, ấm áp; hiểu lầm dần được hóa giải. Chăm sóc, tôn trọng bố mẹ với lòng kiên nhẫn.
+3|X|Thời kỳ rối ren, khó hiểu nhau. Kiên nhẫn, đừng nóng vội hay làm mạnh tay.
+4|X|Dễ phát sinh hiểu lầm, xích mích do thiếu hiểu biết lẫn nhau. Kiên nhẫn và rõ ràng hơn.
+5|T|Vận may đến, hiểu lầm và trở ngại dần được giải quyết, gia đình yên ấm.
+6|X|Có bất đồng, mỗi bên cố chấp giữ ý mình. Lắng nghe và nhường nhịn để giữ hòa khí.
+7|T|Xung đột, hiểu lầm sẽ sớm được giải quyết êm đẹp nếu bạn chủ động.
+8|T|Thuận lợi khi hai bên biết giúp đỡ, lắng nghe và hiểu cho nhau.
+9|B|Tạm thời phải nhẫn: đang có khó khăn hay hiểu lầm. Đừng vội trách móc hay quyết định.
+10|T|Cát tường nếu cư xử nhẹ nhàng, khiêm nhường, từng bước một để tránh va chạm.
+11|T|Hòa thuận, đầy yêu thương; bất đồng cũ được giải quyết, gia đình đầm ấm.
+12|X|Có trở ngại, thiếu trò chuyện, khó đồng cảm. Kiên nhẫn, tăng cường giao tiếp và thể hiện lòng hiếu thảo.
+13|T|Đồng lòng, hiểu nhau; mở lòng chia sẻ và thấu hiểu quan điểm của bố mẹ.
+14|T|Làm việc gì với bố mẹ cũng cần chắc chắn, có trách nhiệm, suy nghĩ kỹ trước khi quyết.
+15|T|Khiêm tốn, biết ơn, lắng nghe và sẻ chia vui buồn cùng bố mẹ thì gia đình êm ấm.
+16|T|Gặp hung hóa cát, khó khăn đều được giải quyết nếu cùng chia sẻ và lắng nghe.
+17|B|Kiên nhẫn xây dựng từ từ, hiểu cảm xúc và mong muốn của bố mẹ thì quan hệ tốt dần.
+18|X|Nên xem lại cách giao tiếp, cư xử với bố mẹ; có thể đang chưa phù hợp nên sinh hiểu lầm.
+19|T|Thời điểm thuận để cải thiện quan hệ; sống nhân hậu, tôn trọng và gần gũi bố mẹ.
+20|T|Như hoa sen gặp nước sau hạn; hiểu lầm cũ qua đi nếu biết vun đắp, quan tâm.
+21|T|Hãy là chỗ dựa, mang lại sự ấm áp và khích lệ cho bố mẹ như khi mình được giúp đỡ.
+22|T|Hòa thuận, ấm áp, vạn sự như ý. Trân trọng thời gian bên nhau, giữ lòng hiếu thảo.
+23|X|Dễ hiểu lầm, có rạn nứt khó hàn gắn nhưng không phải không thể. Rất cẩn trọng trong lời nói.
+24|X|Mâu thuẫn do chưa hiểu nhau. Nhịn nhường, lắng nghe; một cử chỉ quan tâm nhỏ cũng có ích.
+25|X|Có hiểu lầm, tình thế bế tắc. Bình tĩnh, kiên nhẫn chờ dịp hóa giải.
+26|T|Trở ngại được hóa giải, có cơ hội gắn kết hơn nếu sẵn lòng đối diện và giải quyết.
+27|T|Nuôi dưỡng quan hệ bằng sự lắng nghe, học hỏi, tôn trọng và quan tâm bố mẹ.
+28|X|Đang quá tải về cảm xúc hoặc kỳ vọng; đừng cố thay đổi lớn một cách thiếu thực tế.
+29|X|Cảm thấy mắc kẹt, nhiều thử thách. Giữ thái độ mềm dẻo, kiên nhẫn.
+30|T|Hòa hợp, tương trợ, ấm áp và chân thành giữa các thành viên.
+31|T|Thời vận tốt, quan hệ ngày càng cải thiện. Mở lòng tâm sự và lắng nghe lời khuyên của bố mẹ.
+32|T|Vạn sự như ý, thân thiết và hòa thuận tự nhiên; cần kiên trì vun đắp từ cả hai phía.
+33|X|Có trở ngại, hiểu lầm hay cảm xúc bị che giấu như mây che mặt trời. Kiên nhẫn, khéo léo.
+34|T|Giai đoạn tích cực, có cơ hội mới để gắn bó hơn với bố mẹ.
+35|T|Quan hệ đang tiến triển tốt; tiếp tục kiên trì quan tâm sẽ có kết quả đẹp.
+36|X|Đang căng thẳng, có mâu thuẫn. Kiên nhẫn, thông cảm, tránh hành động vội vàng.
+37|X|Nhìn bố mẹ cho thật, đừng đánh giá theo ấn tượng sai hay kỳ vọng ảo.
+38|X|Có thể thấy không được hiểu, khó nói ra. Không cần theo lối mòn, nhưng tránh làm trái đạo lý.
+39|X|Nhiều trở ngại như đi đường tuyết. Dừng lại tìm hiểu nguyên nhân rồi mới tính tiếp.
+40|T|Căng thẳng sẽ giảm, bạn tìm được cách giải quyết, quan hệ cải thiện tích cực.
+41|X|Nỗ lực cải thiện chưa mang lại kết quả như mong. Kiên nhẫn, chưa nên ép.
+42|T|Đang khó nhưng như cây khô nở hoa nhờ chăm sóc; chủ động vun đắp sẽ khởi sắc.
+43|T|Có thể có lúc thử thách nhưng hung hóa cát, kiên trì và quyết tâm sẽ vượt qua.
+44|T|Quan hệ có thể cải thiện bất ngờ, rắc rối cũ được hòa giải.
+45|T|Hành trình thay đổi tích cực, học hỏi từ bố mẹ và cùng trưởng thành.
+46|T|Tiến triển tốt trong thời gian tới; cần nỗ lực và tôn trọng lẫn nhau.
+47|X|Bất ổn, có ý tốt mà thiếu ổn định, dễ hiểu lầm. Kiên nhẫn gỡ dần.
+48|T|Khó khăn đã qua, mâu thuẫn cũ sắp được giải quyết, gia đình gần gũi ấm áp.
+49|T|Vận tốt đến; cần đổi mới cách giao tiếp, bế tắc sẽ chuyển thành tốt đẹp.
+50|T|Cần thêm sự ấm áp, quan tâm và chia sẻ; mở lòng và lắng nghe nhiều hơn.
+51|T|Có bước đột phá, quan hệ được cải thiện mạnh mẽ.
+52|X|Đang bất ổn, hiểu lầm. Hạn chế tranh cãi, học cách lắng nghe và tôn trọng.
+53|B|Cần thận trọng, tiến từng bước như đi trên băng mỏng, tránh làm tổn thương nhau.
+54|X|Có thể đang hòa giải sai cách. Tìm hiểu sâu hơn tâm tư, nguyện vọng của bố mẹ.
+55|T|Thời điểm thích hợp để hàn gắn, làm mới quan hệ, gia đình hòa thuận.
+56|X|Không thuận, dễ hiểu lầm, xung đột. Kiên nhẫn, linh hoạt và sẵn lòng thấu hiểu.
+57|T|Khốn cực sinh phúc: mềm dẻo, nhẫn nại thì qua thử thách sẽ gắn bó sâu sắc hơn.
+58|T|Thuận lợi, hòa hợp, êm đẹp; mở lòng lắng nghe và chia sẻ với bố mẹ.
+59|X|Không mấy thuận, có trục trặc. Kiên nhẫn, lắng nghe và thấu hiểu để vượt qua.
+60|T|Thời vận tốt nếu biết tiết chế, điều hòa cảm xúc để hiểu nhau hơn.
+61|T|Rất tốt lành, sự hòa hợp và thông cảm đang đến, như chim ra khỏi lồng.
+62|B|Tôn trọng, cẩn thận trong từng lời nói, việc làm; tiến tới từ từ, đừng lùi xa.
+63|T|Ngày càng thân thiết, hài hòa; tiếp tục lắng nghe và chia sẻ.
+64|X|Có bất hòa do hiểu lầm hay quan điểm trái ngược. Kiên nhẫn, bình tĩnh, không cưỡng cầu.

@@ -1,0 +1,64 @@
+1|T|Thời cơ học tập đã đến, điều kiện thuận lợi để phát triển và vượt khó. Giữ vững ý chí.
+2|T|Học hành thuận lợi, thi cử dễ đỗ cao, khả năng thành công lớn.
+3|X|Việc học rối bời, khó tìm hướng đi. Kiên nhẫn, bình tĩnh sắp xếp lại.
+4|X|Gian nan, dễ bị cám dỗ, xao nhãng. Siêng năng, kiên trì, tránh xa thứ làm phân tâm.
+5|T|Vận tốt đến, cơ hội và kết quả sẽ tới như ngọc sáng lên; cần kiên nhẫn, chăm chỉ.
+6|X|Dễ va chạm, hiểu lầm với người khác; đừng để tranh cãi làm phân tâm việc học.
+7|T|Mã đáo thành công, đường học suôn sẻ; kiên trì sẽ được đền đáp.
+8|T|Thuận lợi như thuyền gặp gió; biết ơn và trân trọng người giúp đỡ mình.
+9|B|Tạm thời phải nhẫn, chưa tiến nhanh như mong; công sức vẫn đang tích lũy.
+10|T|Đi đúng hướng, cố gắng sẽ đạt kết quả như ý; học cẩn thận, từng bước.
+11|T|Thành công lớn trong học tập, thi cử đạt kết quả cao.
+12|X|Cát ít hung nhiều, nhiều trở ngại. Chuẩn bị tâm lý, kiên nhẫn vượt qua.
+13|T|Có người chỉ dẫn, hỗ trợ; lắng nghe lời khuyên của thầy cô, người đi trước.
+14|B|Học chắc chắn, có kế hoạch, hiểu sâu từng phần rồi mới đi tiếp; đừng vội.
+15|T|Khiêm tốn, ham học hỏi là chìa khóa thành công; học để tích lũy chứ không chỉ để tranh hạng.
+16|T|Thời kỳ thuận lợi, thành công đang chờ; giữ lạc quan và tinh thần học hỏi.
+17|T|Tiến bộ dần dần, không vội; mục tiêu rõ và bền bỉ sẽ vượt khó.
+18|X|Có thể đang học sai phương pháp hoặc mục tiêu chưa rõ. Xem lại cách học.
+19|T|Thời vận hanh thông, thuận lợi để phát triển bản thân trong học tập.
+20|T|Gặp quý nhân giúp đỡ, dẫn dắt lúc khó khăn.
+21|T|May mắn, có người giúp; khó khăn học tập được gỡ.
+22|T|Vạn sự như ý, nỗ lực được đền đáp; giữ lạc quan và chăm chỉ.
+23|X|Khó khăn, nỗ lực chưa ra kết quả; có thể bị đố kỵ, gây khó dễ.
+24|X|Thiếu tập trung, mất hứng thú hoặc có bất đồng. Kiên nhẫn lấy lại động lực.
+25|X|Cảm thấy bế tắc, mắc kẹt như chim trong lồng. Kiên trì, chờ thời.
+26|T|Đã đủ năng lực và kiến thức để hành động; chuẩn bị kỹ để bứt phá.
+27|T|Có thể đạt thành công lớn; nuôi dưỡng chí khí và học từ người giỏi.
+28|X|Việc gì quá cũng không tốt: mục tiêu quá cao hoặc học quá sức. Tìm lại cân bằng.
+29|X|Công sức bỏ ra chưa xứng kết quả, như mò trăng đáy biển. Xem lại cách học.
+30|T|Thành công nếu cố gắng và giữ tập trung; nỗ lực được đền đáp.
+31|T|Thời vận đã đến, nỗ lực bắt đầu cho thành quả, tiến bộ rõ.
+32|T|Vạn sự như ý, công sức không uổng, kết quả đáng mong đợi.
+33|X|Có thể gặp trở ngại bất ngờ, chưa tìm được hướng đi. Kiên nhẫn chờ.
+34|T|Vận khí sắp lên, có thể gặp tài liệu, cơ hội hay thầy giỏi giúp vượt khó.
+35|T|Vận may đến, có cơ hội bất ngờ; nắm bắt và đừng bối rối trước khó khăn.
+36|X|Đang khó khăn, bế tắc. Chưa phải lúc mở rộng; tập trung giữ vững nền tảng.
+37|X|Đang theo đuổi mục tiêu khó đạt; xem lại mục tiêu và hướng đi cho thực tế.
+38|X|Long đong, cố mà chưa như ý. Xem lại phương pháp học.
+39|X|Chưa phải lúc thuận lợi nhất, nhiều trở ngại cả bên ngoài lẫn trong lòng.
+40|T|Rất lành, khó khăn sắp được gỡ; tận dụng thời gian này để tập trung cao độ.
+41|X|Công sức chưa ra kết quả; xem lại cách học, có thể đang dùng phương pháp chưa hợp.
+42|T|Rất tốt, tiến bộ nhờ cố gắng không ngừng, như cây khô nở hoa.
+43|T|Gặp hung hóa cát, vượt qua được bế tắc nếu kiên trì.
+44|T|Thời vận tốt, có thể gặp thầy hoặc bạn tốt hỗ trợ nhiều.
+45|T|Rất tốt, có bước tiến bất ngờ như cá chép hóa rồng.
+46|T|Tin vui, mưu sự tất thành, dù khó cũng đạt kết quả cao.
+47|X|Bất ổn, gian truân. Kiên nhẫn, bền bỉ.
+48|T|Phục hồi, tiếp thu dồi dào như giếng khô có nước.
+49|T|Vận tốt đến; tiếp tục nuôi dưỡng việc học như tưới cây.
+50|T|May mắn, nỗ lực cho kết quả gấp đôi.
+51|T|Mọi sự thành công nếu nắm bắt cơ hội và không ngừng nỗ lực.
+52|X|Nhiều trở ngại, cố vươn mà kết quả vẫn ngoài tầm. Kiên nhẫn, đừng nản.
+53|B|Rất thận trọng, kiên nhẫn; đừng mong kết quả ngay, tiến từng bước.
+54|X|Có thể đang theo đuổi mục tiêu chưa hợp năng lực hay hoàn cảnh hiện tại.
+55|T|Vận tốt trở lại sau thời gian khó; có cơ hội ôn luyện, mài giũa kiến thức.
+56|X|Dễ có trở ngại bất ngờ, công sức chưa như mong. Đừng chủ quan.
+57|T|Khốn cực sinh phúc: mềm dẻo, kiên trì, linh hoạt sẽ thành công.
+58|T|Vô cùng thuận tiện; giữ lạc quan, chăm chỉ.
+59|X|Cố hết sức nhưng khó đạt như mong; mục tiêu có thể chưa hợp khả năng hiện tại.
+60|T|Rất tốt; cân đối thời gian và công sức, đừng tự ép quá mức.
+61|T|Giai đoạn rất thuận lợi, có cơ hội tốt để phát triển.
+62|B|Có khó khăn nhưng không phải lúc bỏ cuộc; tiến từ từ, đừng nóng vội.
+63|T|Cát lành, thành tích tốt, được ghi nhận như ghi danh bảng vàng.
+64|X|Nhiều thử thách, có thể có người gây khó dễ, đố kỵ. Tập trung và cẩn thận.

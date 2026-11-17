@@ -1,0 +1,64 @@
+1|T|Thời vận đã đến, thuận lợi cho việc nuôi dạy con, con cái phát triển tốt như rồng gặp mưa.
+2|T|Như ý, hài lòng; nuôi dạy con như vun đất tốt, cần kiên nhẫn và bao dung.
+3|X|Nuôi dạy con đang có khó khăn, lo lắng; mọi việc mới bắt đầu, cần kiên nhẫn.
+4|X|Nhiều gian lao, chưa như ý. Cẩn trọng trong cách giáo dục, đừng quá nuông chiều.
+5|T|Thuận lợi, mãn nguyện; khó khăn của con cái sẽ được giải quyết, điều tốt đang chờ.
+6|X|Dễ có bất đồng với con. Kiên nhẫn, tránh áp đặt hay quyết liệt khi chưa suy xét kỹ.
+7|T|Con cái gặp may và thành công trong học tập, phát triển; vẫn cần sự nỗ lực và ủng hộ của gia đình.
+8|T|Cả nhà đồng lòng, hỗ trợ nhau trong việc chăm sóc, dạy con thì tốt đẹp.
+9|B|Cần kiên nhẫn, chờ đợi; tin tức hay kết quả về con lúc này chưa thuận.
+10|T|Điềm lành, khởi đầu tươi sáng cho chuyện con cái.
+11|T|Rất tốt lành, hanh thông, hòa hợp, gia đình vui vẻ.
+12|X|Chưa thuận, khó khăn trong sinh nở hoặc nuôi dạy. Cẩn trọng, chờ thời cơ.
+13|T|Hạnh phúc, may mắn; cha mẹ đồng lòng, hòa thuận là chìa khóa nuôi dạy con.
+14|T|Chăm sóc, dạy dỗ con cần chắc chắn, tỉ mỉ, đầy yêu thương.
+15|T|Rất tốt, con mang lại bình an, hạnh phúc. Dạy con bằng yêu thương, khiêm tốn và biết chia sẻ.
+16|T|Con cái mang lại niềm vui, cả nhà hòa thuận; đừng quá nuông chiều hay lơ là giáo dục.
+17|T|Cha mẹ làm chỗ dựa và tấm gương, khuyến khích con tự vượt khó từng bước.
+18|X|Cách dạy dỗ có thể chưa đúng, quá cứng nhắc hoặc chưa quan tâm đúng mức. Xem lại cách tiếp cận.
+19|T|Điềm lành, con có tương lai sáng; dạy con sống nhân hậu.
+20|T|Sau khó khăn sẽ khởi sắc, như sen gặp nước; gia đình có thay đổi tích cực.
+21|T|Con cái gặp may nhờ chăm chỉ và tốt bụng; dạy con giá trị của sự cần cù, nhân ái.
+22|T|Hỷ khí đầy nhà, con mang lại niềm vui và có thể đạt thành tựu.
+23|X|Dễ có thử thách trong quan hệ với con hoặc giữa các con với nhau. Kiên nhẫn, công bằng.
+24|X|Cần môi trường gia đình ổn định, hòa hợp để con phát triển tốt. Giữ nếp nhà êm ấm.
+25|X|Gặp khó khăn, trở ngại, có thể về tâm lý hay sức khỏe. Kiên nhẫn, đừng nản.
+26|T|Khó khăn cũ dần qua, mọi việc tiến triển tốt; chuẩn bị đón tin vui.
+27|T|Nuôi dưỡng con trong môi trường lành mạnh, đầy yêu thương; tìm người hiền tài làm gương.
+28|X|Có thể đang kỳ vọng hoặc kiểm soát quá mức, tạo áp lực cho con. Bớt áp đặt.
+29|X|Khó khăn, trục trặc. Kiên nhẫn, đừng ép buộc hay mong đợi quá mức.
+30|T|Suôn sẻ, hạnh phúc, con cái thuận hòa và có thành tích.
+31|T|Thời vận đã đến, sinh sôi phát triển; thuận lợi nếu đang mong con.
+32|T|Con mang lại hạnh phúc; chú trọng giáo dục từ nhỏ để tạo nền tảng vững.
+33|X|Mưu sự khó thành; có thể khó khăn trong việc có con, dạy con hoặc quan hệ căng thẳng.
+34|T|Con có thể đạt nhiều thành công, tiến bộ lớn trong học tập và cuộc sống.
+35|T|May mắn, việc nuôi dạy con tiến bộ, cả nhà hạnh phúc.
+36|X|Khó khăn, dễ tranh cãi, hiểu lầm với con. Kiên nhẫn, lắng nghe và thấu hiểu con hơn.
+37|X|Đừng đặt kỳ vọng thiếu thực tế cho con; đặt mục tiêu hợp lý.
+38|X|Nuôi dạy gặp trở ngại; cẩn thận, không nên ép buộc con.
+39|X|Thời kỳ khó khăn, việc dự tính chưa thuận. Kiên nhẫn tìm nguyên nhân và cách gỡ.
+40|T|Khó khăn, căng thẳng trong quan hệ với con được giải tỏa.
+41|X|Cố gắng dạy dỗ chưa ra kết quả, có thể do dồn sức theo ý mình. Kiên nhẫn, đừng ép.
+42|T|Sau khó khăn sẽ có kết quả tốt, như cây khô nở hoa.
+43|T|Gặp may, có cơ hội tốt để dạy con vượt qua trở ngại.
+44|T|Thời vận tốt lên, thuận lợi để nuôi dạy; tận dụng thời cơ hỗ trợ con.
+45|T|Điềm lành, con có tiến bộ trong học tập, sự nghiệp hay các mối quan hệ.
+46|T|Tin vui, con phát triển và tiến bộ rõ rệt như cây vươn cao.
+47|X|Có khó khăn, thử thách; cần kiên nhẫn, thấu hiểu và tìm hướng giải quyết.
+48|T|Tích cực, đừng quá lo về tương lai của con; sẽ có sự trợ giúp.
+49|T|Vận tốt đến, khởi đầu mới, tin vui nếu đang mong con.
+50|T|Đại cát, có tin vui từ con cái, thuận lợi bất ngờ.
+51|T|Dù đang lo lắng, cuối cùng mọi việc về con sẽ tốt đẹp.
+52|X|Việc chưa thuận; dừng lại cân nhắc cách giáo dục, hỗ trợ con, đừng ép.
+53|B|Rất kiên nhẫn và cẩn trọng khi dạy con; quyết định quan trọng phải suy nghĩ kỹ.
+54|X|Có thể đang kỳ vọng ở chỗ không thể đạt; xem lại mong muốn của mình.
+55|T|Khó khăn hiện tại cuối cùng được giải quyết, vận tốt trở lại.
+56|X|Đang khó khăn, hiểu lầm, giáo dục chưa đúng hướng mong muốn. Kiên nhẫn.
+57|T|Nhẹ nhàng, nhẫn nại và thấu hiểu như gió thổi đều thì sẽ thành công.
+58|T|Điềm lành, thuận lợi, vợ chồng hòa thuận, mọi sự suôn sẻ.
+59|X|Có cách trở trong giao tiếp, khó hiểu nhau; cần cải thiện kẻo uổng công.
+60|T|Không cần kiêng kỵ, thời vận tốt, lo lắng được hóa giải.
+61|T|Rất tốt lành, hy vọng và hạnh phúc mở ra cho gia đình.
+62|B|Cẩn thận khi dạy con, đừng nóng vội hay áp đặt; tiến từ từ, kiên nhẫn.
+63|T|Cát lành, hanh thông; có thể nhận tin vui về con.
+64|X|Cẩn trọng, bảo vệ con khỏi ảnh hưởng xấu; có thể có hiểu lầm, xung đột. Kiên nhẫn.

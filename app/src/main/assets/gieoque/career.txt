@@ -1,0 +1,64 @@
+1|T|Công danh thuận lợi; dù trước đây có cạnh tranh, thử thách, nay đã gặp thời. Giữ chính trực, kiên định.
+2|T|Sắp đạt mục tiêu sự nghiệp như diều gặp gió. Giữ khiêm tốn, bình tĩnh để đón cơ hội.
+3|X|Công việc rối ren, khó xác định hướng đi, nhiều trở ngại. Kiên nhẫn, sắp xếp lại kế hoạch.
+4|X|Chưa thuận để phát triển hay bắt đầu sự nghiệp mới. Tránh mạo hiểm, dự án lớn; học hỏi thêm.
+5|T|Vận tốt đã đến, mưu sự sẽ thành; năng lực của bạn sẽ được nhìn nhận.
+6|X|Dễ gặp mâu thuẫn, tranh chấp nơi làm việc, tốn thời gian công sức. Tránh đối đầu.
+7|T|Thời điểm thuận để phát triển, thăng tiến; nỗ lực được đền đáp, nắm bắt cơ hội đang mở.
+8|T|Suôn sẻ nếu biết nhờ người giúp và giữ quan hệ tốt; lúc thích hợp để mở rộng mạng lưới.
+9|B|Đang gặp trở ngại, như mây dày chưa mưa. Kiên nhẫn, đừng quyết định vội.
+10|T|Mưu sự tất thành, bắt đầu hay tiếp tục con đường công danh đều có lợi; vẫn đi từng bước cẩn trọng.
+11|T|Đại cát, công việc thuận buồm xuôi gió, kế hoạch tương lai thành công. Tiếp tục kiên trì.
+12|X|Bế tắc, nỗ lực chưa ra kết quả, dễ mệt mỏi. Giữ bình tĩnh, kiên nhẫn chờ thời.
+13|T|Nhiều thuận lợi nhờ đồng lòng, hòa hợp; nghe lời khuyên của người có kinh nghiệm.
+14|T|Hanh thông nếu làm chắc chắn, kiên nhẫn; việc chưa hiểu kỹ thì đừng làm.
+15|T|Khiêm tốn, sẵn lòng hợp tác là chìa khóa thành công; phát huy tài năng nhưng đừng khoe khoang.
+16|T|Gặp hung hóa cát, hợp để mở rộng hay khởi động dự án, dễ được ủng hộ; đừng chủ quan.
+17|B|Sự nghiệp phát triển dần; kiên nhẫn, dựa vào cơ hội và quan hệ đáng tin, không mạo hiểm.
+18|X|Có thể đang làm sai cách hoặc dùng phương pháp không hợp. Xem lại để tránh hậu quả.
+19|T|Thời vận hanh thông; sống nhân hậu, làm lợi cho người khác thì cùng phát triển.
+20|T|Sắp gặp quý nhân giúp đỡ; khó khăn hiện tại sẽ qua, sự nghiệp tươi mới trở lại.
+21|T|Con đường công danh rộng mở, nhiều may mắn; nắm cơ hội và hợp tác tốt với đồng nghiệp.
+22|T|Vạn sự như ý; chú trọng hình ảnh bản thân nhưng phải có thực chất đi kèm.
+23|X|Dễ gặp trở ngại, thất bại, bị đố kỵ, ganh đua. Cẩn trọng, giữ mình.
+24|X|Trắc trở; nhẫn nại, giữ quan hệ tốt với đồng nghiệp và cấp trên.
+25|X|Chưa thuận để thăng tiến; giữ mình, đừng theo đuổi mục tiêu quá xa khi chưa chuẩn bị kỹ.
+26|T|Trở ngại đã qua, đủ sức đạt mục tiêu; chuẩn bị kỹ càng.
+27|T|Muốn thăng tiến hãy học hỏi người giỏi, tìm người hợp tác có kỹ năng bổ trợ.
+28|X|Đang quá sức, mất cân bằng. Điều chỉnh mục tiêu và cách làm, tránh ảo vọng.
+29|X|Thách thức lớn, có thể đang dồn sức vào hướng không hiệu quả. Xem lại mục tiêu, cách làm.
+30|T|Giai đoạn phát triển mạnh, có quý nhân phù trợ, công việc đạt thành tựu đáng kể.
+31|T|Thời vận đã đến, kế hoạch sắp thành; vận đỏ tới.
+32|T|Phát triển mạnh và bền; giữ kiên định, không chùn bước, sẽ được ghi nhận.
+33|X|Mưu sự khó thành; chưa phải lúc thay đổi lớn, nên giữ ổn định và chờ thời.
+34|T|Gặp may, đi lên, tiếp tục thu kết quả tốt.
+35|T|Vận đỏ sắp đến, có thể thành công bất ngờ, sắp đạt mục tiêu; biết tận dụng cơ hội.
+36|X|Việc đang làm khó như ý, dễ có tranh chấp. Không nên mạo hiểm hay thay đổi lớn.
+37|X|Đang theo đuổi ước vọng không thực tế, như hoa trong gương. Đặt mục tiêu vừa sức hơn.
+38|X|Kế hoạch dễ không như mong, có thể do cách làm chưa hợp. Xem lại phương pháp.
+39|X|Đang bế tắc với vấn đề ngoài dự tính. Bình tĩnh, đừng bỏ cuộc, tìm thêm trợ giúp.
+40|T|Rất tốt: khó khăn tiêu tan, dự định đều thành. Nhớ cảm ơn người giúp mình.
+41|X|Có khó khăn, có phần do tự mình gây ra. Đừng vội, chờ đủ điều kiện, thời vận sẽ đến.
+42|T|Đang ở cuối giai đoạn khó, sắp thăng tiến; tăng nỗ lực, kiên trì sẽ thành công.
+43|T|Kiên quyết, mạnh mẽ giúp vượt khó; không bỏ mục tiêu, sắp có thành công.
+44|T|Thời vận đã đến, nhiều cơ hội, có người giúp đỡ.
+45|T|Tiến bộ, biến đổi tốt; kiên trì và chăm chỉ là chìa khóa.
+46|T|Tiến triển không ngừng, mưu sự tất thành, có thành công lớn.
+47|X|Khó khăn, bất ổn; có thể có tiểu nhân phá. Cẩn thận, đừng vội tin người chưa rõ.
+48|T|Vận tốt đã đến; kiên định, nỗ lực học tập và làm việc thì mọi thứ sẽ thuận.
+49|T|Đổi mới, có cơ hội phát triển; bế tắc hiện tại sẽ sớm được cải thiện.
+50|T|Đại cát, sự nghiệp phát triển mạnh, một công đôi việc, lợi kép.
+51|T|Mọi sự thành công, cầu danh như ý. Kiên định với đam mê, những gì đã gieo sẽ có quả.
+52|X|Chưa phải lúc bước mạnh hay thay đổi lớn. Kiên nhẫn, tập trung củng cố hiện tại.
+53|B|Tiến tới mục tiêu từ từ, thận trọng; đường có khó nhưng đi chắc sẽ tới.
+54|X|Nhiều trắc trở, mưu sự khó thành; có thể đang đặt nền móng sai chỗ hoặc tiếp cận chưa đúng.
+55|T|Có bước tiến tích cực, thời vận quay lại; chú trọng mài giũa kỹ năng.
+56|X|Việc làm khó thành, nhiều thử thách bất ngờ. Thận trọng, chưa nên mạo hiểm.
+57|T|Khốn cực sinh phúc: khó khăn hiện tại là bước đệm cho thành công.
+58|T|Rất thuận tiện, công việc may mắn, trở ngại được gỡ nhẹ nhàng.
+59|X|Dễ uổng công, khó đạt kết quả mong đợi; có mong muốn nhưng còn cách trở.
+60|T|Mọi việc đang thuận, không cần e ngại; lúc tốt để thể hiện năng lực, biết tiết chế.
+61|T|Rất tốt lành, rào cản sớm được tháo gỡ, có cơ hội thăng tiến.
+62|B|Tiến thận trọng và kiên định; không lùi bước, cũng đừng vội hay dây dưa.
+63|T|Thời vận rất thuận, nỗ lực được đền đáp như ghi danh bảng vàng.
+64|X|Chưa thuận, dễ gặp rắc rối, áp lực; đề phòng tiểu nhân, nhẫn nại.

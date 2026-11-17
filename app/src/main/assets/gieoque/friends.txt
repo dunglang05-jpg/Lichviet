@@ -1,0 +1,64 @@
+1|T|Thể hiện sự mạnh mẽ, rõ ràng, chính trực với bạn bè; gặp thử thách chính là dịp để bạn tỏa sáng.
+2|T|Bạn bè mang lại niềm vui, hài lòng; hiểu lầm nhỏ được giải quyết êm đẹp.
+3|X|Giai đoạn rối ren, khó hiểu nhau, dễ có mâu thuẫn không đáng có.
+4|X|Chưa thuận, dễ hiểu lầm hoặc mất mát; tránh làm ăn, đầu tư chung với bạn lúc này.
+5|T|Biết chờ đợi và cư xử mềm mỏng, kiên nhẫn thì tình bạn nhiều điều tốt.
+6|X|Có tranh cãi, các bên cứng nhắc. Đừng đối đầu, tránh làm to chuyện nhỏ.
+7|T|Điềm lành, hòa hợp; chủ động mở rộng giao lưu sẽ nhận được ủng hộ.
+8|T|Việc gì cũng lợi; biết giúp đỡ, chia sẻ, tương trợ lúc khó thì tình bạn vững.
+9|B|Tạm giữ khoảng cách, đừng kỳ vọng hay đề xuất gì nhiều lúc này; chờ thời điểm thích hợp.
+10|T|Đối xử thận trọng, tôn trọng; trân trọng và xây dựng những mối quan hệ lành mạnh.
+11|T|Đại cát, gắn bó và hiểu nhau hơn; mở lòng sẻ chia.
+12|X|Trở ngại lớn, không hòa hợp, có hiểu lầm. Kiên nhẫn, cẩn trọng lời nói và hành động.
+13|T|Gặp được bạn tâm đầu ý hợp, đồng lòng, có thể cùng chia sẻ và hợp tác.
+14|B|Cần chắc chắn, cẩn thận; tìm hiểu kỹ bạn bè trước khi khuyên bảo hay giúp đỡ.
+15|T|Khiêm tốn, lắng nghe, sẵn lòng chia sẻ; hợp tác với bạn mang lại lợi ích chung.
+16|T|Gặp hung hóa cát, có dịp cải thiện quan hệ; vẫn nên giữ chừng mực, đừng quá tự tin.
+17|T|Tình bạn tiến triển dần dần; để mọi thứ tự nhiên, không vội.
+18|X|Có thể đang cư xử chưa đúng cách gây hiểu lầm; níu kéo quá mức cũng làm rối thêm.
+19|T|Thời điểm thuận để gắn kết; nhân hậu, lắng nghe, chia sẻ sẽ được tin cậy.
+20|T|May mắn, thân thiết hơn; trân trọng những tình bạn quý.
+21|T|Tình bạn thuận lợi; chân thành, hỗ trợ nhau lúc khó, có thể hợp tác cùng tiến bộ.
+22|T|Hòa thuận, vui vẻ; giữ tâm cởi mở, sẵn sàng chia sẻ và đón nhận.
+23|X|Không tốt, dễ gặp đố kỵ, hiểu lầm. Cẩn thận với người tiếp cận có ý đồ xấu.
+24|X|Có trục trặc từ nghi kỵ, thiếu tin tưởng. Kiên nhẫn lấy lại lòng tin.
+25|X|Bế tắc, gò bó, dễ hiểu nhầm, tranh chấp. Thận trọng lời nói.
+26|T|Giai đoạn thuận lợi, nhiều cơ hội phát triển tình bạn; kiên nhẫn và chuẩn bị chu đáo.
+27|T|Nuôi dưỡng tình bạn bằng tôn trọng và hỗ trợ lẫn nhau, sẽ gặp được bạn tri kỷ.
+28|X|Việc gì quá cũng không tốt: đang đầu tư tình cảm hoặc kỳ vọng quá nhiều vào bạn bè. Tìm lại cân bằng.
+29|X|Đừng kỳ vọng nhiều vào quan hệ mập mờ, không thực tế; có rắc rối tiềm ẩn.
+30|T|Nhiều may mắn; chân thành, tốt bụng sẽ được bạn bè đáp lại và giúp đỡ.
+31|T|Thời điểm tuyệt vời để mở lòng, kết nối và củng cố tình bạn.
+32|T|Vạn sự như ý; mâu thuẫn nhỏ tự giải quyết, giao lưu mang lại niềm vui.
+33|X|Dễ hiểu lầm, xa cách, xích mích. Giữ bình tĩnh, đừng phản ứng mạnh.
+34|T|Vận khí đang lên, tình bạn chắc chắn hơn, có dịp kết thêm bạn mới.
+35|T|Vận may đến, mâu thuẫn dần được giải quyết; tìm được bạn quý thì biết giữ gìn.
+36|X|Nhiều khó khăn, có xung đột, có thể dẫn tới xa cách. Tránh tranh luận để giành phần thắng.
+37|X|Có thể đang quá ngưỡng mộ hay tin tưởng một người bạn không thực sự hợp với mình.
+38|X|Đang bất đồng, mỗi người một góc nhìn. Khiêm tốn, lắng nghe quan điểm của người khác.
+39|X|Có khó khăn, hiểu lầm. Sáng suốt, kiên nhẫn, đừng đổ lỗi; tìm nguyên nhân và xử lý khéo.
+40|T|Đang có rắc rối nhưng sẽ vượt qua được; khó khăn rồi sẽ tan.
+41|X|Có thể đang tốn quá nhiều thời gian, công sức cho những mối quan hệ không đáng.
+42|T|Giai đoạn khởi sắc sau thời gian khó khăn, như cây khô nở hoa.
+43|T|Có thử thách nhưng biết nhờ người khác giúp và giải quyết khéo thì sẽ ổn.
+44|T|Tình bạn là chỗ dựa lúc khó khăn; có thể gặp bạn tốt ở nơi xa lạ.
+45|T|Thời điểm tốt để tụ họp, gắn kết; biết ơn những người từng bên cạnh mình.
+46|T|Tình bạn không ngừng cải thiện, lên một nấc mới; giữ niềm tin và cởi mở.
+47|X|Cẩn thận khi mở lòng; tìm hiểu kỹ trước khi tin tưởng hoàn toàn, không phải ai cũng như mình nghĩ.
+48|T|Vận tốt đã đến; biết ơn, trân trọng và thấu hiểu bạn bè hơn.
+49|T|Thời điểm tốt để thay đổi, cải thiện; quan hệ tươi mới và hiểu nhau sâu hơn.
+50|T|Hỗ trợ lẫn nhau, cùng phát triển, đôi bên cùng có lợi.
+51|T|Có chuyển biến tích cực; chủ động, mạnh dạn chia sẻ suy nghĩ, gỡ hiểu lầm.
+52|X|Gặp bất thuận do hiểu lầm, thiếu giao tiếp. Thận trọng, tránh phán xét vội.
+53|B|Quan hệ mong manh như băng mỏng; cảm thông, từ tốn, tránh quyết định vội.
+54|X|Đang cố tạo dựng quan hệ một cách gượng ép; xem lại cách đối đãi với bạn bè.
+55|T|Quan hệ được cải thiện, khoảng cách cũ được xóa; chủ động mở lòng và tha thứ.
+56|X|Dễ căng thẳng vì hiểu lầm, cãi vã. Bình tĩnh, nhẫn nại.
+57|T|Khốn cực sinh phúc: qua thử thách tình bạn càng sâu đậm nếu khéo léo, mềm mỏng.
+58|T|Vô cùng thuận tiện, vui vẻ; cởi mở nhưng giữ lập trường riêng.
+59|X|Dễ uổng công: cố duy trì mà ít kết quả.
+60|T|Biết tiết chế, giữ cân bằng trong cư xử thì quan hệ êm đẹp.
+61|T|Rất tốt lành nếu giữ chữ tín và sự chân thành; quan hệ thoải mái, hòa hợp.
+62|B|Cẩn thận, không vội; tiến từng bước sẽ có lợi.
+63|T|Cát khánh như ý, hợp tác cùng bạn có lợi; giữ hòa thuận, tránh hành động thiếu suy nghĩ.
+64|X|Coi chừng tiểu nhân gây chia rẽ, hiểu lầm. Tỉnh táo, đừng vội tin người mới quen.
