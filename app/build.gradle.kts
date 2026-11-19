@@ -12,8 +12,19 @@ android {
         applicationId = "vn.lichviet.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 139
-        versionName = "0.13.9"
+        versionCode = 140
+        versionName = "0.14.0"
+    }
+
+    // Khóa ký cố định (để cập nhật OTA cài đè được): đọc từ biến môi trường do CI giải mã từ GitHub Secrets.
+    val ksFile = System.getenv("LV_KEYSTORE")?.let { file(it) }?.takeIf { it.exists() }
+    signingConfigs {
+        if (ksFile != null) create("lv") {
+            storeFile = ksFile
+            storePassword = System.getenv("LV_KEYSTORE_PASS")
+            keyAlias = System.getenv("LV_KEY_ALIAS") ?: "lichviet"
+            keyPassword = System.getenv("LV_KEY_PASS") ?: System.getenv("LV_KEYSTORE_PASS")
+        }
     }
 
     buildTypes {
@@ -21,8 +32,8 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            // Ký tạm bằng khóa debug để APK release cài được ngay; thay bằng khóa riêng khi phát hành.
-            signingConfig = signingConfigs.getByName("debug")
+            // Có khóa riêng thì dùng, chưa có thì ký tạm bằng khóa debug.
+            signingConfig = if (ksFile != null) signingConfigs.getByName("lv") else signingConfigs.getByName("debug")
         }
     }
     compileOptions {

@@ -68,6 +68,7 @@ fun SettingsScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
     Column(modifier.fillMaxSize()) {
         AppHeader("Cài đặt", "Giao diện · thông báo · widget", onBack = onBack)
         Column(Modifier.verticalScroll(rememberScrollState()).padding(top = 8.dp, bottom = 24.dp)) {
+            UpdateSection()
             ThemeSection()
             SettingsSection()
             Text("Lịch Việt · âm lịch theo thuật toán Hồ Ngọc Đức (múi giờ UTC+7)", style = MaterialTheme.typography.labelSmall,

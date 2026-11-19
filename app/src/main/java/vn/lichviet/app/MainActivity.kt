@@ -112,6 +112,7 @@ private fun AppRoot(activity: ComponentActivity) {
     }
 
     LichTheme(spec) {
+    vn.lichviet.settings.AutoUpdateCheck()
     Box(
         Modifier.fillMaxSize().background(spec.bg).drawBehind { drawHeritage(spec.ink, if (spec.dark) .07f else .05f) },
     ) {

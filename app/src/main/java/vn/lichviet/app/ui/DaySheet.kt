@@ -163,7 +163,10 @@ fun DaySheet(jd: Int, todayJd: Int, onChange: (Int) -> Unit, modifier: Modifier 
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = { onChange(shown - 1) }) { Text("‹", fontSize = 22.sp, color = MaterialTheme.colorScheme.primary) }
-            Spacer(Modifier.weight(1f))
+            Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                val sd = remember(shown) { dayOf(shown) }
+                vn.lichviet.tools.WeatherChip(sd.solarYear, sd.solarMonth, sd.solarDay, shown == todayJd)
+            }
             IconButton(onClick = { onChange(shown + 1) }) { Text("›", fontSize = 22.sp, color = MaterialTheme.colorScheme.primary) }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

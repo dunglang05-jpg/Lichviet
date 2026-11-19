@@ -25,7 +25,21 @@ jobs:
       - name: Kiểm thử lõi âm lịch
         run: ./gradlew :core:lunar:test --stacktrace
 
+      - name: Giải mã khóa ký (nếu có secret)
+        env:
+          KS_B64: ${{ secrets.LV_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$KS_B64" ]; then
+            echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/lv.jks"
+            echo "LV_KEYSTORE=$RUNNER_TEMP/lv.jks" >> "$GITHUB_ENV"
+            echo "Dùng khóa ký cố định"
+          else
+            echo "::warning::Chưa có secret LV_KEYSTORE_B64 – APK ký bằng khóa debug tạm, cập nhật OTA sẽ không cài đè được"
+          fi
+
       - name: Build APK
+        env:
+          LV_KEYSTORE_PASS: ${{ secrets.LV_KEYSTORE_PASS }}
         run: ./gradlew :app:assembleDebug :app:assembleRelease --stacktrace
 
       - name: Đổi tên APK
@@ -33,6 +47,11 @@ jobs:
           mkdir -p out
           cp app/build/outputs/apk/debug/app-debug.apk out/LichViet-debug.apk
           cp app/build/outputs/apk/release/app-release.apk out/LichViet.apk
+          code=$(grep -oP 'versionCode = \K[0-9]+' app/build.gradle.kts)
+          name=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)
+          msg=$(git log -1 --pretty=%s | head -c 300 | sed 's/\\/\\\\/g; s/"/\\"/g')
+          printf '{"versionCode":%s,"versionName":"%s","apk":"LichViet.apk","notes":"%s"}\n' "$code" "$name" "$msg" > out/version.json
+          cat out/version.json
 
       - uses: actions/upload-artifact@v4
         with:
@@ -48,7 +67,9 @@ jobs:
           body: |
             Bản build tự động từ commit ${{ github.sha }}.
             Tải LichViet.apk về điện thoại và cài đặt (cho phép cài ứng dụng không rõ nguồn).
-          files: out/*.apk
+          files: |
+            out/*.apk
+            out/version.json
           make_latest: true
 
       - name: Báo cáo kiểm thử (nếu lỗi)
