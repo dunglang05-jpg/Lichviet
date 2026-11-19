@@ -88,7 +88,7 @@ fun EventsScreen(todayJd: Int, onOpenDay: (Int) -> Unit, modifier: Modifier = Mo
                         Spacer(Modifier.width(14.dp))
                         Column(Modifier.weight(1f)) {
                             Text("TẾT NGUYÊN ĐÁN ${tet.yearCanChi.uppercase()}", style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold, maxLines = 1)
+                                color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
                             Text(solarText(tet), color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.bodyMedium)
                         }
                         Column(horizontalAlignment = Alignment.End) {

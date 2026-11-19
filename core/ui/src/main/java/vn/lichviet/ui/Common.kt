@@ -107,7 +107,7 @@ fun AppHeader(
         Row(Modifier.fillMaxWidth().statusBarsPadding().padding(start = 4.dp, end = 4.dp, top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             if (onBack != null) IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Quay lại", tint = fg) }
             else Spacer(Modifier.width(12.dp))
-            Text(title, color = fg, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, maxLines = 1,
+            Text(title, color = fg, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold,
                 modifier = Modifier.weight(1f).padding(vertical = 12.dp))
             if (onSettings != null) IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Cài đặt", tint = fg) }
             else Spacer(Modifier.width(12.dp))
@@ -128,11 +128,11 @@ fun KeyValue(key: String, value: String) {
     }
 }
 
-/** Nhãn nhỏ bo tròn, luôn một dòng. */
+/** Nhãn nhỏ bo tròn; chữ dài thì xuống dòng, không cắt. */
 @Composable
 fun Pill(text: String, bg: Color, fg: Color, bold: Boolean = false) {
     Text(
-        text, color = fg, maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis,
+        text, color = fg,
         fontWeight = if (bold) FontWeight.Bold else FontWeight.Medium,
         style = MaterialTheme.typography.labelMedium,
         modifier = Modifier.clip(RoundedCornerShape(50)).background(bg).padding(horizontal = 10.dp, vertical = 5.dp),
@@ -178,8 +178,7 @@ fun MoonStatus(d: DayInfo, modifier: Modifier = Modifier) {
         Spacer(Modifier.width(8.dp))
         Text(
             "${mp.phaseName} · sáng ${mp.illumination}% · tuổi trăng ${"%.1f".format(mp.age)} ngày",
-            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }

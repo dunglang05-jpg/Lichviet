@@ -233,7 +233,7 @@ fun ActivityGridCard(fromJd: Int, onOpenDay: (Int) -> Unit) {
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Column(Modifier.weight(1f)) {
-                                Text("${DayInfo.THU[d.weekday]}, ${d.solarDay}/${d.solarMonth}/${d.solarYear}", fontWeight = FontWeight.Bold, maxLines = 1)
+                                Text("${DayInfo.THU[d.weekday]}, ${d.solarDay}/${d.solarMonth}/${d.solarYear}", fontWeight = FontWeight.Bold)
                                 Text("${d.lunarText()} âm · ${d.dayCanChi} · Trực ${d.truc}", style = MaterialTheme.typography.bodySmall)
                             }
                             Text(d.starsText(), color = MaterialTheme.colorScheme.primary, maxLines = 1, softWrap = false)

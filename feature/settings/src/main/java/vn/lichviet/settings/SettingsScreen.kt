@@ -98,7 +98,7 @@ private fun ThemeCard(id: Int, selected: Boolean, modifier: Modifier, onClick: (
                 Box(Modifier.size(14.dp).clip(CircleShape).background(a2))
                 Spacer(Modifier.width(8.dp))
                 Text(Themes.NAMES[id], color = if (dark) Color(0xFFF5EFE6) else Color(0xFF1E1A16),
-                    fontWeight = if (selected) FontWeight.Bold else FontWeight.SemiBold, style = MaterialTheme.typography.labelLarge, maxLines = 1)
+                    fontWeight = if (selected) FontWeight.Bold else FontWeight.SemiBold, style = MaterialTheme.typography.labelLarge)
             }
         }
     }

@@ -19,6 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -69,7 +70,7 @@ fun WeatherChip(y: Int, m: Int, d: Int, isToday: Boolean, modifier: Modifier = M
     val ctx = LocalContext.current
     val (w, granted, ask) = rememberWeather()
     val cs = MaterialTheme.colorScheme
-    val shape = RoundedCornerShape(50)
+    val shape = RoundedCornerShape(18.dp)
     Row(
         modifier.clip(shape).background(cs.surfaceContainerHighest, shape)
             .clickable { if (!granted) ask() else openAccuWeather(ctx, w) }
@@ -78,24 +79,24 @@ fun WeatherChip(y: Int, m: Int, d: Int, isToday: Boolean, modifier: Modifier = M
     ) {
         if (!granted) {
             Icon(Icons.Filled.LocationOn, null, tint = cs.primary, modifier = Modifier.size(16.dp))
-            Text("Bật vị trí để xem thời tiết", fontSize = 13.sp, color = cs.primary)
+            Text("Bật vị trí để xem thời tiết", fontSize = 13.sp, color = cs.primary, modifier = Modifier.weight(1f, fill = false))
             return@Row
         }
-        if (w == null) { Text("Đang tải thời tiết…", fontSize = 13.sp, color = cs.onSurfaceVariant); return@Row }
+        if (w == null) { Text("Đang tải thời tiết", fontSize = 13.sp, color = cs.onSurfaceVariant); return@Row }
         val day = w.day(y, m, d)
-        if (isToday) {
-            Icon(weatherIcon(w.code, w.isDay), null, tint = cs.secondary, modifier = Modifier.size(18.dp))
-            Text("${t(w.temp)} ${Weather.describe(w.code)}", fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
-            day?.let { Text("· ${t(it.min)}–${t(it.max)}", fontSize = 13.sp, color = cs.onSurfaceVariant) }
-        } else if (day != null) {
-            Icon(weatherIcon(day.code), null, tint = cs.secondary, modifier = Modifier.size(18.dp))
-            Text("${t(day.min)}–${t(day.max)} ${Weather.describe(day.code)}", fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
-        } else {
-            Icon(Icons.Filled.Cloud, null, tint = cs.onSurfaceVariant, modifier = Modifier.size(16.dp))
-            Text("Chưa có dự báo cho ngày này", fontSize = 13.sp, color = cs.onSurfaceVariant)
-            return@Row
+        val place = w.place.substringBefore(',').takeIf { it.isNotBlank() }?.let { " · $it" } ?: ""
+        val (icon, line) = when {
+            isToday -> weatherIcon(w.code, w.isDay) to buildString {
+                append("${t(w.temp)} ${Weather.describe(w.code)}")
+                day?.let { append(" · ${t(it.min)}–${t(it.max)}") }
+                w.air?.let { append(" · AQI ${it.aqi}") }
+                append(place)
+            }
+            day != null -> weatherIcon(day.code) to "${t(day.min)}–${t(day.max)} ${Weather.describe(day.code)}$place"
+            else -> Icons.Filled.Cloud to "Chưa có dự báo cho ngày này"
         }
-        if (w.place.isNotBlank()) Text("· ${w.place.substringBefore(',')}", fontSize = 12.sp, color = cs.onSurfaceVariant, maxLines = 1)
+        Icon(icon, null, tint = cs.secondary, modifier = Modifier.size(18.dp))
+        Text(line, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f, fill = false))
     }
 }
 
@@ -132,10 +133,12 @@ fun WeatherScreen() {
                     }
                     Text(Weather.describe(w.code), fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
                     Spacer(Modifier.height(6.dp))
-                    Text("Cảm giác ${t(w.feels)} · Độ ẩm ${w.humidity}% · Gió ${w.wind.roundToInt()} km/h", fontSize = 13.sp)
+                    Text("Cảm giác ${t(w.feels)} · Độ ẩm ${w.humidity}% · UV ${"%.0f".format(w.uv)} (${Weather.uvText(w.uv)})", fontSize = 13.sp)
                     w.days.firstOrNull()?.let { Text("Mặt trời mọc ${it.sunrise} · lặn ${it.sunset}", fontSize = 13.sp) }
                 }
             }
+            WindCard(w)
+            w.air?.let { AirCard(it) }
             Text("24 giờ tới", fontWeight = FontWeight.Bold)
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 w.hours.forEach { h ->
@@ -158,7 +161,7 @@ fun WeatherScreen() {
                     Row(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                         Text(if (i == 0) "Hôm nay" else "${THU[wd]} ${parts[2]}/${parts[1]}", Modifier.width(80.dp), fontSize = 14.sp)
                         Icon(weatherIcon(dd.code), null, tint = cs.secondary, modifier = Modifier.size(20.dp))
-                        Text(" " + Weather.describe(dd.code), Modifier.weight(1f), fontSize = 13.sp, maxLines = 1)
+                        Text(" " + Weather.describe(dd.code), Modifier.weight(1f), fontSize = 13.sp)
                         if (dd.rain > 0) Text("${dd.rain}%  ", fontSize = 12.sp, color = Color(0xFF1E88E5))
                         Text("${t(dd.min)} / ${t(dd.max)}", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
                     }
@@ -172,7 +175,71 @@ fun WeatherScreen() {
                     loading = true; scope.launch { WeatherRepository.load(ctx, force = true); loading = false }
                 }) { Icon(Icons.Filled.Refresh, null, modifier = Modifier.size(18.dp)) }
             }
-            Text("Số liệu: Open-Meteo · cập nhật mỗi 30 phút", fontSize = 11.sp, color = cs.onSurfaceVariant)
+            Text("Số liệu: Open-Meteo, không khí theo Copernicus CAMS · cập nhật mỗi 30 phút", fontSize = 11.sp, color = cs.onSurfaceVariant)
         }
     }
+}
+
+@Composable
+private fun WindCard(w: Weather) {
+    val cs = MaterialTheme.colorScheme
+    val b = Weather.beaufort(maxOf(w.wind, 0.0))
+    Card { Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+        Box(Modifier.size(56.dp).clip(androidx.compose.foundation.shape.CircleShape).background(cs.primary.copy(alpha = .12f)), contentAlignment = Alignment.Center) {
+            // Mũi tên chỉ hướng gió thổi tới (ngược với hướng gió đến)
+            Icon(Icons.Filled.Navigation, null, tint = cs.primary,
+                modifier = Modifier.size(30.dp).graphicsLayer { rotationZ = (w.windDir + 180f) % 360f })
+        }
+        Spacer(Modifier.width(14.dp))
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text("Gió ${Weather.direction(w.windDir)} ${w.wind.roundToInt()} km/h", fontWeight = FontWeight.Bold)
+            Text("Giật ${w.gust.roundToInt()} km/h · cấp $b (${Weather.beaufortText(b)})", fontSize = 13.sp, color = cs.onSurfaceVariant)
+            w.days.firstOrNull()?.let {
+                Text("Hôm nay mạnh nhất ${it.windMax.roundToInt()} km/h, giật ${it.gustMax.roundToInt()} km/h", fontSize = 13.sp, color = cs.onSurfaceVariant)
+            }
+        }
+    } }
+}
+
+@Composable
+private fun AirCard(a: Weather.Air) {
+    val cs = MaterialTheme.colorScheme
+    val (name, argb, advice) = Weather.aqiLevel(a.aqi)
+    val c = Color(argb)
+    Card { Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.size(56.dp).clip(RoundedCornerShape(14.dp)).background(c), contentAlignment = Alignment.Center) {
+                Text("${a.aqi}", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+            }
+            Spacer(Modifier.width(14.dp))
+            Column(Modifier.weight(1f)) {
+                Text("Không khí: $name", fontWeight = FontWeight.Bold, color = c)
+                Text("Chỉ số AQI (chuẩn Mỹ)", fontSize = 12.sp, color = cs.onSurfaceVariant)
+            }
+        }
+        Text(advice, fontSize = 13.sp)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf("PM2.5" to a.pm25, "PM10" to a.pm10, "O₃" to a.o3, "NO₂" to a.no2).forEach { (k, v) ->
+                Column(Modifier.weight(1f).clip(RoundedCornerShape(10.dp)).background(cs.surfaceContainerHighest).padding(vertical = 6.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(k, fontSize = 12.sp, color = cs.onSurfaceVariant)
+                    Text("${v.roundToInt()}", fontWeight = FontWeight.SemiBold)
+                    Text("µg/m³", fontSize = 10.sp, color = cs.onSurfaceVariant)
+                }
+            }
+        }
+        if (a.hours.size > 1) {
+            Text("24 giờ tới", fontSize = 12.sp, color = cs.onSurfaceVariant)
+            Row(Modifier.fillMaxWidth().height(36.dp), horizontalArrangement = Arrangement.spacedBy(2.dp), verticalAlignment = Alignment.Bottom) {
+                val mx = maxOf(a.hours.maxOf { it.second }, 50)
+                a.hours.forEach { (_, v) ->
+                    Box(Modifier.weight(1f).fillMaxHeight(v.toFloat() / mx).clip(RoundedCornerShape(2.dp)).background(Color(Weather.aqiLevel(v).second)))
+                }
+            }
+            Row(Modifier.fillMaxWidth()) {
+                Text(a.hours.first().first.take(5), fontSize = 11.sp, color = cs.onSurfaceVariant, modifier = Modifier.weight(1f))
+                Text(a.hours.last().first.take(5), fontSize = 11.sp, color = cs.onSurfaceVariant)
+            }
+        }
+    } }
 }

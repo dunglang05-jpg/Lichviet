@@ -14,6 +14,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -105,12 +106,12 @@ fun ToolScaffold(title: String, onBack: () -> Unit, content: @Composable ColumnS
     val on = spec?.onAccent ?: MaterialTheme.colorScheme.onPrimary
     val bg = spec?.bg ?: MaterialTheme.colorScheme.background
     Column(Modifier.background(accent)) {
-        Box(Modifier.fillMaxWidth().statusBarsPadding().height(64.dp)) {
+        Box(Modifier.fillMaxWidth().statusBarsPadding().heightIn(min = 64.dp)) {
             IconButton(onClick = onBack, modifier = Modifier.align(Alignment.CenterStart).padding(start = 4.dp)) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, "Quay lại", tint = on)
             }
-            Text(title, color = on, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, maxLines = 1,
-                overflow = TextOverflow.Ellipsis, modifier = Modifier.align(Alignment.Center).padding(horizontal = 56.dp))
+            Text(title, color = on, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                modifier = Modifier.align(Alignment.Center).padding(horizontal = 56.dp, vertical = 10.dp))
         }
         Column(
             Modifier.fillMaxWidth().clip(RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)).background(bg)
