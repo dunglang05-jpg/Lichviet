@@ -44,6 +44,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -76,12 +77,19 @@ import vn.lichviet.data.Today
 import kotlin.math.cos
 import kotlin.math.sin
 
-private val SkyTop = Color(0xFF5CC6D9)
-private val SkyMid = Color(0xFF7DBCE6)
-private val SkyBottom = Color(0xFFD9D4F2)
-private val Deep = Color(0xFF3F97C7)
-private val Ink = Color(0xFF2B5F86)
-private val Title = Color(0xFF4A7BE0)
+// Màu lấy theo giao diện đang dùng để đồng bộ với toàn app.
+private val Hero: Color @Composable get() = MaterialTheme.colorScheme.primary
+private val OnHero: Color @Composable get() = MaterialTheme.colorScheme.onPrimary
+private val Bg: Color @Composable get() = MaterialTheme.colorScheme.background
+private val Paper: Color @Composable get() = MaterialTheme.colorScheme.surfaceContainerHighest
+private val Deep: Color @Composable get() = androidx.compose.ui.graphics.lerp(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.onSurface, .3f)
+private val Ink: Color @Composable get() = MaterialTheme.colorScheme.onSurface
+private val Muted: Color @Composable get() = MaterialTheme.colorScheme.onSurfaceVariant
+private val Line: Color @Composable get() = MaterialTheme.colorScheme.outlineVariant
+private val Tint: Color @Composable get() = MaterialTheme.colorScheme.primary.copy(alpha = .12f)
+private val Title: Color @Composable get() = MaterialTheme.colorScheme.primary
+private val Bad: Color @Composable get() = MaterialTheme.colorScheme.error
+@Composable private fun heroBrush() = Brush.verticalGradient(0f to Hero, .35f to Hero, .8f to Bg)
 
 /** Thần số học: trang nhập (tên + ngày sinh) và trang kết quả với các mục mở/đóng. */
 @Composable
@@ -110,14 +118,14 @@ private fun ThanSoInput(
     var pick by remember { mutableStateOf(false) }
     var people by remember { mutableStateOf(false) }
     val lp = if (ok) Numerology.lifePath(d.toInt(), m.toInt(), y.toInt()) else 0
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(SkyTop, SkyMid, SkyBottom)))) {
+    Box(Modifier.fillMaxSize().background(heroBrush())) {
         SacredGeometry(Modifier.fillMaxWidth().height(300.dp))
         Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).statusBarsPadding()) {
             Row(Modifier.fillMaxWidth().height(56.dp), verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Quay lại", tint = Color.White) }
+                IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Quay lại", tint = OnHero) }
                 Spacer(Modifier.weight(1f))
                 Box {
-                    IconButton(onClick = { people = true }) { Icon(Icons.Filled.Groups, "Chọn người trong gia đình", tint = Color.White) }
+                    IconButton(onClick = { people = true }) { Icon(Icons.Filled.Groups, "Chọn người trong gia đình", tint = OnHero) }
                     DropdownMenu(people, { people = false }) {
                         if (s.birthD > 0) DropdownMenuItem(text = { Text(s.userName.ifBlank { "Tôi" }) }, onClick = {
                             onName(s.userName); onDate(s.birthD.toString(), s.birthM.toString(), s.birthY.toString()); people = false
@@ -132,27 +140,27 @@ private fun ThanSoInput(
                 }
             }
             Spacer(Modifier.height(110.dp))
-            Text("THẦN SỐ HỌC", fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, fontSize = 38.sp, color = Color.White,
+            Text("THẦN SỐ HỌC", fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, fontSize = 38.sp, color = OnHero,
                 textAlign = TextAlign.Center, letterSpacing = 2.sp, modifier = Modifier.fillMaxWidth())
             Spacer(Modifier.height(20.dp))
             Column(Modifier.padding(horizontal = 32.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 WhiteField(Icons.Filled.Person) {
                     BasicTextField(
-                        name, onName, singleLine = true, textStyle = TextStyle(fontSize = 18.sp, color = Color(0xFF263238)),
+                        name, onName, singleLine = true, textStyle = TextStyle(fontSize = 18.sp, color = Ink),
                         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
                         modifier = Modifier.weight(1f),
                         decorationBox = { inner ->
-                            if (name.isEmpty()) Text("Họ tên khai sinh (không bắt buộc)", color = Color(0xFF9AA5AE), fontSize = 16.sp)
+                            if (name.isEmpty()) Text("Họ tên khai sinh (không bắt buộc)", color = Muted, fontSize = 16.sp)
                             inner()
                         },
                     )
                     if (name.isNotEmpty()) IconButton(onClick = { onName("") }, modifier = Modifier.size(32.dp)) {
-                        Icon(Icons.Filled.Cancel, "Xóa", tint = Color(0xFFB0B8BF))
+                        Icon(Icons.Filled.Cancel, "Xóa", tint = Muted)
                     }
                 }
                 WhiteField(Icons.Filled.Cake, Modifier.clickable { pick = true }) {
                     Text(if (ok) "%02d/%02d/%s".format(d.toInt(), m.toInt(), y) else "Ngày sinh dương lịch",
-                        fontSize = 18.sp, color = if (ok) Color(0xFF263238) else Color(0xFF9AA5AE), modifier = Modifier.weight(1f))
+                        fontSize = 18.sp, color = if (ok) Ink else Muted, modifier = Modifier.weight(1f))
                 }
             }
             Spacer(Modifier.height(24.dp))
@@ -162,10 +170,10 @@ private fun ThanSoInput(
             Spacer(Modifier.height(24.dp))
             Box(
                 Modifier.padding(horizontal = 40.dp).fillMaxWidth().height(56.dp).clip(RoundedCornerShape(28.dp))
-                    .background(if (ok) Color.White else Color.White.copy(alpha = .55f)).clickable(enabled = ok, onClick = onSubmit),
+                    .background(if (ok) Hero else Hero.copy(alpha = .4f)).clickable(enabled = ok, onClick = onSubmit),
                 contentAlignment = Alignment.Center,
-            ) { Text("XEM KẾT QUẢ", color = Deep, fontWeight = FontWeight.Bold, fontSize = 20.sp, letterSpacing = 1.sp) }
-            if (!ok) Text("Chọn ngày sinh để xem", color = Color.White, fontSize = 13.sp, textAlign = TextAlign.Center,
+            ) { Text("XEM KẾT QUẢ", color = OnHero, fontWeight = FontWeight.Bold, fontSize = 20.sp, letterSpacing = 1.sp) }
+            if (!ok) Text("Chọn ngày sinh để xem", color = Muted, fontSize = 13.sp, textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
             Spacer(Modifier.height(40.dp))
         }
@@ -176,8 +184,8 @@ private fun ThanSoInput(
 @Composable
 private fun WhiteField(icon: androidx.compose.ui.graphics.vector.ImageVector, modifier: Modifier = Modifier, content: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit) {
     Row(
-        Modifier.fillMaxWidth().heightIn(min = 58.dp).clip(RoundedCornerShape(14.dp)).background(Color.White)
-            .border(1.5.dp, Color(0xFFE3EAF0), RoundedCornerShape(14.dp)).then(modifier).padding(horizontal = 16.dp),
+        Modifier.fillMaxWidth().heightIn(min = 58.dp).clip(RoundedCornerShape(14.dp)).background(Paper)
+            .border(1.5.dp, Line, RoundedCornerShape(14.dp)).then(modifier).padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(icon, null, tint = Deep, modifier = Modifier.size(26.dp))
@@ -191,17 +199,18 @@ private fun WhiteField(icon: androidx.compose.ui.graphics.vector.ImageVector, mo
 fun NumberEmblem(text: String, size: Dp, modifier: Modifier = Modifier) {
     val t = rememberInfiniteTransition(label = "emblem")
     val rot by t.animateFloat(0f, 360f, infiniteRepeatable(tween(60000, easing = LinearEasing), RepeatMode.Restart), label = "rot")
+    val deep = Deep; val core = Hero; val paper = Paper; val onCore = OnHero
     Box(modifier.size(size), contentAlignment = Alignment.Center) {
         Canvas(Modifier.fillMaxSize()) {
             val c = center; val r = this.size.minDimension / 2f
-            val white = Color.White
+            val white = deep
             drawCircle(white.copy(alpha = .85f), r * .97f, c, style = Stroke(r * .012f))
             for (k in 0 until 8) {
                 val a = Math.toRadians(k * 45.0 - 90)
                 val p = Offset(c.x + (r * .97f * cos(a)).toFloat(), c.y + (r * .97f * sin(a)).toFloat())
-                drawCircle(white, r * .045f, p)
-                drawCircle(Deep, r * .045f, p, style = Stroke(r * .012f))
-                drawArc(Deep, (k * 45f) - 90f, 180f, true, Offset(p.x - r * .045f, p.y - r * .045f),
+                drawCircle(paper, r * .045f, p)
+                drawCircle(deep, r * .045f, p, style = Stroke(r * .012f))
+                drawArc(deep, (k * 45f) - 90f, 180f, true, Offset(p.x - r * .045f, p.y - r * .045f),
                     androidx.compose.ui.geometry.Size(r * .09f, r * .09f))
             }
             rotate(rot, c) {
@@ -213,19 +222,20 @@ fun NumberEmblem(text: String, size: Dp, modifier: Modifier = Modifier) {
                 }
             }
             drawCircle(white, r * .64f, c, style = Stroke(r * .02f))
-            drawCircle(Deep, r * .61f, c)
+            drawCircle(core, r * .61f, c)
         }
-        Text(text, color = Color.White, fontWeight = FontWeight.ExtraBold, fontSize = (size.value * (if (text.length > 2) .22f else .32f)).sp)
+        Text(text, color = onCore, fontWeight = FontWeight.ExtraBold, fontSize = (size.value * (if (text.length > 2) .22f else .32f)).sp)
     }
 }
 
 /** Hình học thiêng mờ phía trên: hai tam giác lồng nhau trong vòng tròn, chấm sao. */
 @Composable
 private fun SacredGeometry(modifier: Modifier) {
+    val onHero = OnHero
     Canvas(modifier) {
         val c = Offset(size.width / 2f, size.height * .3f)
         val r = size.width * .42f
-        val w = Color.White.copy(alpha = .55f)
+        val w = onHero.copy(alpha = .55f)
         val st = Stroke(1.5f)
         drawCircle(w, r, c, style = st)
         drawCircle(w.copy(alpha = .35f), r * 1.12f, c, style = Stroke(1.2f, pathEffect = androidx.compose.ui.graphics.PathEffect.dashPathEffect(floatArrayOf(8f, 10f))))
@@ -243,7 +253,7 @@ private fun SacredGeometry(modifier: Modifier) {
         drawLine(w.copy(alpha = .4f), Offset(c.x, c.y - r), Offset(c.x, c.y + r), 1.2f)
         for (k in 0 until 12) {
             val a = Math.toRadians(k * 30.0 + 15)
-            drawCircle(Color.White, 5f, Offset(c.x + (r * 1.12f * cos(a)).toFloat(), c.y + (r * 1.12f * sin(a)).toFloat()))
+            drawCircle(onHero, 5f, Offset(c.x + (r * 1.12f * cos(a)).toFloat(), c.y + (r * 1.12f * sin(a)).toFloat()))
         }
     }
 }
@@ -266,20 +276,20 @@ private fun ThanSoResult(name: String, d: Int, m: Int, y: Int, onBack: () -> Uni
     val year = Today.ymd()[2]
     val r = remember(name, d, m, y, year) { Numerology.of(name, d, m, y, year) }
     val pk = remember(d, m, y) { Numerology.pinnacles(d, m, y) }
-    Column(Modifier.fillMaxSize().background(Color.White).verticalScroll(rememberScrollState())) {
-        Box(Modifier.fillMaxWidth().background(Brush.verticalGradient(listOf(SkyTop, SkyMid, Color(0xFF8FA8E3))))) {
+    Column(Modifier.fillMaxSize().background(Bg).verticalScroll(rememberScrollState())) {
+        Box(Modifier.fillMaxWidth().background(Hero)) {
             Column(Modifier.fillMaxWidth().statusBarsPadding().padding(bottom = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 Box(Modifier.fillMaxWidth().height(56.dp)) {
                     IconButton(onClick = onBack, modifier = Modifier.align(Alignment.CenterStart)) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Quay lại", tint = Color.White)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Quay lại", tint = OnHero)
                     }
-                    Text("CON SỐ CHỦ ĐẠO", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 1.sp,
+                    Text("CON SỐ CHỦ ĐẠO", color = OnHero, fontSize = 20.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 1.sp,
                         modifier = Modifier.align(Alignment.Center))
                 }
                 NumberEmblem(Numerology.label(r.lifePath), 240.dp)
                 Text(listOfNotNull(name.takeIf { it.isNotBlank() }, "%02d/%02d/%d".format(d, m, y)).joinToString(" · "),
-                    color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.Medium, modifier = Modifier.padding(top = 8.dp))
-                Text(Numerology.keyword(r.lifePath).ifEmpty { " " }, color = Color.White, fontSize = 14.sp)
+                    color = OnHero, fontSize = 15.sp, fontWeight = FontWeight.Medium, modifier = Modifier.padding(top = 8.dp))
+                Text(Numerology.keyword(r.lifePath).ifEmpty { " " }, color = OnHero, fontSize = 14.sp)
             }
         }
         Fold("Ý NGHĨA CON SỐ CHỦ ĐẠO", true) {
@@ -351,13 +361,13 @@ private fun Fold(title: String, initiallyOpen: Boolean, content: @Composable () 
     var open by rememberSaveable(title) { mutableStateOf(initiallyOpen) }
     Column(Modifier.fillMaxWidth()) {
         Row(
-            Modifier.fillMaxWidth().background(Color(0xFFF6F7F9)).clickable { open = !open }.padding(horizontal = 20.dp, vertical = 18.dp),
+            Modifier.fillMaxWidth().background(Tint).clickable { open = !open }.padding(horizontal = 20.dp, vertical = 18.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(title, color = Title, fontWeight = FontWeight.Bold, fontSize = 18.sp, modifier = Modifier.weight(1f))
-            Icon(if (open) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore, if (open) "Thu gọn" else "Mở", tint = Color(0xFF9AA0A6))
+            Icon(if (open) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore, if (open) "Thu gọn" else "Mở", tint = Muted)
         }
-        Box(Modifier.fillMaxWidth().height(1.dp).background(Color(0xFFE6E8EB)))
+        Box(Modifier.fillMaxWidth().height(1.dp).background(Line))
         AnimatedVisibility(open) {
             Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) { content() }
         }
@@ -365,26 +375,26 @@ private fun Fold(title: String, initiallyOpen: Boolean, content: @Composable () 
 }
 
 @Composable
-private fun Body(t: String) = Text(t, fontSize = 17.sp, lineHeight = 26.sp, color = Color(0xFF2E3338), textAlign = TextAlign.Justify)
+private fun Body(t: String) = Text(t, fontSize = 17.sp, lineHeight = 26.sp, color = Ink, textAlign = TextAlign.Justify)
 
 @Composable
-private fun Tag(t: String) = Text(t, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 14.sp,
-    modifier = Modifier.clip(RoundedCornerShape(16.dp)).background(Deep).padding(horizontal = 14.dp, vertical = 6.dp))
+private fun Tag(t: String) = Text(t, color = OnHero, fontWeight = FontWeight.SemiBold, fontSize = 14.sp,
+    modifier = Modifier.clip(RoundedCornerShape(16.dp)).background(Hero).padding(horizontal = 14.dp, vertical = 6.dp))
 
 @Composable
 private fun Calc(t: String) = Text(t, fontSize = 14.sp, lineHeight = 20.sp, color = Ink,
-    modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Color(0xFFEAF4FA)).padding(12.dp))
+    modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Tint).padding(12.dp))
 
 @Composable
 private fun NumRow(label: String, n: String, kw: String) {
     Row(verticalAlignment = Alignment.Top) {
-        Box(Modifier.size(44.dp).clip(CircleShape).background(Deep), contentAlignment = Alignment.Center) {
-            Text(n, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+        Box(Modifier.size(44.dp).clip(CircleShape).background(Hero), contentAlignment = Alignment.Center) {
+            Text(n, color = OnHero, fontWeight = FontWeight.Bold, fontSize = 18.sp)
         }
         Spacer(Modifier.width(14.dp))
         Column(Modifier.weight(1f)) {
-            Text(label, fontSize = 13.sp, color = Color(0xFF6B7680))
-            Text(kw.ifEmpty { "—" }, fontSize = 16.sp, lineHeight = 23.sp, color = Color(0xFF2E3338))
+            Text(label, fontSize = 13.sp, color = Muted)
+            Text(kw.ifEmpty { "—" }, fontSize = 16.sp, lineHeight = 23.sp, color = Ink)
         }
     }
 }
@@ -398,8 +408,8 @@ private fun BirthChart(name: String, d: Int, m: Int, y: Int) {
     val c = remember(name, d, m, y, useName) { Numerology.chart(d, m, y, if (useName) Numerology.nameDigits(name) else null) }
     if (name.isNotBlank()) Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         listOf(false to "Ngày sinh", true to "Ngày sinh + tên").forEach { (v, t) ->
-            Text(t, color = if (withName == v) Color.White else Deep, fontSize = 14.sp, fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.clip(RoundedCornerShape(16.dp)).background(if (withName == v) Deep else Color(0xFFEAF4FA))
+            Text(t, color = if (withName == v) OnHero else Deep, fontSize = 14.sp, fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.clip(RoundedCornerShape(16.dp)).background(if (withName == v) Hero else Tint)
                     .clickable { withName = v }.padding(horizontal = 14.dp, vertical = 6.dp))
         }
     }
@@ -411,13 +421,13 @@ private fun BirthChart(name: String, d: Int, m: Int, y: Int) {
                         val n = row * 3 + col + 1
                         val has = c[n] > 0
                         Box(
-                            Modifier.size(88.dp).background(if (has) Color(0xFFEAF4FA) else Color.White)
-                                .border(0.5.dp, Color(0xFFBFD9E8)),
+                            Modifier.size(88.dp).background(if (has) Tint else Paper)
+                                .border(0.5.dp, Line),
                             contentAlignment = Alignment.Center,
                         ) {
                             Text(if (has) n.toString().repeat(c[n]) else n.toString(), fontSize = if (c[n] > 3) 16.sp else 24.sp,
                                 fontWeight = if (has) FontWeight.Bold else FontWeight.Normal,
-                                color = if (has) Ink else Color(0xFFD0D6DB))
+                                color = if (has) Ink else Line)
                         }
                     }
                 }
@@ -432,11 +442,11 @@ private fun BirthChart(name: String, d: Int, m: Int, y: Int) {
     if (arrows.isEmpty()) Body("Không có mũi tên nào (không hàng, cột hay đường chéo nào đủ hoặc trống cả ba số).")
     arrows.forEach { (full, t, mean) ->
         Row(verticalAlignment = Alignment.Top) {
-            Text(if (full) "↗" else "○", color = if (full) Deep else Color(0xFFE07A5F), fontSize = 20.sp, fontWeight = FontWeight.Bold,
+            Text(if (full) "↗" else "○", color = if (full) Deep else Bad, fontSize = 20.sp, fontWeight = FontWeight.Bold,
                 modifier = Modifier.width(28.dp))
             Column {
-                Text(t, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = if (full) Ink else Color(0xFFB4533A))
-                Text(mean, fontSize = 15.sp, lineHeight = 22.sp, color = Color(0xFF2E3338))
+                Text(t, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = if (full) Ink else Bad)
+                Text(mean, fontSize = 15.sp, lineHeight = 22.sp, color = Ink)
             }
         }
     }

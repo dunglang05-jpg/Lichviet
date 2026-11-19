@@ -36,6 +36,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -69,11 +70,16 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import vn.lichviet.core.fortune.KinhDich
 
-private val Red1 = Color(0xFFC8352E)
-private val Red2 = Color(0xFF8E1B1B)
-private val Cream = Color(0xFFFFE8B8)
-private val Gold = Color(0xFFF4C46A)
-private val Wine = Color(0xFF8E1B1B)
+// Màu lấy theo giao diện đang dùng để đồng bộ với toàn app.
+private val Red1: Color @Composable get() = MaterialTheme.colorScheme.primary
+private val Red2: Color @Composable get() = androidx.compose.ui.graphics.lerp(MaterialTheme.colorScheme.primary, Color.Black, .3f)
+private val Cream: Color @Composable get() = MaterialTheme.colorScheme.onPrimary
+private val Gold: Color @Composable get() = MaterialTheme.colorScheme.secondary
+private val OnGold: Color @Composable get() = MaterialTheme.colorScheme.onSecondary
+private val Wine: Color @Composable get() = MaterialTheme.colorScheme.primary
+private val Paper: Color @Composable get() = MaterialTheme.colorScheme.surfaceContainerHighest
+private val Ink: Color @Composable get() = MaterialTheme.colorScheme.onSurface
+private val Muted: Color @Composable get() = MaterialTheme.colorScheme.onSurfaceVariant
 
 /** Chủ đề hỏi quẻ: id file lời giải trong assets/gieoque. */
 private val TOPICS = listOf(
@@ -148,7 +154,7 @@ fun GieoQueV2(onBack: () -> Unit) {
                     question, { question = it.take(120) },
                     textStyle = TextStyle(color = Cream, fontSize = 16.sp, textAlign = TextAlign.Center),
                     modifier = Modifier.padding(horizontal = 28.dp).fillMaxWidth().clip(RoundedCornerShape(14.dp))
-                        .background(Color.White.copy(alpha = .08f)).padding(14.dp),
+                        .background(Cream.copy(alpha = .1f)).padding(14.dp),
                     decorationBox = { inner ->
                         Box(contentAlignment = Alignment.Center) {
                             if (question.isEmpty()) Text("Việc cụ thể muốn hỏi (không bắt buộc)", color = Cream.copy(alpha = .6f), fontSize = 15.sp)
@@ -160,10 +166,10 @@ fun GieoQueV2(onBack: () -> Unit) {
                 val ready = topic >= 0
                 Box(
                     Modifier.size(150.dp).shadow(if (ready) 16.dp else 0.dp, CircleShape).clip(CircleShape)
-                        .background(if (ready) Brush.verticalGradient(listOf(Color(0xFFFFF3D6), Gold)) else Brush.verticalGradient(listOf(Cream.copy(.35f), Cream.copy(.25f))))
+                        .background(if (ready) Brush.verticalGradient(listOf(Gold, Gold)) else Brush.verticalGradient(listOf(Cream.copy(.35f), Cream.copy(.25f))))
                         .clickable(enabled = ready) { shown = 0; seed = System.nanoTime() },
                     contentAlignment = Alignment.Center,
-                ) { Text("Gieo quẻ", color = if (ready) Wine else Cream.copy(.7f), fontWeight = FontWeight.Bold, fontSize = 24.sp) }
+                ) { Text("Gieo quẻ", color = if (ready) OnGold else Cream.copy(.7f), fontWeight = FontWeight.Bold, fontSize = 24.sp) }
                 Spacer(Modifier.height(14.dp))
                 Text(if (ready) "Tĩnh tâm, mỗi việc chỉ nên hỏi một lần" else "Chọn chủ đề trước khi gieo", color = Cream.copy(alpha = .8f), fontSize = 13.sp)
             } else {
@@ -193,43 +199,43 @@ private fun CastResult(c: KinhDich.Cast, shown: Int, topic: Pair<String, String>
     val main = data[c.main]
     Spacer(Modifier.height(14.dp))
     Column(
-        Modifier.padding(horizontal = 18.dp).fillMaxWidth().clip(RoundedCornerShape(22.dp)).background(Color(0xFFFFF6E3)).padding(18.dp),
+        Modifier.padding(horizontal = 18.dp).fillMaxWidth().clip(RoundedCornerShape(22.dp)).background(Paper).padding(18.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
-                Text("Quẻ số ${c.main}", color = Color(0xFF9A6B3A), fontSize = 13.sp)
+                Text("Quẻ số ${c.main}", color = Muted, fontSize = 13.sp)
                 Text(c.mainName, color = Wine, fontWeight = FontWeight.Bold, fontSize = 24.sp, fontFamily = FontFamily.Serif)
             }
             main?.let { VerdictPill(it.verdict) }
         }
-        Text(main?.text ?: "Chưa có lời giải cho quẻ này.", color = Color(0xFF3A2A20), fontSize = 17.sp, lineHeight = 25.sp)
+        Text(main?.text ?: "Chưa có lời giải cho quẻ này.", color = Ink, fontSize = 17.sp, lineHeight = 25.sp)
         if (c.changed != 0) {
-            Box(Modifier.fillMaxWidth().height(1.dp).background(Color(0xFFE8D3B0)))
+            Box(Modifier.fillMaxWidth().height(1.dp).background(MaterialTheme.colorScheme.outlineVariant))
             val ch = data[c.changed]
             Text("Có hào động → quẻ biến: ${c.changedName} (số ${c.changed})", color = Wine, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)
-            Text("Quẻ biến cho biết chiều hướng về sau của sự việc.", color = Color(0xFF9A6B3A), fontSize = 13.sp)
+            Text("Quẻ biến cho biết chiều hướng về sau của sự việc.", color = Muted, fontSize = 13.sp)
             ch?.let {
                 Row(verticalAlignment = Alignment.Top) {
                     VerdictPill(it.verdict, small = true)
                     Spacer(Modifier.width(8.dp))
-                    Text(it.text, color = Color(0xFF3A2A20), fontSize = 15.sp, lineHeight = 22.sp, modifier = Modifier.weight(1f))
+                    Text(it.text, color = Ink, fontSize = 15.sp, lineHeight = 22.sp, modifier = Modifier.weight(1f))
                 }
             }
         }
         if (topic.first == "health" || topic.first == "having_more_kids")
-            Text("Chỉ để tham khảo, không thay thế ý kiến của bác sĩ.", color = Color(0xFF9A6B3A), fontSize = 12.sp)
+            Text("Chỉ để tham khảo, không thay thế ý kiến của bác sĩ.", color = Muted, fontSize = 12.sp)
     }
     Spacer(Modifier.height(20.dp))
     Box(
-        Modifier.clip(RoundedCornerShape(26.dp)).background(Cream).clickable(onClick = onAgain).padding(horizontal = 36.dp, vertical = 14.dp),
-    ) { Text("Gieo quẻ khác", color = Wine, fontWeight = FontWeight.Bold, fontSize = 17.sp) }
+        Modifier.clip(RoundedCornerShape(26.dp)).background(Gold).clickable(onClick = onAgain).padding(horizontal = 36.dp, vertical = 14.dp),
+    ) { Text("Gieo quẻ khác", color = OnGold, fontWeight = FontWeight.Bold, fontSize = 17.sp) }
     Text("Lời giải tóm lược theo gieoque.net", color = Cream.copy(alpha = .7f), fontSize = 12.sp, modifier = Modifier.padding(top = 10.dp))
 }
 
 @Composable
 private fun VerdictPill(v: Char, small: Boolean = false) {
-    val (t, c) = when (v) { 'T' -> "Tốt" to Color(0xFF2E7D32); 'X' -> "Xấu" to Color(0xFFC62828); else -> "Trung bình" to Color(0xFFB7791F) }
+    val (t, c) = when (v) { 'T' -> "Tốt" to vn.lichviet.ui.goodColor(); 'X' -> "Xấu" to MaterialTheme.colorScheme.error; else -> "Trung bình" to Color(0xFFB7791F) }
     Text(t, color = Color.White, fontWeight = FontWeight.Bold, fontSize = if (small) 12.sp else 14.sp,
         modifier = Modifier.clip(RoundedCornerShape(14.dp)).background(c).padding(horizontal = if (small) 8.dp else 12.dp, vertical = 4.dp))
 }
@@ -245,7 +251,7 @@ private fun Coins(sum: Int) {
             val head = i < heads
             Box(
                 Modifier.size(54.dp).graphicsLayer { rotationY = spin * 360f + i * 40f }
-                    .clip(CircleShape).background(if (head) Gold else Color(0xFFB87333)).border(3.dp, Color(0xFF7A4A12), CircleShape),
+                    .clip(CircleShape).background(if (head) Color(0xFFF4C46A) else Color(0xFFB87333)).border(3.dp, Color(0xFF7A4A12), CircleShape),
                 contentAlignment = Alignment.Center,
             ) { Box(Modifier.size(14.dp).background(Red2)) }
         }
@@ -255,6 +261,7 @@ private fun Coins(sum: Int) {
 /** Vẽ quẻ từ dưới lên; [shown] hào đầu tiên được hiện. Hào động có chấm. */
 @Composable
 private fun Hexagram(lines: IntArray, shown: Int, modifier: Modifier) {
+    val on = Cream; val mark = Gold
     Canvas(modifier) {
         val h = size.height / 6f
         val w = size.width * .82f
@@ -262,7 +269,7 @@ private fun Hexagram(lines: IntArray, shown: Int, modifier: Modifier) {
         for (i in 0 until 6) {
             val y = size.height - (i + .5f) * h
             val v = lines[i]
-            val c = if (i < shown) Cream else Cream.copy(alpha = .18f)
+            val c = if (i < shown) on else on.copy(alpha = .18f)
             val th = h * .42f
             val yang = v == 7 || v == 9
             if (yang) drawRoundRect(c, Offset(x0, y - th / 2), Size(w, th), CornerRadius(th / 3))
@@ -270,7 +277,7 @@ private fun Hexagram(lines: IntArray, shown: Int, modifier: Modifier) {
                 drawRoundRect(c, Offset(x0, y - th / 2), Size(w * .43f, th), CornerRadius(th / 3))
                 drawRoundRect(c, Offset(x0 + w * .57f, y - th / 2), Size(w * .43f, th), CornerRadius(th / 3))
             }
-            if (i < shown && (v == 6 || v == 9)) drawCircle(Gold, th * .45f, Offset(x0 + w + th * .9f, y))
+            if (i < shown && (v == 6 || v == 9)) drawCircle(mark, th * .45f, Offset(x0 + w + th * .9f, y))
         }
     }
 }
@@ -278,8 +285,9 @@ private fun Hexagram(lines: IntArray, shown: Int, modifier: Modifier) {
 /** Mây cách điệu mờ trên nền đỏ. */
 @Composable
 private fun CloudBackdrop(modifier: Modifier) {
+    val cc = Cream.copy(alpha = .1f)
     Canvas(modifier) {
-        val c = Color(0xFFF2A97E).copy(alpha = .22f)
+        val c = cc
         fun cloud(x: Float, y: Float, s: Float) = drawCloud(c, Offset(x * size.width, y * size.height), s * size.width)
         cloud(.05f, .12f, .26f); cloud(.62f, .08f, .3f); cloud(.75f, .32f, .22f); cloud(.02f, .45f, .2f)
         cloud(.6f, .58f, .26f); cloud(.1f, .76f, .24f); cloud(.7f, .88f, .22f)
