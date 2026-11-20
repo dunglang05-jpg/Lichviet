@@ -37,7 +37,7 @@ enum class HolidayArt(val bg: Long) {
                 has("dương lịch") -> PHAO
                 has("trung thu") -> DEN_LONG
                 has("vu lan", "phật đản") -> SEN
-                has("hùng vương") -> TRONG
+                has("hùng vương", "văn hóa") -> TRONG
                 has("ông táo") -> CA_CHEP
                 has("giáng sinh") -> THONG
                 has("valentine", "tình nhân") -> TIM

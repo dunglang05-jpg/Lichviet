@@ -18,7 +18,7 @@ public final class Holidays {
         }
     }
 
-    // {ngày, tháng, tên, lớn?}
+    // {ngày, tháng, tên, lớn?[, áp dụng từ năm]}
     private static final Object[][] SOLAR = {
         {1, 1, "Tết Dương lịch", true},
         {3, 2, "Ngày thành lập Đảng", false},
@@ -45,6 +45,8 @@ public final class Holidays {
         {31, 10, "Halloween", false},
         {9, 11, "Ngày Pháp luật Việt Nam", false},
         {20, 11, "Ngày Nhà giáo Việt Nam", false},
+        // Nghị quyết 28/2026/QH16, hiệu lực 1/7/2026: nghỉ lễ hưởng nguyên lương từ năm 2026
+        {24, 11, "Ngày Văn hóa Việt Nam", true, 2026},
         {1, 12, "Ngày Thế giới phòng chống AIDS", false},
         {22, 12, "Ngày thành lập Quân đội nhân dân", false},
         {24, 12, "Đêm Giáng sinh", false},
@@ -74,7 +76,8 @@ public final class Holidays {
     static List<Item> of(DayInfo di) {
         List<Item> out = new ArrayList<>();
         for (Object[] h : SOLAR) {
-            if ((Integer) h[0] == di.solarDay && (Integer) h[1] == di.solarMonth) {
+            if ((Integer) h[0] == di.solarDay && (Integer) h[1] == di.solarMonth
+                    && (h.length < 5 || di.solarYear >= (Integer) h[4])) {
                 out.add(new Item((String) h[2], (Boolean) h[3], false));
             }
         }

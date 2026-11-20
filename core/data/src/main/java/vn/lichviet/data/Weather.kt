@@ -75,6 +75,20 @@ data class Weather(
             else -> Triple("Nguy hại", 0xFF7E0023, "Ở trong nhà, dùng máy lọc không khí nếu có.")
         }
 
+        /** Biểu tượng emoji theo mã WMO (dùng cho widget). */
+        fun emoji(code: Int, day: Boolean = true): String = when (code) {
+            0 -> if (day) "☀️" else "🌙"
+            1 -> if (day) "🌤️" else "🌙"
+            2 -> "⛅"
+            3 -> "☁️"
+            45, 48 -> "🌫️"
+            in 51..57, 80 -> "🌦️"
+            in 61..67, 81, 82 -> "🌧️"
+            in 71..77, 85, 86 -> "❄️"
+            in 95..99 -> "⛈️"
+            else -> "☁️"
+        }
+
         /** Mô tả theo mã thời tiết WMO. */
         fun describe(code: Int): String = when (code) {
             0 -> "Trời quang"
@@ -110,9 +124,17 @@ object WeatherRepository {
             ctx.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
     /** Lấy dữ liệu (dùng bản đệm nếu còn mới). Trả về null nếu không có vị trí hoặc lỗi mạng. */
+    /** Bản đệm gần nhất (đọc đồng bộ, dùng cho widget). */
+    fun cached(ctx: Context): Weather? {
+        val prefs = ctx.getSharedPreferences("weather", Context.MODE_PRIVATE)
+        return prefs.getString("json", null)?.let { runCatching { parse(JSONObject(it), prefs.getString("place", "") ?: "", prefs.getLong("at", 0), prefs.getString("air", null)) }.getOrNull() }
+    }
+
+    fun isStale(w: Weather?) = w == null || System.currentTimeMillis() - w.fetchedAt >= TTL
+
     suspend fun load(ctx: Context, force: Boolean = false): Weather? = withContext(Dispatchers.IO) {
         val prefs = ctx.getSharedPreferences("weather", Context.MODE_PRIVATE)
-        val cached = prefs.getString("json", null)?.let { runCatching { parse(JSONObject(it), prefs.getString("place", "") ?: "", prefs.getLong("at", 0), prefs.getString("air", null)) }.getOrNull() }
+        val cached = cached(ctx)
         if (_state.value == null && cached != null) _state.value = cached
         if (!force && cached != null && System.currentTimeMillis() - cached.fetchedAt < TTL) return@withContext cached
         val loc = location(ctx) ?: cached?.let { it.lat to it.lon } ?: return@withContext cached
@@ -131,6 +153,8 @@ object WeatherRepository {
         val w = runCatching { parse(JSONObject(body), place, now, airBody) }.getOrNull() ?: return@withContext cached
         prefs.edit().putString("json", body).putString("air", airBody).putString("place", place).putLong("at", now).apply()
         _state.value = w
+        // báo widget vẽ lại với thời tiết mới
+        runCatching { ctx.sendBroadcast(android.content.Intent("vn.lichviet.widget.MIDNIGHT").setPackage(ctx.packageName)) }
         w
     }
 

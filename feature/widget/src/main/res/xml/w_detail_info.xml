@@ -8,4 +8,5 @@
     android:widgetCategory="home_screen"
     android:updatePeriodMillis="3600000"
     android:description="@string/w_detail_desc"
+    android:previewImage="@drawable/preview_detail"
     android:initialLayout="@layout/w_detail" />

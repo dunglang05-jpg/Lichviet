@@ -22,6 +22,13 @@ import vn.lichviet.core.MonthGrid
 import vn.lichviet.data.EventRepository
 import vn.lichviet.data.SettingsRepository
 import vn.lichviet.data.Today
+import vn.lichviet.data.Weather
+import vn.lichviet.data.WeatherRepository
+import vn.lichviet.core.LunarCalendar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 /** Cơ sở chung: mỗi widget chỉ cần tự dựng RemoteViews của mình. */
 abstract class BaseWidget : AppWidgetProvider() {
@@ -31,7 +38,31 @@ abstract class BaseWidget : AppWidgetProvider() {
         val today = Today.info()
         ids.forEach { mgr.updateAppWidget(it, build(ctx, today).also { v -> WidgetUpdater.attachClick(ctx, v) }) }
         WidgetUpdater.scheduleMidnight(ctx)
+        // thời tiết cũ hơn 30 phút thì tải lại ngầm (cần đã cấp quyền vị trí trong app); tải xong sẽ tự vẽ lại
+        if (WeatherRepository.isStale(WeatherRepository.cached(ctx)) && WidgetUpdater.mayRefresh()) {
+            val pending = goAsync()
+            CoroutineScope(Dispatchers.IO).launch {
+                try { WeatherRepository.load(ctx.applicationContext) } finally { pending.finish() }
+            }
+        }
     }
+}
+
+private fun t(v: Double) = "${v.roundToInt()}°"
+
+/** Dòng thời tiết hôm nay, null nếu chưa có dữ liệu. */
+internal fun weatherLine(ctx: Context, today: DayInfo): String? {
+    val w = WeatherRepository.cached(ctx) ?: return null
+    val d = w.day(today.solarYear, today.solarMonth, today.solarDay)
+    val fresh = System.currentTimeMillis() - w.fetchedAt < 3 * 60 * 60 * 1000L
+    return if (fresh) "${Weather.emoji(w.code, w.isDay)} ${t(w.temp)}" + (d?.let { " · ${t(it.min)}–${t(it.max)}" } ?: "")
+    else d?.let { "${Weather.emoji(it.code)} ${t(it.min)}–${t(it.max)}" }
+}
+
+private fun RemoteViews.setWeather(ctx: Context, today: DayInfo) {
+    val line = weatherLine(ctx, today)
+    setViewVisibility(R.id.weather, if (line == null) android.view.View.GONE else android.view.View.VISIBLE)
+    if (line != null) setTextViewText(R.id.weather, line)
 }
 
 class DayWidget : BaseWidget() {
@@ -41,6 +72,7 @@ class DayWidget : BaseWidget() {
         setTextViewText(R.id.monthYear, "Tháng ${today.solarMonth}, ${today.solarYear}")
         setTextViewText(R.id.lunar, "${today.lunarText()} âm lịch")
         setTextViewText(R.id.canchi, "Ngày ${today.dayCanChi}")
+        setWeather(ctx, today)
     }
 }
 
@@ -49,6 +81,7 @@ class DetailWidget : BaseWidget() {
         setTextViewText(R.id.weekday, DayInfo.THU[today.weekday].uppercase())
         setTextViewText(R.id.solarDay, today.solarDay.toString())
         setTextViewText(R.id.lunar, today.lunarText())
+        setWeather(ctx, today)
         setTextViewText(R.id.title, "${today.dayCanChi} · ${if (today.hoangDao) "Hoàng đạo" else "Hắc đạo"}")
         setTextViewText(R.id.verdict, "${today.verdict} ${today.starsText()} · ${today.almanac().khongMinh}")
         setTextViewText(R.id.hours, "Giờ tốt: " + today.hours.filter { it.good }.joinToString(", ") { it.name })
@@ -60,6 +93,54 @@ class DetailWidget : BaseWidget() {
             if (left == 0) "Hôm nay: ${e.title}" else "Còn $left ngày: ${e.title}"
         } ?: "Tiết ${today.tietKhiCurrent}"
         setTextViewText(R.id.event, line)
+    }
+}
+
+class WeekWidget : BaseWidget() {
+    override fun build(ctx: Context, today: DayInfo): RemoteViews {
+        val monday = SettingsRepository.get(ctx).settings.value.mondayFirst
+        val back = if (monday) (today.weekday + 6) % 7 else today.weekday
+        val start = today.jd - back
+        val w = WeatherRepository.cached(ctx)
+        val v = RemoteViews(ctx.packageName, R.layout.w_week)
+        val first = dayAt(start); val last = dayAt(start + 6)
+        v.setTextViewText(R.id.title, "Tuần ${first.solarDay}/${first.solarMonth} – ${last.solarDay}/${last.solarMonth}/${last.solarYear}")
+        v.setTextViewText(R.id.subtitle, buildString {
+            append("Tháng ${today.lunarMonth}${if (today.leap) " nhuận" else ""} âm lịch, năm ${today.yearCanChi}")
+            w?.place?.substringBefore(',')?.takeIf { it.isNotBlank() }?.let { append(" · $it") }
+        })
+        val thu = listOf("CN", "T2", "T3", "T4", "T5", "T6", "T7")
+        for (i in 0 until 7) {
+            val d = dayAt(start + i)
+            val isToday = d.jd == today.jd
+            val fc = w?.day(d.solarYear, d.solarMonth, d.solarDay)
+            val head = thu[d.weekday]
+            val solar = d.solarDay.toString()
+            val lunar = if (d.lunarDay == 1) "${d.lunarDay}/${d.lunarMonth}" else d.lunarDay.toString()
+            val wx = fc?.let { "${Weather.emoji(it.code)}\n${t(it.max)}\n${t(it.min)}" } ?: "\n\n"
+            val text = "$head\n$solar\n$lunar\n$wx"
+            val sp = SpannableString(text)
+            val base = when {
+                isToday -> Color.WHITE
+                d.weekday == 0 || d.holidays.any { it.major } -> Color.parseColor("#B3261E")
+                else -> Color.parseColor("#1F1F1F")
+            }
+            sp.setSpan(ForegroundColorSpan(base), 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            val a = head.length + 1; val b = a + solar.length
+            sp.setSpan(RelativeSizeSpan(0.75f), 0, head.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sp.setSpan(StyleSpan(Typeface.BOLD), a, b, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sp.setSpan(RelativeSizeSpan(1.25f), a, b, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            sp.setSpan(RelativeSizeSpan(0.7f), b, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            v.setTextViewText(DAYS[i], sp)
+            v.setInt(DAYS[i], "setBackgroundResource", if (isToday) R.drawable.w_today else 0)
+        }
+        return v
+    }
+
+    private fun dayAt(jd: Int): DayInfo = LunarCalendar.jdToDate(jd).let { DayInfo.of(it[0], it[1], it[2]) }
+
+    companion object {
+        private val DAYS = intArrayOf(R.id.d0, R.id.d1, R.id.d2, R.id.d3, R.id.d4, R.id.d5, R.id.d6)
     }
 }
 
@@ -114,7 +195,15 @@ class WidgetRefreshReceiver : BroadcastReceiver() {
 
 object WidgetUpdater {
     private const val ACTION_MIDNIGHT = "vn.lichviet.widget.MIDNIGHT"
-    private val providers = listOf(DayWidget::class.java, DetailWidget::class.java, MonthWidget::class.java)
+    private val providers = listOf(DayWidget::class.java, DetailWidget::class.java, WeekWidget::class.java, MonthWidget::class.java)
+    private var lastRefresh = 0L
+
+    /** Chống tải thời tiết dồn dập khi nhiều widget cùng cập nhật. */
+    @Synchronized fun mayRefresh(): Boolean {
+        val now = System.currentTimeMillis()
+        if (now - lastRefresh < 10 * 60 * 1000L) return false
+        lastRefresh = now; return true
+    }
 
     /** Gọi từ app khi dữ liệu thay đổi (thêm sự kiện, đổi cài đặt...). */
     fun updateAll(ctx: Context) {

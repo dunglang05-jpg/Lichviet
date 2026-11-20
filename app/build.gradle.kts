@@ -12,8 +12,8 @@ android {
         applicationId = "vn.lichviet.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 150
-        versionName = "0.15.0"
+        versionCode = 151
+        versionName = "0.15.1"
     }
 
     // Khóa ký cố định (để cập nhật OTA cài đè được): đọc từ biến môi trường do CI giải mã từ GitHub Secrets.

@@ -8,4 +8,5 @@
     android:widgetCategory="home_screen"
     android:updatePeriodMillis="3600000"
     android:description="@string/w_day_desc"
+    android:previewImage="@drawable/preview_day"
     android:initialLayout="@layout/w_day" />

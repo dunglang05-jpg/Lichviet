@@ -12,4 +12,6 @@
         android:layout_marginTop="4dp" android:textColor="#1F1F1F" android:textSize="12sp" android:textStyle="bold" />
     <TextView android:id="@+id/canchi" android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:textColor="#555555" android:textSize="10sp" />
+    <TextView android:id="@+id/weather" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginTop="2dp" android:textColor="#1F1F1F" android:textSize="11sp" android:gravity="center" android:visibility="gone" />
 </LinearLayout>
