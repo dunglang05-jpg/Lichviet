@@ -44,6 +44,7 @@ import vn.lichviet.ui.SectionTitle
 enum class Tool(val title: String, val icon: ImageVector, val color: Long, val group: Int) {
     VAN_HAN("Vận Hạn Năm", Icons.Filled.Insights, 0xFFE53935, 0),
     TINH_DUYEN("Tình Duyên", Icons.Filled.Favorite, 0xFFEC407A, 0),
+    LA_SO_TU_VI("Lá Số Tử Vi", Icons.Filled.GridOn, 0xFF7B1FA2, 0),
     BAT_TU("Lá Số Bát Tự", Icons.Filled.GridView, 0xFF8D6E63, 0),
     TONG_QUAN_VAN_MENH("Tổng Quan Vận Mệnh", Icons.Filled.AutoAwesome, 0xFFD81B60, 0),
     NOI_BAT("Nổi Bật Hôm Nay", Icons.Filled.Today, 0xFFFB8C00, 0),
@@ -119,6 +120,7 @@ fun ToolPage(tool: Tool, todayJd: Int, onOpenDay: (Int) -> Unit, onBack: () -> U
         when (tool) {
             Tool.VAN_HAN -> VanHanScreen()
             Tool.TINH_DUYEN -> TinhDuyenScreen()
+            Tool.LA_SO_TU_VI -> TuViLaSoScreen()
             Tool.BAT_TU -> BatTuScreen()
             Tool.TONG_QUAN_VAN_MENH -> TongQuanVanMenhScreen()
             Tool.NOI_BAT -> NoiBatScreen(todayJd, onOpenDay)
